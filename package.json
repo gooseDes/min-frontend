@@ -39,5 +39,9 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://msg-min.xyz"
+  "homepage": "https://msg-min.xyz",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gooseDes/min-frontend.git"
+  }
 }
