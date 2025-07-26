@@ -1,0 +1,36 @@
+.MessageDiv {
+    margin: 10px;
+    width: calc(100% - 20px);
+    height: fit-content;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    transition: all 0.2s ease-in-out;
+    transition: translate 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+    &.left {
+        translate: -35vh 0;
+    }
+
+    &.right {
+        justify-content: right;
+        translate: 35vh 0;
+    }
+}
+
+.TextDiv {
+    background-color: #444;
+    width: fit-content;
+    max-width: 30vh;
+    padding: 0 10px;
+    border-radius: 1svh;
+    text-align: left;
+
+    &.left {
+        border-radius: 1svh 1svh 1svh 0;
+    }
+
+    &.right {
+        border-radius: 1svh 1svh 0 1svh;
+    }
+}

@@ -1,2 +1,3 @@
-The best messenger in the world, lol
-available at https://msg-min.xyz
+### MIN
+The best messenger in the world, lol.
+Available at `https://msg-min.xyz`
