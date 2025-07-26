@@ -1,0 +1,46 @@
+.ProfileThingDiv {
+    background-color: transparent;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    height: 50px;
+    width: 100%;
+    transition: all 0.2s ease-in-out;
+    border-radius: 1svh;
+
+    &:hover {
+        background-color: #aaaaaa66;
+        translate: 10px 0;
+        width: calc(100% - 10px);
+
+        .ProfileThingText {
+            color: #fff;
+        }
+    }
+
+    &:active {
+        background-color: #aaaaaaaa;
+    }
+}
+
+.ProfileThingText {
+    text-align: left;
+    margin-left: 10px;
+    color: #aaa;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.ProfileThingImage {
+    height: 80%;
+    margin-left: 20px;
+    border-radius: 999px;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
