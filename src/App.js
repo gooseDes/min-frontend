@@ -20,10 +20,13 @@ function App() {
     }, []);
 
     function sendMessage() {
+        const value = document.getElementById('message_input').value;
+        if (value.trim() === '') return;
+        document.getElementById('message_input').value = '';
         setMessages(prev => [
             ...prev,
             {
-                text: document.getElementById('message_input').value,
+                text: value,
                 type: 'right',
             }
         ]);
@@ -91,7 +94,7 @@ function App() {
                     ))}
                 </div>
                 <div className='InputPanel' id='input_panel'>
-                    <input placeholder='Your message here' className='MessageInput' id='message_input'/>
+                    <input placeholder='Your message here' onKeyDown={(event) => {if (event.key === 'Enter') sendMessage()}} className='MessageInput' id='message_input'/>
                     <button className='SendButton' onClick={sendMessage}><i class="fa-solid fa-paper-plane"></i></button>
                 </div>
             </div>

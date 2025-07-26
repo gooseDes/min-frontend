@@ -142,7 +142,7 @@ p {
   outline: none;
   color: #fff;
   padding: 0 1svh;
-  font-size: 1.2svh;
+  font-size: 16px;
   overflow: hidden;
   translate: 0 150%;
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -158,7 +158,7 @@ p {
   background-color: transparent;
   border: none;
   color: #999;
-  font-size: 2svh;
+  font-size: 30px;
   translate: 150% 0;
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   overflow: hidden;
