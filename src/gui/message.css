@@ -9,12 +9,12 @@
     transition: translate 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
     &.left {
-        translate: -35vh 0;
+        translate: -36vh 0;
     }
 
     &.right {
         justify-content: right;
-        translate: 35vh 0;
+        translate: 36vh 0;
     }
 }
 
