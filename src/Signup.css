@@ -1,0 +1,84 @@
+.App {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background-color: #000;
+}
+
+html, body, .App {
+    overflow: hidden;
+}
+
+.SignupForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #24242466;
+    padding: 25px;
+    border-radius: 2svh;
+    height: fit-content;
+    transition: all 0.2s ease-in-out;
+    backdrop-filter: blur(10px);
+    border: 3px solid #fff;
+
+    input {
+        border: none;
+        outline: none;
+        max-width: 25svh;
+        width: 40vw;
+        height: 2svh;
+        border-radius: 999px;
+        padding: 0 1svh;
+        text-align: center;
+    }
+
+    button {
+        border: none;
+        border-radius: 999px;
+        background-color: #252525;
+        font-size: 1.5svh;
+        padding: 0.8svh;
+        color: #fff;
+        margin-bottom: 0;
+        transition: all 0.2s ease-in-out;
+
+        &:hover {
+            scale: 1.1;
+        }
+    }
+}
+
+#bg_thing1 {
+    position: fixed;
+    width: 50vw;
+    border-radius: 10svh;
+    border: 2svh solid #fff;
+    aspect-ratio: 1;
+    animation: bg_thing1_anim 12s infinite linear;
+}
+
+@keyframes bg_thing1_anim {
+    from {
+        rotate: 0deg;
+    }
+    to {
+        rotate: 360deg;
+    }
+}
+
+#bg_thing2 {
+    position: fixed;
+    width: 25vw;
+    border-radius: 999px;
+    border: 2svh solid #fff;
+    aspect-ratio: 1;
+}
+
+#bg_canvas {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+}
