@@ -3,10 +3,25 @@ import ProfileThing from './gui/profile_thing';
 import Message from './gui/message';
 import logo from './logo.png'
 import { useState, useEffect, useRef } from 'react';
+import { io } from 'socket.io-client';
+
+const socket = io('https://server.msg-min.xyz');
 
 function App() {
     const [messages, setMessages] = useState([]);
     var inited = useRef(false);
+    var lastSended = useRef('');
+
+    useEffect(() => {
+        socket.on('message', (data) => {
+            if (lastSended.current === data.text) return;
+            setMessages((prev) => [...prev, {text: data.text, type: 'left'}]);
+        });
+
+        return () => {
+            socket.off('message');
+        };
+    }, []);
 
     useEffect(() => {
         const initialMessages = [];
@@ -30,6 +45,8 @@ function App() {
                 type: 'right',
             }
         ]);
+        socket.send({ text: value });
+        lastSended.current = value;
     }
 
     useEffect(() => {
@@ -95,7 +112,7 @@ function App() {
                 </div>
                 <div className='InputPanel' id='input_panel'>
                     <input placeholder='Your message here' onKeyDown={(event) => {if (event.key === 'Enter') sendMessage()}} className='MessageInput' id='message_input'/>
-                    <button className='SendButton' onClick={sendMessage}><i class="fa-solid fa-paper-plane"></i></button>
+                    <button className='SendButton' onClick={sendMessage}><i className="fa-solid fa-paper-plane"></i></button>
                 </div>
             </div>
         </div>
