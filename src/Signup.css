@@ -36,6 +36,7 @@ html, body, .App {
         border-radius: 999px;
         padding: 0 1svh;
         text-align: center;
+        font-size: 1.5svh;
     }
 
     button {

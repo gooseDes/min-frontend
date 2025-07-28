@@ -8,8 +8,10 @@ import { getSocket } from './wsClient';
 
 function ChatPage() {
     const [messages, setMessages] = useState([]);
+    const [lastMessages, setLastMessages] = useState([]);
     var inited = useRef(false);
     var lastSended = useRef('');
+    var dontTouch = useRef(-1);
 
     useEffect(() => {
         const socket = getSocket();
@@ -32,6 +34,14 @@ function ChatPage() {
             });
         }
         setMessages(initialMessages);
+        function setRealVh() {
+            const vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
+
+        window.addEventListener('resize', setRealVh);
+        window.addEventListener('load', setRealVh);
+        setRealVh();
     }, []);
 
     useEffect(() => {
@@ -64,18 +74,58 @@ function ChatPage() {
             content_panel?.children || []
         );
 
-        for (let i = 0; i < content_panel_children.length; i++) {
-            content_panel_children[i].style.translate = '0 0';
+        if (lastMessages.length !== 0) {
+            if (dontTouch.current === -1) {
+                dontTouch.current = content_panel_children.length;
+            }
+            for (let i = dontTouch.current === -1 ? 0 : dontTouch.current; i < content_panel_children.length; i++) {
+                content_panel_children[i].style.opacity = '1';
+                content_panel_children[i].style.translate = '0 0';
+            }
         }
+
+        let behavior = 'smooth';
+        if (lastMessages.length === 0) behavior = 'instant';
 
         content_panel.scrollTo({
             top: content_panel.scrollTop+10000,
-            behavior: 'smooth'
+            behavior: behavior
         });
-    }, [messages]);
+        setLastMessages(messages);
+    }, [messages, lastMessages]);
 
     function openChat(username) {
-        document.getElementById('right_panel').style.gap = '10px';
+        const initialMessages = [];
+        setMessages([]);
+        setTimeout(() => {
+            requestAnimationFrame(() => {
+                for (let i = 0; i < 100; i++) {
+                    initialMessages.push({
+                        text: `Message ${i}! Lorem ipsum, epta, idi nahui`,
+                        type: Math.random() < 0.5 ? 'left' : 'right'
+                    });
+                }
+                setMessages(initialMessages);
+                requestAnimationFrame(() => {
+                    const content_panel = document.getElementById('content_panel');
+                    content_panel.scrollTop = content_panel.scrollTop + 10000;
+                    const content_panel_children = Array.from(content_panel.children)
+                    for (let i=0; i<content_panel_children.length; i++) {
+                        setTimeout(() => {
+                            content_panel_children[i].style.opacity = '1';
+                            content_panel_children[i].style.translate = '0 0';
+                        }, i > content_panel_children.length-25 ? (25-(i-(content_panel_children.length-25)))*50 : 0)
+                    }
+                });
+            });
+        }, 50);
+        const left_panel = document.getElementById('left_panel');
+        left_panel.style.translate = '';
+        left_panel.style.width = '';
+        left_panel.style.opacity = '';
+        const right_panel = document.getElementById('right_panel');
+        right_panel.style.gap = '10px';
+        right_panel.style.filter = '';
         document.getElementById('top_panel').style.borderRadius = '2svh 2svh 2svh 2svh';
         document.getElementById('content_panel').style.borderRadius = '2svh 2svh 2svh 2svh';
         document.getElementById('input_panel').style.borderRadius = '2svh 2svh 2svh 2svh';
@@ -86,21 +136,21 @@ function ChatPage() {
         Array.from(document.getElementById('input_panel').children).forEach((el) => {
             el.style.translate = '0 0';
         });
-        const content_panel = document.getElementById('content_panel');
-        content_panel.scrollTop = content_panel.scrollHeight;
-        const content_panel_children = Array.from(content_panel.children)
-        for (let i=0; i<content_panel_children.length; i++) {
-            setTimeout(() => {
-                content_panel_children[i].style.translate = '0 0';
-            }, i > content_panel_children.length-25 ? (25-(i-(content_panel_children.length-25)))*50 : 0)
-        }
         inited.current = true;
+    }
+
+    function openMenu() {
+        const left_panel = document.getElementById('left_panel'); 
+        left_panel.style.translate = '10px 10px'; 
+        left_panel.style.width = 'calc(100vw - 40px)';
+        left_panel.style.opacity = '1';
+        document.getElementById('right_panel').style.filter = 'blur(5px)';
     }
 
     return (
         <div>
             <div className="App" id='app'>
-                <div className="LeftPanel">
+                <div className="LeftPanel" id='left_panel'>
                     {[...Array(10)].map((_, i) => (
                         <ProfileThing text={`Olexey Totskiy ${i}`} onClick={openChat}/>
                     ))}
@@ -108,6 +158,7 @@ function ChatPage() {
                 <div className="RightPanel" id='right_panel'>
                     <div className='TopPanel' id='top_panel'>
                         <div className='TopPanelContent' id='top_panel_content'>
+                            <button className='MenuButton' onClick={openMenu}><i className="fa-solid fa-bars"></i></button>
                             <div className='TopPanelThing'>
                                 <img src={logo} alt='avatar' />
                                 <p id='top_panel_username'>username</p>

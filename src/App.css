@@ -29,14 +29,30 @@ p {
   background: #242424; 
   border-radius: 2svh;
   width: 400px;
-  height: calc(100vh - 40px);
+  height: calc(var(--vh, 1vh) * 100 - 40px);
   padding: 10px;
   gap: 10px;
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 9999;
+}
+
+@media screen and (orientation: portrait) {
+  .LeftPanel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200vw;
+    height: calc(var(--vh, 1vh) * 100 - 60px);
+    translate: -100% 10px;
+    opacity: 0;
+    backdrop-filter: blur(10px);
+    background: #24242466;
+  }
 }
 
 .RightPanel {
   width: 100%;
-  height: calc(100vh - 40px);
+  height: calc(var(--vh, 1vh) * 100 - 40px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -44,6 +60,7 @@ p {
   padding: 0 10px;
   gap: 0;
   transition: gap 0.3s cubic-bezier(0.175, 0.885, 0.32, 2);
+  transition: filter 0.3s ease-in-out;
 }
 
 .TopPanel {
@@ -276,4 +293,28 @@ p {
 
 .popup-close:active {
   scale: 0.9;
+}
+
+.MenuButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  background-color: #aaaaaa11;
+  padding: 10px;
+  border-radius: 2svh;
+  border: none;
+  color: #fff;
+  font-size: 2svh;
+  cursor: pointer;
+  aspect-ratio: 1;
+  margin: 0;
+  position: absolute;
+  left: 30px;
+}
+
+@media screen and (orientation: landscape) {
+  .MenuButton {
+    display: none;
+  }
 }
