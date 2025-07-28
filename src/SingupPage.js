@@ -74,6 +74,8 @@ function SignupPage() {
             response.json().then(json => {
                 if (response.ok) {
                     localStorage.setItem('token', json.token);
+                    localStorage.setItem('email', email_input.value);
+                    localStorage.setItem('username', login_input.value);
                     window.location.href = '/';
                 } else {
                     showError(json.msg || 'Unknown error');

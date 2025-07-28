@@ -25,6 +25,7 @@
     padding: 0 10px;
     border-radius: 1svh;
     text-align: left;
+    margin-top: 0;
 
     &.left {
         border-radius: 1svh 1svh 1svh 0;
@@ -33,4 +34,12 @@
     &.right {
         border-radius: 1svh 1svh 0 1svh;
     }
+}
+
+.Author {
+    color: #aaa;
+    font-size: 1.2svh;
+    font-weight: bold;
+    margin: 5px;
+    margin-bottom: 0;
 }

@@ -14,8 +14,8 @@ function ChatPage() {
     useEffect(() => {
         const socket = getSocket();
         socket.on('message', (data) => {
-            if (lastSended.current === data.text) return;
-            setMessages((prev) => [...prev, {text: data.text, type: 'left'}]);
+            if (data.author === localStorage.getItem('username')) return;
+            setMessages((prev) => [...prev, { text: data.text, type: 'left', author: data.author }]);
         });
 
         return () => {
@@ -48,6 +48,7 @@ function ChatPage() {
             ...prev,
             {
                 text: value,
+                author: 'You',
                 type: 'right',
             }
         ]);
@@ -115,7 +116,7 @@ function ChatPage() {
                     </div>
                     <div className='ContentPanel' id='content_panel'>
                         {messages.map(msg => (
-                            <Message text={msg.text} type={msg.type} />
+                            <Message text={msg.text} type={msg.type} author={msg.author} />
                         ))}
                     </div>
                     <div className='InputPanel' id='input_panel'>
