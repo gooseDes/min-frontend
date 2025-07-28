@@ -4,7 +4,7 @@ import './App.css'
 import './Signup.css'
 import { showError } from './utils.js';
 
-function SignupPage() {
+function SigninPage() {
     const particles = useRef([]);
     useEffect(() => {
         for (let i=0; i<100; i++) {
@@ -47,29 +47,19 @@ function SignupPage() {
 
     function handleRegistration() {
         const email_input = document.getElementById('email_input');
-        const login_input = document.getElementById('login_input');
         const password_input = document.getElementById('password_input');
-        const password2_input = document.getElementById('password2_input');
         const signup_form = document.getElementById('signup_form');
-        if (password_input.value !== password2_input.value) {
-            showError('Passwords do not match');
+        if (email_input.value.trim() === '' || password_input.value.trim() === '') {
             signup_form.classList.add('error');
             setTimeout(() => {
                 signup_form.classList.remove('error');
             }, 1000);
             return;
         }
-        if (email_input.value.trim() === '' || login_input.value.trim() === '' || password_input.value.trim() === '') {
-            signup_form.classList.add('error');
-            setTimeout(() => {
-                signup_form.classList.remove('error');
-            }, 1000);
-            return;
-        }
-        fetch(`${address}/register`, {
+        fetch(`${address}/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: email_input.value, username: login_input.value, password: password_input.value })
+            body: JSON.stringify({ email: email_input.value, password: password_input.value })
         }).then(response => {
             response.json().then(json => {
                 if (response.ok) {
@@ -93,9 +83,7 @@ function SignupPage() {
             <div id='bg_thing2'></div>
             <div className='SignupForm' id='signup_form'>
                 <input id='email_input' placeholder='Email' />
-                <input id='login_input' placeholder='Login'/>
                 <input id='password_input' placeholder='Password' type='password' />
-                <input id='password2_input' placeholder='Password Confirmation' type='password' />
                 <button id='signup_button' onClick={handleRegistration}>Sign Up</button>
             </div>
         </div>
@@ -103,4 +91,4 @@ function SignupPage() {
 }
 
 
-export default SignupPage
+export default SigninPage

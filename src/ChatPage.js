@@ -3,10 +3,8 @@ import ProfileThing from './gui/profile_thing';
 import Message from './gui/message';
 import logo from './logo.png'
 import { useState, useEffect, useRef } from 'react';
-import { io } from 'socket.io-client';
 import { closePopup, isUserLogined, openPopup } from './utils';
-
-const socket = io('https://server.msg-min.xyz');
+import { getSocket } from './wsClient';
 
 function ChatPage() {
     const [messages, setMessages] = useState([]);
@@ -14,6 +12,7 @@ function ChatPage() {
     var lastSended = useRef('');
 
     useEffect(() => {
+        const socket = getSocket();
         socket.on('message', (data) => {
             if (lastSended.current === data.text) return;
             setMessages((prev) => [...prev, {text: data.text, type: 'left'}]);
@@ -52,7 +51,8 @@ function ChatPage() {
                 type: 'right',
             }
         ]);
-        socket.send({ text: value });
+        const socket = getSocket();
+        socket.emit('reg', { text: value });
         lastSended.current = value;
     }
 
@@ -124,12 +124,12 @@ function ChatPage() {
                     </div>
                 </div>
             </div>
-            <div class="popup" id="account-popup">
-                <div class="popup-header">Account</div>
-                <div class="popup-content">
-                    <div class="scrollable-y">
-                        <p style={{ fontSize: '3svh' }}>Account is required to use MIN. Please <a href='/#signup' style={{ color: '#4f7afbff' }}>create</a> one or <a href='/#login' style={{ color: '#4f7afbff' }}>login</a> in to an existing one.</p>
-                        <button class="popup-close" onClick={() => {closePopup('account-popup')}}><i className="fa-solid fa-xmark"></i></button>
+            <div className="popup" id="account-popup">
+                <div className="popup-header">Account</div>
+                <div className="popup-content">
+                    <div className="scrollable-y">
+                        <p style={{ fontSize: '3svh' }}>Account is required to use MIN. Please <a href='/#signup' style={{ color: '#4f7afbff' }}>create</a> one or <a href='/#signin' style={{ color: '#4f7afbff' }}>login</a> in to an existing one.</p>
+                        <button className="popup-close" onClick={() => {closePopup('account-popup')}}><i className="fa-solid fa-xmark"></i></button>
                     </div>
                 </div>
             </div>
