@@ -52,7 +52,7 @@ function ChatPage() {
             }
         ]);
         const socket = getSocket();
-        socket.emit('reg', { text: value });
+        socket.emit('msg', { text: value });
         lastSended.current = value;
     }
 
