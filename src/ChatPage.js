@@ -180,7 +180,7 @@ function ChatPage() {
                 <div className="popup-header">Account</div>
                 <div className="popup-content">
                     <div className="scrollable-y">
-                        <p style={{ fontSize: '3svh' }}>Account is required to use MIN. Please <a href='/#signup' style={{ color: '#4f7afbff' }}>create</a> one or <a href='/#signin' style={{ color: '#4f7afbff' }}>login</a> in to an existing one.</p>
+                        <p style={{ fontSize: '3svh' }}>Account is required to use MIN. Please <a href='/#signup' style={{ color: '#4f7afbff' }}>create</a> one or <a href='/#signin' style={{ color: '#4f7afbff' }}>log in</a> to an existing one.</p>
                         <button className="popup-close" onClick={() => {closePopup('account-popup')}}><i className="fa-solid fa-xmark"></i></button>
                     </div>
                 </div>
