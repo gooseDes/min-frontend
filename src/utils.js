@@ -1,3 +1,5 @@
+import { address } from "./wsClient";
+
 export function getToken() {
     return localStorage.getItem('token');
 }
@@ -60,4 +62,24 @@ export function showError(text) {
         document.getElementById('popup-error-p').textContent = text;
     }
     openPopup('error-popup');
+}
+
+export function verifyToken(token) {
+    fetch(`${address}/verify`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: token })
+    }).then(response => {
+        if (response.ok) {
+            return true;
+        } else {
+            try {
+                openPopup('account-popup');
+            } catch (e) {}
+            localStorage.removeItem('token');
+            localStorage.removeItem('email');
+            localStorage.removeItem('username');
+            return false;
+        }
+    });
 }

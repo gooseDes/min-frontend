@@ -3,7 +3,7 @@ import ProfileThing from './gui/profile_thing';
 import Message from './gui/message';
 import logo from './logo.png'
 import { useState, useEffect, useRef } from 'react';
-import { closePopup, isUserLogined, openPopup } from './utils';
+import { closePopup, isUserLogined, openPopup, verifyToken } from './utils';
 import { getSocket } from './wsClient';
 
 function ChatPage() {
@@ -12,12 +12,39 @@ function ChatPage() {
     var inited = useRef(false);
     var lastSended = useRef('');
     var dontTouch = useRef(-1);
+    var isWaitingForHistory = useRef(false);
 
     useEffect(() => {
+        verifyToken(localStorage.getItem('token'));
         const socket = getSocket();
+        socket.on('connect', data => {
+            console.log('Connected to server');
+            isWaitingForHistory.current = true;
+        });
         socket.on('message', (data) => {
             if (data.author === localStorage.getItem('username')) return;
             setMessages((prev) => [...prev, { text: data.text, type: 'left', author: data.author }]);
+        });
+        socket.on('history', data => {
+            if (isWaitingForHistory.current) {
+                setMessages(data.messages.map(msg => ({
+                    text: msg.text,
+                    type: msg.author === localStorage.getItem('username') ? 'right' : 'left',
+                    author: msg.author === localStorage.getItem('username') ? 'You': msg.author
+                })));
+                isWaitingForHistory.current = false;
+                requestAnimationFrame(() => {
+                    const content_panel = document.getElementById('content_panel');
+                    content_panel.scrollTop = content_panel.scrollTop + 10000;
+                    const content_panel_children = Array.from(content_panel.children)
+                    for (let i=0; i<content_panel_children.length; i++) {
+                        setTimeout(() => {
+                            content_panel_children[i].style.opacity = '1';
+                            content_panel_children[i].style.translate = '0 0';
+                        }, i > content_panel_children.length-25 ? (25-(i-(content_panel_children.length-25)))*50 : 0)
+                    }
+                });
+            }
         });
 
         return () => {
@@ -95,30 +122,12 @@ function ChatPage() {
     }, [messages, lastMessages]);
 
     function openChat(username) {
-        const initialMessages = [];
         setMessages([]);
-        setTimeout(() => {
-            requestAnimationFrame(() => {
-                for (let i = 0; i < 100; i++) {
-                    initialMessages.push({
-                        text: `Message ${i}! Lorem ipsum, epta, idi nahui`,
-                        type: Math.random() < 0.5 ? 'left' : 'right'
-                    });
-                }
-                setMessages(initialMessages);
-                requestAnimationFrame(() => {
-                    const content_panel = document.getElementById('content_panel');
-                    content_panel.scrollTop = content_panel.scrollTop + 10000;
-                    const content_panel_children = Array.from(content_panel.children)
-                    for (let i=0; i<content_panel_children.length; i++) {
-                        setTimeout(() => {
-                            content_panel_children[i].style.opacity = '1';
-                            content_panel_children[i].style.translate = '0 0';
-                        }, i > content_panel_children.length-25 ? (25-(i-(content_panel_children.length-25)))*50 : 0)
-                    }
-                });
-            });
-        }, 50);
+        requestAnimationFrame(() => {
+            isWaitingForHistory.current = true;
+            const socket = getSocket();
+            socket.emit('getChatHistory', { chat: 1 });
+        });
         const left_panel = document.getElementById('left_panel');
         left_panel.style.translate = '';
         left_panel.style.width = '';
