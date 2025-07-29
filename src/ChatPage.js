@@ -160,6 +160,7 @@ function ChatPage() {
         <div>
             <div className="App" id='app'>
                 <div className="LeftPanel" id='left_panel'>
+                    <ProfileThing text='Default Chat' onClick={openChat}/>
                     {[...Array(10)].map((_, i) => (
                         <ProfileThing text={`Olexey Totskiy ${i}`} onClick={openChat}/>
                     ))}

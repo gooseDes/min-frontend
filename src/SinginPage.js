@@ -86,7 +86,7 @@ function SigninPage() {
             <div className='SignupForm' id='signup_form'>
                 <input id='email_input' placeholder='Email' />
                 <input id='password_input' placeholder='Password' type='password' />
-                <button id='signup_button' onClick={handleRegistration}>Sign Up</button>
+                <button id='signup_button' onClick={handleRegistration}>Sign In</button>
             </div>
         </div>
     )
