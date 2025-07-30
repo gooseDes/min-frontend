@@ -5,6 +5,7 @@ import logo from './logo.png'
 import { useState, useEffect, useRef } from 'react';
 import { closePopup, isUserLogined, openPopup, verifyToken } from './utils';
 import { getSocket } from './wsClient';
+import ProfilePopup from './gui/profile_popup';
 
 function ChatPage() {
     const [messages, setMessages] = useState([]);
@@ -13,6 +14,7 @@ function ChatPage() {
     var lastSended = useRef('');
     var dontTouch = useRef(-1);
     var isWaitingForHistory = useRef(false);
+    const ProfilePopupRef = useRef();
 
     useEffect(() => {
         verifyToken(localStorage.getItem('token'));
@@ -156,14 +158,29 @@ function ChatPage() {
         document.getElementById('right_panel').style.filter = 'blur(5px)';
     }
 
+    function openUserProfile() {
+        ProfilePopupRef.current.show();
+    }
+
     return (
         <div>
             <div className="App" id='app'>
                 <div className="LeftPanel" id='left_panel'>
-                    <ProfileThing text='Default Chat' onClick={openChat}/>
-                    {[...Array(10)].map((_, i) => (
-                        <ProfileThing text={`Olexey Totskiy ${i}`} onClick={openChat}/>
-                    ))}
+                    <div className='ChatsPanel' id='chats_panel'>
+                        <ProfileThing text='Default Chat' onClick={openChat}/>
+                        {[...Array(10)].map((_, i) => (
+                            <ProfileThing text={`Olexey Totskiy ${i}`} onClick={openChat}/>
+                        ))}
+                    </div>
+                    <div className='UserPanel' id='user_panel'>
+                        <div className='UserPanelContent' id='user_panel_content'>
+                            <ProfileThing text={localStorage.getItem('username') || 'Guest'} onClick={openUserProfile} animation={false}/>
+                            <button className='LogoutButton' onClick={() => {
+                                localStorage.clear();
+                                window.location.href = '/';
+                            }} ><i className="fa-solid fa-arrow-right-from-bracket"></i></button>
+                        </div>
+                    </div>
                 </div>
                 <div className="RightPanel" id='right_panel'>
                     <div className='TopPanel' id='top_panel'>
@@ -195,6 +212,7 @@ function ChatPage() {
                     </div>
                 </div>
             </div>
+            <ProfilePopup ref={ProfilePopupRef} username={localStorage.getItem('username') || 'Guest'}/>
         </div>
     );
 }

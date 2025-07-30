@@ -14,7 +14,7 @@ body,
   align-items: center;
   background-size: 100% 100%;
   padding: 10px;
-  gap: 10px;
+  gap: 30px;
   transition: all 0.3s ease-in-out;
 }
 
@@ -26,14 +26,43 @@ p {
   display: flex;
   justify-content: left;
   flex-direction: column;
-  background: #242424; 
-  border-radius: 2svh;
   width: 400px;
   height: calc(var(--vh, 1vh) * 100 - 40px);
-  padding: 10px;
   gap: 10px;
   transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   z-index: 9999;
+}
+
+.ChatsPanel {
+  display: flex;
+  background: #242424;
+  border-radius: 2svh;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+}
+
+.UserPanel {
+  display: flex;
+  background: #242424;
+  border-radius: 2svh;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 60px;
+  padding: 10px;
+}
+
+.UserPanelContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  gap: 10px;
 }
 
 @media screen and (orientation: portrait) {
@@ -316,5 +345,24 @@ p {
 @media screen and (orientation: landscape) {
   .MenuButton {
     display: none;
+  }
+}
+
+.LogoutButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  aspect-ratio: 1;
+  background-color: transparent;
+  border: none;
+  color: #b99d9d;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: #ff8c8c;
+    font-size: 30px;
   }
 }

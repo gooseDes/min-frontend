@@ -11,11 +11,14 @@
 
     &:hover {
         background-color: #aaaaaa66;
-        translate: 10px 0;
-        width: calc(100% - 10px);
 
         .ProfileThingText {
             color: #fff;
+        }
+
+        &.anim {
+            translate: 10px 0;
+            width: calc(100% - 10px);
         }
     }
 
@@ -26,7 +29,7 @@
 
 .ProfileThingText {
     text-align: left;
-    margin-left: 10px;
+    margin: 0 20px 0 10px;
     color: #aaa;
     font-weight: 500;
     transition: all 0.2s ease-in-out;
