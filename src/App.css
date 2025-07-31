@@ -44,6 +44,13 @@ p {
   padding: 10px;
 }
 
+@media screen and (orientation: portrait) {
+  .ChatsPanel {
+    backdrop-filter: blur(10px);
+    background: #00000066;
+  }
+}
+
 .UserPanel {
   display: flex;
   background: #242424;
@@ -53,6 +60,13 @@ p {
   width: 100%;
   height: 60px;
   padding: 10px;
+}
+
+@media screen and (orientation: portrait) {
+  .UserPanel {
+    backdrop-filter: blur(10px);
+    background: #00000066;
+  }
 }
 
 .UserPanelContent {
@@ -74,8 +88,6 @@ p {
     height: calc(var(--vh, 1vh) * 100 - 60px);
     translate: -100% 10px;
     opacity: 0;
-    backdrop-filter: blur(10px);
-    background: #24242466;
   }
 }
 

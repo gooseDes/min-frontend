@@ -155,7 +155,7 @@ function ChatPage() {
         left_panel.style.translate = '10px 10px'; 
         left_panel.style.width = 'calc(100vw - 40px)';
         left_panel.style.opacity = '1';
-        document.getElementById('right_panel').style.filter = 'blur(5px)';
+        document.getElementById('right_panel').style.filter = 'blur(1px)';
     }
 
     function openUserProfile() {
