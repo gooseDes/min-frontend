@@ -1,6 +1,9 @@
 import { useImperativeHandle, forwardRef, useState } from 'react';
 import '../App.css';
 import './profile_popup.css';
+import logo from '../logo.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMessage, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 const ProfilePopup = forwardRef(({ id = '', username = '' }, ref) => {
     const [isShown, setIsShown] = useState(false);
@@ -15,11 +18,15 @@ const ProfilePopup = forwardRef(({ id = '', username = '' }, ref) => {
             <div className='ProfilePopupHeader'>
                 <p>{`Profile: ${username}`}</p>
                 <button className='CloseButton' onClick={() => setIsShown(false)}>
-                    <i className="fa-solid fa-xmark"></i>
+                    <FontAwesomeIcon icon={faXmark}/>
                 </button>
             </div>
             <div className='ProfilePopupContent'>
-                <p>Profile info (WIP)</p>
+                <img src={logo} alt='logo' className='ProfilePopupAvatar'></img>
+                <p className='ProfilePopupUsername'>{username}</p>
+                <div className='ProfilePopupBottom'>
+                    <button className='MessageButton'><p>Send message</p><FontAwesomeIcon className='icon' icon={faMessage}/></button>
+                </div>
             </div>
         </div>
     );

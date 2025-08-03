@@ -6,6 +6,8 @@ import { useState, useEffect, useRef } from 'react';
 import { closePopup, isUserLogined, openPopup, verifyToken } from './utils';
 import { getSocket } from './wsClient';
 import ProfilePopup from './gui/profile_popup';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRightFromBracket, faBars, faPaperPlane, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 function ChatPage() {
     const [messages, setMessages] = useState([]);
@@ -178,14 +180,14 @@ function ChatPage() {
                             <button className='LogoutButton' onClick={() => {
                                 localStorage.clear();
                                 window.location.href = '/';
-                            }} ><i className="fa-solid fa-arrow-right-from-bracket"></i></button>
+                            }} ><FontAwesomeIcon icon={faArrowRightFromBracket}/></button>
                         </div>
                     </div>
                 </div>
                 <div className="RightPanel" id='right_panel'>
                     <div className='TopPanel' id='top_panel'>
                         <div className='TopPanelContent' id='top_panel_content'>
-                            <button className='MenuButton' onClick={openMenu}><i className="fa-solid fa-bars"></i></button>
+                            <button className='MenuButton' onClick={openMenu}><FontAwesomeIcon icon={faBars}/></button>
                             <div className='TopPanelThing'>
                                 <img src={logo} alt='avatar' />
                                 <p id='top_panel_username'>username</p>
@@ -199,7 +201,7 @@ function ChatPage() {
                     </div>
                     <div className='InputPanel' id='input_panel'>
                         <input placeholder='Your message here' onKeyDown={(event) => {if (event.key === 'Enter') sendMessage()}} className='MessageInput' id='message_input'/>
-                        <button className='SendButton' onClick={sendMessage}><i className="fa-solid fa-paper-plane"></i></button>
+                        <button className='SendButton' onClick={sendMessage}><FontAwesomeIcon icon={faPaperPlane}/></button>
                     </div>
                 </div>
             </div>
@@ -208,7 +210,7 @@ function ChatPage() {
                 <div className="popup-content">
                     <div className="scrollable-y">
                         <p style={{ fontSize: '3svh' }}>Account is required to use MIN. Please <a href='/#signup' style={{ color: '#4f7afbff' }}>create</a> one or <a href='/#signin' style={{ color: '#4f7afbff' }}>log in</a> to an existing one.</p>
-                        <button className="popup-close" onClick={() => {closePopup('account-popup')}}><i className="fa-solid fa-xmark"></i></button>
+                        <button className="popup-close" onClick={() => {closePopup('account-popup')}}><FontAwesomeIcon icon={faXmark}/></button>
                     </div>
                 </div>
             </div>

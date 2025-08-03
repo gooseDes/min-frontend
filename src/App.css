@@ -1,3 +1,7 @@
+* {
+  font-family: 'Rubik' !important;
+}
+
 html,
 body,
 #root {
@@ -269,7 +273,6 @@ p {
   border-radius: 4svh 4svh 1svh 1svh;
   text-align: center;
   background-color: rgb(22, 22, 22, 0.8);
-  font-family: 'Baloo 2';
 }
 
 .popup-content {
