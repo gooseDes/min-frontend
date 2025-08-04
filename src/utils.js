@@ -8,24 +8,24 @@ export function isUserLogined() {
     return localStorage.getItem('token') != null;
 }
 
-export function openPopup(popupId) {
+export function openPopup(popupName) {
     const app = document.getElementById('app');
     app.style.filter = 'blur(2px)';
-    const popup = document.getElementById(popupId);
+    const popup = document.getElementById(`${popupName}-popup`);
     if (popup) {
-        popup.classList.remove('popup-hide');
+        popup.classList.remove('PopupHide');
         popup.style.display = 'flex';
-        popup.classList.add('popup-show');
+        popup.classList.add('PopupShow');
     }
 }
 
-export function closePopup(popupId) {
-    const popup = document.getElementById(popupId);
+export function closePopup(popupName) {
+    const popup = document.getElementById(`${popupName}-popup`);
     if (popup) {
         const app = document.getElementById('app');
         app.style.filter = 'blur(0)';
-        popup.classList.remove('popup-show');
-        popup.classList.add('popup-hide');
+        popup.classList.remove('PopupShow');
+        popup.classList.add('PopupHide');
         setTimeout(() => {
             popup.style.display = 'none';
         }, 300);

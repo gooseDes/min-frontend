@@ -3,11 +3,12 @@ import ProfileThing from './gui/profile_thing';
 import Message from './gui/message';
 import logo from './logo.png'
 import { useState, useEffect, useRef } from 'react';
-import { closePopup, isUserLogined, openPopup, verifyToken } from './utils';
+import { isUserLogined, openPopup, verifyToken } from './utils';
 import { getSocket } from './wsClient';
 import ProfilePopup from './gui/profile_popup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRightFromBracket, faBars, faPaperPlane, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRightFromBracket, faBars, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import Popup from './gui/popup';
 
 function ChatPage() {
     const [messages, setMessages] = useState([]);
@@ -77,7 +78,7 @@ function ChatPage() {
 
     useEffect(() => {
         if (!isUserLogined()) {
-            openPopup('account-popup');
+            openPopup('account');
         }
     }, []);
 
@@ -205,15 +206,11 @@ function ChatPage() {
                     </div>
                 </div>
             </div>
-            <div className="popup" id="account-popup">
-                <div className="popup-header">Account</div>
-                <div className="popup-content">
-                    <div className="scrollable-y">
-                        <p style={{ fontSize: '3svh' }}>Account is required to use MIN. Please <a href='/#signup' style={{ color: '#4f7afbff' }}>create</a> one or <a href='/#signin' style={{ color: '#4f7afbff' }}>log in</a> to an existing one.</p>
-                        <button className="popup-close" onClick={() => {closePopup('account-popup')}}><FontAwesomeIcon icon={faXmark}/></button>
-                    </div>
+            <Popup title='Account' name='account'>
+                <div className="scrollable-y">
+                    <p style={{ fontSize: '3svh' }}>Account is required to use MIN. Please <a href='/#signup' style={{ color: '#4f7afbff' }}>create</a> one or <a href='/#signin' style={{ color: '#4f7afbff' }}>log in</a> to an existing one.</p>
                 </div>
-            </div>
+            </Popup>
             <ProfilePopup ref={ProfilePopupRef} username={localStorage.getItem('username') || 'Guest'}/>
         </div>
     );
