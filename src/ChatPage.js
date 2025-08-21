@@ -1,4 +1,5 @@
 import './App.css';
+import './ChatPage.css';
 import ProfileThing from './gui/profile_thing';
 import Message from './gui/message';
 import logo from './logo.png'
@@ -7,7 +8,7 @@ import { isUserLogined, openPopup, verifyToken } from './utils';
 import { getSocket } from './wsClient';
 import ProfilePopup from './gui/profile_popup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRightFromBracket, faBars, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRightFromBracket, faBars, faPaperPlane, faPlus } from '@fortawesome/free-solid-svg-icons';
 import Popup from './gui/popup';
 
 function ChatPage() {
@@ -77,9 +78,11 @@ function ChatPage() {
     }, []);
 
     useEffect(() => {
-        if (!isUserLogined()) {
-            openPopup('account');
-        }
+        setTimeout(() => {
+            if (!isUserLogined()) {
+                openPopup('account');
+            }
+        }, 100);
     }, []);
 
     function sendMessage() {
@@ -174,6 +177,7 @@ function ChatPage() {
                         {[...Array(10)].map((_, i) => (
                             <ProfileThing text={`Olexey Totskiy ${i}`} onClick={openChat}/>
                         ))}
+                        <button className='ChatPlusButton' onClick={() => openPopup('create-chat')}><FontAwesomeIcon icon={faPlus}/></button>
                     </div>
                     <div className='UserPanel' id='user_panel'>
                         <div className='UserPanelContent' id='user_panel_content'>
@@ -210,6 +214,9 @@ function ChatPage() {
                 <div className="scrollable-y">
                     <p style={{ fontSize: '3svh' }}>Account is required to use MIN. Please <a href='/#signup' style={{ color: '#4f7afbff' }}>create</a> one or <a href='/#signin' style={{ color: '#4f7afbff' }}>log in</a> to an existing one.</p>
                 </div>
+            </Popup>
+            <Popup title='Create chat' name='create-chat'>
+                <input placeholder='nickname' className='CreateChatNicknameInput'/>
             </Popup>
             <ProfilePopup ref={ProfilePopupRef} username={localStorage.getItem('username') || 'Guest'}/>
         </div>

@@ -20,7 +20,7 @@ body,
   gap: 30px;
   background-size: 100% 100%;
   transition: all 0.3s ease-in-out;
-  background-image: url('./background.webp');
+  background-image: #000;
 }
 
 p {
@@ -289,5 +289,23 @@ p {
   &:hover {
     color: #ff8c8c;
     font-size: 30px;
+  }
+}
+
+input {
+  border: 2px #fff solid;
+  border-radius: 999px;
+  font-size: 24px;
+  text-align: center;
+  background-color: #33333399;
+  color: #fff;
+  transition: all 0.5s ease, scale 0.2s ease,;
+  opacity: 0.8;
+  min-width: 200px;
+  width: fit-content;
+
+  &:hover {
+    opacity: 1;
+    scale: 1.1;
   }
 }
