@@ -292,7 +292,7 @@ p {
   }
 }
 
-input {
+input:not(.MessageInput) {
   border: 2px #fff solid;
   border-radius: 999px;
   font-size: 24px;
