@@ -3,9 +3,9 @@ import { closePopup } from '../utils.js';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import './popup.css';
 
-function Popup({ title="Title", name='default', children }) {
+function Popup({ title="Title", name='default', scale=0.9, children }) {
     return (
-        <div className="Popup" id={`${name}-popup`}>
+        <div className="Popup" id={`${name}-popup`} style={{ '--popup-scale': scale }}>
             <div className="PopupHeader">
                 <p>{title}</p>
                 <button className="CloseButton" onClick={() => {closePopup(name)}}><FontAwesomeIcon icon={faXmark}/></button>

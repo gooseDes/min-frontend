@@ -309,3 +309,8 @@ input:not(.MessageInput) {
     scale: 1.1;
   }
 }
+
+.fade {
+  transition: opacity 1s ease;
+  opacity: 0;
+}

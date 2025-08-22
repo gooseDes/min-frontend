@@ -17,3 +17,22 @@
         rotate: 90deg;
     }
 }
+
+.CreateChatConfirmButton {
+    position: absolute;
+    right: 24px;
+    bottom: 24px;
+    aspect-ratio: 1;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 48px;
+    padding-left: 0;
+    transition: all 0.2s ease;
+    opacity: 0.8;
+
+    &:hover {
+        opacity: 1;
+        scale: 1.5;
+    }
+}

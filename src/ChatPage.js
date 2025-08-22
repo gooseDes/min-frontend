@@ -4,16 +4,17 @@ import ProfileThing from './gui/profile_thing';
 import Message from './gui/message';
 import logo from './logo.png'
 import { useState, useEffect, useRef } from 'react';
-import { isUserLogined, openPopup, verifyToken } from './utils';
+import { closePopup, isUserLogined, openPopup, verifyToken } from './utils';
 import { getSocket } from './wsClient';
 import ProfilePopup from './gui/profile_popup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRightFromBracket, faBars, faPaperPlane, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRight, faArrowRightFromBracket, faBars, faPaperPlane, faPlus } from '@fortawesome/free-solid-svg-icons';
 import Popup from './gui/popup';
 
 function ChatPage() {
     const [messages, setMessages] = useState([]);
     const [lastMessages, setLastMessages] = useState([]);
+    const [chats, setChats] = useState([]);
     var inited = useRef(false);
     var lastSended = useRef('');
     var dontTouch = useRef(-1);
@@ -52,9 +53,28 @@ function ChatPage() {
                 });
             }
         });
+        socket.on('chats', data => {
+            setChats(() => data.chats);
+        });
+        socket.on('createChatResult', data => {
+            if (data.success) {
+                closePopup('create-chat');
+                socket.emit('getChats', {});
+            } else {
+                const createError = document.getElementById('create_chat_error');
+                createError.textContent = data.msg;
+                createError.classList.remove('fade');
+                setTimeout(() => {
+                    createError.classList.add('fade');
+                }, 1500);
+            }
+        });
 
         return () => {
             socket.off('message');
+            socket.off('history');
+            socket.off('chats');
+            socket.off('createChatResult');
         };
     }, []);
 
@@ -98,7 +118,7 @@ function ChatPage() {
             }
         ]);
         const socket = getSocket();
-        socket.emit('msg', { text: value });
+        socket.emit('msg', { text: value, chat: localStorage.getItem('chatId') || 1 });
         lastSended.current = value;
     }
 
@@ -129,12 +149,17 @@ function ChatPage() {
         setLastMessages(messages);
     }, [messages, lastMessages]);
 
+    useEffect(() => {
+        const socket = getSocket();
+        socket.emit('getChats', {});
+    }, [])
+
     function openChat(username) {
         setMessages([]);
         requestAnimationFrame(() => {
             isWaitingForHistory.current = true;
             const socket = getSocket();
-            socket.emit('getChatHistory', { chat: 1 });
+            socket.emit('getChatHistory', { chat: localStorage.getItem('chatId') || 1 });
         });
         const left_panel = document.getElementById('left_panel');
         left_panel.style.translate = '';
@@ -168,14 +193,20 @@ function ChatPage() {
         ProfilePopupRef.current.show();
     }
 
+    function createChat() {
+        const input = document.getElementById('create_chat_nickname_input');
+        const socket = getSocket();
+        socket.emit('createChat', { nickname: input.value.replace('@', '') })
+    }
+
     return (
         <div>
             <div className="App" id='app'>
                 <div className="LeftPanel" id='left_panel'>
                     <div className='ChatsPanel' id='chats_panel'>
-                        <ProfileThing text='Default Chat' onClick={openChat}/>
-                        {[...Array(10)].map((_, i) => (
-                            <ProfileThing text={`Olexey Totskiy ${i}`} onClick={openChat}/>
+                        <ProfileThing text='Default Chat' onClick={() => {localStorage.setItem('chatId', 1); openChat('Default Chat');}}/>
+                        {chats.map(chat => (
+                            <ProfileThing text={chat.name} onClick={() => {localStorage.setItem('chatId', chat.id); openChat(chat.name);}}/>
                         ))}
                         <button className='ChatPlusButton' onClick={() => openPopup('create-chat')}><FontAwesomeIcon icon={faPlus}/></button>
                     </div>
@@ -215,8 +246,10 @@ function ChatPage() {
                     <p style={{ fontSize: '3svh' }}>Account is required to use MIN. Please <a href='/#signup' style={{ color: '#4f7afbff' }}>create</a> one or <a href='/#signin' style={{ color: '#4f7afbff' }}>log in</a> to an existing one.</p>
                 </div>
             </Popup>
-            <Popup title='Create chat' name='create-chat'>
-                <input placeholder='nickname' className='CreateChatNicknameInput'/>
+            <Popup title='Create chat' name='create-chat' scale={0.5}>
+                <input placeholder='nickname' className='CreateChatNicknameInput' id='create_chat_nickname_input' onKeyDown={(event) => {if (event.key === 'Enter') createChat()}}/>
+                <p id='create_chat_error' style={{ color: 'red',  fontSize: '12px' }}></p>
+                <button className='CreateChatConfirmButton'><FontAwesomeIcon icon={faArrowRight} onClick={createChat}/></button>
             </Popup>
             <ProfilePopup ref={ProfilePopupRef} username={localStorage.getItem('username') || 'Guest'}/>
         </div>
