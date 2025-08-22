@@ -144,13 +144,11 @@ function ChatPage() {
     }, [])
 
     useEffect(() => {
-        console.log(location.search);
         const profile = searchParams.get('profile');
         if (profile) {
-            console.log(profile);
             window.openProfilePopup(profile);
         }
-    }, [location.search, searchParams]);
+    }, [location, searchParams]);
 
     function sendMessage() {
         const value = document.getElementById('message_input').value;
