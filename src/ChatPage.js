@@ -4,7 +4,7 @@ import ProfileThing from './gui/profile_thing';
 import Message from './gui/message';
 import logo from './logo.png'
 import { useState, useEffect, useRef } from 'react';
-import { closePopup, isUserLogined, openPopup, verifyToken } from './utils';
+import { closePopup, isUserLogined, openPopup, showError, verifyToken } from './utils';
 import { getSocket } from './wsClient';
 import ProfilePopup from './gui/profile_popup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -68,6 +68,9 @@ function ChatPage() {
                     createError.classList.add('fade');
                 }, 1500);
             }
+        });
+        socket.on('error', data => {
+            showError(data.msg);
         });
 
         return () => {
