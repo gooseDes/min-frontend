@@ -10,6 +10,7 @@ import ProfilePopup from './gui/profile_popup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faArrowRightFromBracket, faBars, faPaperPlane, faPlus } from '@fortawesome/free-solid-svg-icons';
 import Popup from './gui/popup';
+import { useLocation, useSearchParams } from 'react-router-dom';
 
 function ChatPage() {
     const [messages, setMessages] = useState([]);
@@ -20,6 +21,8 @@ function ChatPage() {
     var dontTouch = useRef(-1);
     var isWaitingForHistory = useRef(false);
     const ProfilePopupRef = useRef();
+    const location = useLocation();
+    const [searchParams] = useSearchParams();
 
     useEffect(() => {
         verifyToken(localStorage.getItem('token'));
@@ -108,23 +111,6 @@ function ChatPage() {
         }, 100);
     }, []);
 
-    function sendMessage() {
-        const value = document.getElementById('message_input').value;
-        if (value.trim() === '') return;
-        document.getElementById('message_input').value = '';
-        setMessages(prev => [
-            ...prev,
-            {
-                text: value,
-                author: 'You',
-                type: 'right',
-            }
-        ]);
-        const socket = getSocket();
-        socket.emit('msg', { text: value, chat: localStorage.getItem('chatId') || 1 });
-        lastSended.current = value;
-    }
-
     useEffect(() => {
         if (!inited.current) return;
         const content_panel = document.getElementById('content_panel');
@@ -156,6 +142,32 @@ function ChatPage() {
         const socket = getSocket();
         socket.emit('getChats', {});
     }, [])
+
+    useEffect(() => {
+        console.log(location.search);
+        const profile = searchParams.get('profile');
+        if (profile) {
+            console.log(profile);
+            window.openProfilePopup(profile);
+        }
+    }, [location.search, searchParams]);
+
+    function sendMessage() {
+        const value = document.getElementById('message_input').value;
+        if (value.trim() === '') return;
+        document.getElementById('message_input').value = '';
+        setMessages(prev => [
+            ...prev,
+            {
+                text: value,
+                author: 'You',
+                type: 'right',
+            }
+        ]);
+        const socket = getSocket();
+        socket.emit('msg', { text: value, chat: localStorage.getItem('chatId') || 1 });
+        lastSended.current = value;
+    }
 
     function openChat(username) {
         setMessages([]);
@@ -202,6 +214,11 @@ function ChatPage() {
         socket.emit('createChat', { nickname: input.value.replace('@', '') })
     }
 
+    setTimeout(() => {
+        const socket = getSocket();
+        socket.emit('getChats', {});
+    }, 10000);
+
     return (
         <div>
             <div className="App" id='app'>
@@ -246,7 +263,7 @@ function ChatPage() {
             </div>
             <Popup title='Account' name='account'>
                 <div className="scrollable-y">
-                    <p style={{ fontSize: '3svh' }}>Account is required to use MIN. Please <a href='/#signup' style={{ color: '#4f7afbff' }}>create</a> one or <a href='/#signin' style={{ color: '#4f7afbff' }}>log in</a> to an existing one.</p>
+                    <p style={{ fontSize: '3svh' }}>Account is required to use MIN. Please <a href='/signup' style={{ color: '#4f7afbff' }}>create</a> one or <a href='/signin' style={{ color: '#4f7afbff' }}>log in</a> to an existing one.</p>
                 </div>
             </Popup>
             <Popup title='Create chat' name='create-chat' scale={0.5}>

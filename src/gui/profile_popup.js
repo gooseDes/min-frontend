@@ -4,9 +4,11 @@ import './profile_popup.css';
 import logo from '../logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMessage, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { useSearchParams } from 'react-router-dom';
 
 const ProfilePopup = forwardRef(({ id = '', username = '' }, ref) => {
     const [isShown, setIsShown] = useState(false);
+    const [searchParams, setSearchParams] = useSearchParams();
 
     useImperativeHandle(ref, () => ({
         show: () => setIsShown(true),
@@ -17,7 +19,7 @@ const ProfilePopup = forwardRef(({ id = '', username = '' }, ref) => {
         <div className={`ProfilePopup${isShown ? ' show' : ''}`} id={id}>
             <div className='ProfilePopupHeader'>
                 <p>{`Profile: ${username}`}</p>
-                <button className='CloseButton' onClick={() => setIsShown(false)}>
+                <button className='CloseButton' onClick={() => { setIsShown(false); searchParams.delete('profile');  setSearchParams(searchParams); }}>
                     <FontAwesomeIcon icon={faXmark}/>
                 </button>
             </div>

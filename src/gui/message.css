@@ -44,4 +44,9 @@
     font-weight: bold;
     margin: 5px;
     margin-bottom: 0;
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+    }
 }
