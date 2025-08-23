@@ -4,7 +4,7 @@
     "chat_creation": "Chat Creation",
     "account_required": "Account is required to use MIN. Please <0>create</0> one or <1>log in</1> to an existing one.",
     "account": "Account",
-    "message_placeholder": "Your message here",
+    "message_placeholder": "Enter message...",
     "guest": "Guest",
 
     "email": "Email",
