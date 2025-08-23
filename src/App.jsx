@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import ChatPage from './ChatPage';
-import SignupPage from './SingupPage';
-import SigninPage from './SinginPage';
-import Popup from './gui/popup';
+import ChatPage from './ChatPage.jsx';
+import SignupPage from './SingupPage.jsx';
+import SigninPage from './SinginPage.jsx';
+import Popup from './gui/popup.jsx';
 import { useRef, useState } from 'react';
-import ProfilePopup from './gui/profile_popup';
+import ProfilePopup from './gui/profile_popup.jsx';
 
 function App() {
     const [errorPopupContent, setErrorPopupContent] = useState(null);

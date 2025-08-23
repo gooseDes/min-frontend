@@ -14,17 +14,15 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.7.1",
-    "react-scripts": "5.0.1",
     "socket.io-client": "^4.8.1",
     "web-vitals": "^2.1.4"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist"
   },
   "eslintConfig": {
     "extends": [
@@ -48,5 +46,10 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/gooseDes/min-frontend.git"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.0.1",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.3"
   }
 }

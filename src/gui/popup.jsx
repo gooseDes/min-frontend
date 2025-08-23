@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { closePopup } from '../utils.js';
+import { closePopup } from '../utils';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import './popup.css';
 
