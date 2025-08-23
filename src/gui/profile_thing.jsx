@@ -1,7 +1,6 @@
 import './profile_thing.css'
-import logo from '../logo.png'
 
-function ProfileThing({ text = 'Default text', animation = true, onClick }) {
+function ProfileThing({ text = 'Default text', src = '/logo512.png', animation = true, onClick }) {
     const handleClick = () => {
         if (onClick) {
             onClick(text);
@@ -9,7 +8,7 @@ function ProfileThing({ text = 'Default text', animation = true, onClick }) {
     };
     return (
         <div className={`ProfileThingDiv${animation ? ' anim' : ''}`} onClick={handleClick}>
-            <img src={logo} alt='avatar' draggable='false' className='ProfileThingImage'/>
+            <img src={src} alt='avatar' draggable='false' className='ProfileThingImage' onError={(e) => e.currentTarget.src='/logo512.png'}/>
             <p className='ProfileThingText'>{text}</p>
         </div>
     )

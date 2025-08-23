@@ -5,10 +5,10 @@ import Message from './gui/message';
 import logo from './logo.png'
 import { useState, useEffect, useRef } from 'react';
 import { closePopup, isUserLogined, openPopup, showError, verifyToken } from './utils';
-import { getSocket } from './wsClient';
+import { address, getSocket } from './wsClient';
 import ProfilePopup from './gui/profile_popup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight, faArrowRightFromBracket, faBars, faPaperPlane, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRight, faArrowRightFromBracket, faBars, faGear, faPaperPlane, faPlus } from '@fortawesome/free-solid-svg-icons';
 import Popup from './gui/popup';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { Trans } from 'react-i18next';
@@ -214,6 +214,39 @@ function ChatPage() {
         socket.emit('createChat', { nickname: input.value.replace('@', '') })
     }
 
+    function uploadAvatar() {
+        const fileInput = document.createElement("input");
+        fileInput.type = "file";
+        fileInput.accept = "image/*";
+
+        fileInput.onchange = () => {
+            const file = fileInput.files[0];
+            if (!file) return;
+
+            const formData = new FormData();
+            formData.append("avatar", file);
+
+            fetch(`${address}/upload-avatar`, {
+            method: "POST",
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token"),
+            },
+            body: formData,
+            })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log("Avatar loaded:", data.url);
+                window.location.href = window.location.href;
+            })
+            .catch((err) => {
+                console.error("Eror loading avatar:", err);
+            });
+        };
+
+        fileInput.click();
+    }
+
+
     setTimeout(() => {
         const socket = getSocket();
         socket.emit('getChats', {});
@@ -230,13 +263,14 @@ function ChatPage() {
                     <div className='ChatsPanel' id='chats_panel'>
                         <ProfileThing text={<Trans>default_chat</Trans>} onClick={() => {localStorage.setItem('chatId', 1); openChat('Default Chat');}}/>
                         {chats.map(chat => (
-                            <ProfileThing text={chat.name} onClick={() => {localStorage.setItem('chatId', chat.id); openChat(chat.name);}}/>
+                            <ProfileThing text={chat.name} onClick={() => { localStorage.setItem('chatId', chat.id); openChat(chat.name); }} key={chat.id}/>
                         ))}
                     </div>
                     <div className='UserPanel' id='user_panel'>
                         <div className='UserPanelContent' id='user_panel_content'>
-                            <ProfileThing text={localStorage.getItem('username') || <Trans>guest</Trans>} onClick={openUserProfile} animation={false}/>
-                            <button className='LogoutButton' onClick={() => {
+                            <ProfileThing text={localStorage.getItem('username') || <Trans>guest</Trans>} onClick={openUserProfile} animation={false} src={`${address}/avatars/${localStorage.getItem('id')}.webp`}/>
+                            <button className='UserControlButton settings' onClick={uploadAvatar}><FontAwesomeIcon icon={faGear}/></button>
+                            <button className='UserControlButton logout' onClick={() => {
                                 localStorage.clear();
                                 window.location.href = '/';
                             }} ><FontAwesomeIcon icon={faArrowRightFromBracket}/></button>
@@ -255,7 +289,7 @@ function ChatPage() {
                     </div>
                     <div className='ContentPanel' id='content_panel'>
                         {messages.map(msg => (
-                            <Message text={msg.text} type={msg.type} author={msg.author} />
+                            <Message text={msg.text} type={msg.type} author={msg.author} key={msg.text}/>
                         ))}
                     </div>
                     <div className='InputPanel' id='input_panel'>

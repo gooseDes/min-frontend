@@ -273,7 +273,7 @@ p {
   }
 }
 
-.LogoutButton {
+.UserControlButton {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -281,13 +281,20 @@ p {
   aspect-ratio: 1;
   background-color: transparent;
   border: none;
-  color: #b99d9d;
+  color: #aaa;
   font-size: 20px;
   cursor: pointer;
   transition: all 0.2s ease;
 
+  &.logout {
+    color: #b99d9d;
+  }
+
   &:hover {
-    color: #ff8c8c;
+    color: #fff;
+    &.logout {
+      color: #ff8c8c;
+    }
     font-size: 30px;
   }
 }

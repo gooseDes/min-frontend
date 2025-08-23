@@ -68,6 +68,7 @@ function SigninPage() {
                     localStorage.setItem('token', json.token);
                     localStorage.setItem('email', email_input.value);
                     localStorage.setItem('username', json.username);
+                    localStorage.setItem('id', json.id);
                     window.location.href = '/';
                 } else {
                     showError(json.msg || 'Unknown error');
