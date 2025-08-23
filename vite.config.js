@@ -7,5 +7,12 @@ export default defineConfig({
   server: {
     host: true,
     port: 3000,
+    proxy: {
+      '/socket.io': {
+        target: 'https://server.msg-min.xyz',
+        ws: true,
+        changeOrigin: true
+      }
+    },
   },
 });
