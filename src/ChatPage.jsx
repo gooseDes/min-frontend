@@ -11,6 +11,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faArrowRightFromBracket, faBars, faPaperPlane, faPlus } from '@fortawesome/free-solid-svg-icons';
 import Popup from './gui/popup';
 import { useLocation, useSearchParams } from 'react-router-dom';
+import { Trans } from 'react-i18next';
+import { t } from 'i18next';
 
 function ChatPage() {
     const [messages, setMessages] = useState([]);
@@ -221,16 +223,19 @@ function ChatPage() {
         <div>
             <div className="App" id='app'>
                 <div className="LeftPanel" id='left_panel'>
+                    <div className='ChatsHeader'>
+                        <p className='ChatsTitle'><Trans>chats</Trans></p>
+                        <button className='ChatPlusButton' onClick={() => openPopup('create-chat')}><FontAwesomeIcon icon={faPlus}/></button>
+                    </div>
                     <div className='ChatsPanel' id='chats_panel'>
-                        <ProfileThing text='Default Chat' onClick={() => {localStorage.setItem('chatId', 1); openChat('Default Chat');}}/>
+                        <ProfileThing text={<Trans>default_chat</Trans>} onClick={() => {localStorage.setItem('chatId', 1); openChat('Default Chat');}}/>
                         {chats.map(chat => (
                             <ProfileThing text={chat.name} onClick={() => {localStorage.setItem('chatId', chat.id); openChat(chat.name);}}/>
                         ))}
-                        <button className='ChatPlusButton' onClick={() => openPopup('create-chat')}><FontAwesomeIcon icon={faPlus}/></button>
                     </div>
                     <div className='UserPanel' id='user_panel'>
                         <div className='UserPanelContent' id='user_panel_content'>
-                            <ProfileThing text={localStorage.getItem('username') || 'Guest'} onClick={openUserProfile} animation={false}/>
+                            <ProfileThing text={localStorage.getItem('username') || <Trans>guest</Trans>} onClick={openUserProfile} animation={false}/>
                             <button className='LogoutButton' onClick={() => {
                                 localStorage.clear();
                                 window.location.href = '/';
@@ -243,7 +248,7 @@ function ChatPage() {
                         <div className='TopPanelContent' id='top_panel_content'>
                             <button className='MenuButton' onClick={openMenu}><FontAwesomeIcon icon={faBars}/></button>
                             <div className='TopPanelThing'>
-                                <img src={logo} alt='avatar' />
+                                <img src={logo} alt='avatar'/>
                                 <p id='top_panel_username'>username</p>
                             </div>
                         </div>
@@ -254,22 +259,22 @@ function ChatPage() {
                         ))}
                     </div>
                     <div className='InputPanel' id='input_panel'>
-                        <input placeholder='Your message here' onKeyDown={(event) => {if (event.key === 'Enter') sendMessage()}} className='MessageInput' id='message_input'/>
+                        <input placeholder={t('message_placeholder')} onKeyDown={(event) => {if (event.key === 'Enter') sendMessage()}} className='MessageInput' id='message_input'/>
                         <button className='SendButton' onClick={sendMessage}><FontAwesomeIcon icon={faPaperPlane}/></button>
                     </div>
                 </div>
             </div>
-            <Popup title='Account' name='account'>
+            <Popup title={<Trans>account</Trans>} name='account'>
                 <div className="scrollable-y">
-                    <p style={{ fontSize: '3svh' }}>Account is required to use MIN. Please <a href='/signup' style={{ color: '#4f7afbff' }}>create</a> one or <a href='/signin' style={{ color: '#4f7afbff' }}>log in</a> to an existing one.</p>
+                    <p style={{ fontSize: '3svh' }}><Trans i18nKey={'account_required'}><a href='/signup' style={{ color: '#4f7afbff' }}>create</a><a href='/signin' style={{ color: '#4f7afbff' }}>log in</a></Trans></p>
                 </div>
             </Popup>
-            <Popup title='Create chat' name='create-chat' scale={0.5}>
+            <Popup title={<Trans>chat_creation</Trans>} name='create-chat' scale={0.5}>
                 <input placeholder='nickname' className='CreateChatNicknameInput' id='create_chat_nickname_input' onKeyDown={(event) => {if (event.key === 'Enter') createChat()}}/>
-                <p id='create_chat_error' style={{ color: 'red',  fontSize: '12px' }}></p>
+                <p id='create_chat_error' style={{ color: 'red',  fontSize: '12px' }} className='fade'>Totskiy</p>
                 <button className='CreateChatConfirmButton'><FontAwesomeIcon icon={faArrowRight} onClick={createChat}/></button>
             </Popup>
-            <ProfilePopup ref={ProfilePopupRef} username={localStorage.getItem('username') || 'Guest'}/>
+            <ProfilePopup ref={ProfilePopupRef} username={localStorage.getItem('username') || <Trans>guest</Trans>}/>
         </div>
     );
 }

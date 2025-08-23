@@ -1,0 +1,19 @@
+{
+    "default_chat": "Default Chat",
+    "chats": "Chats",
+    "chat_creation": "Chat Creation",
+    "account_required": "Account is required to use MIN. Please <0>create</0> one or <1>log in</1> to an existing one.",
+    "account": "Account",
+    "message_placeholder": "Your message here",
+    "guest": "Guest",
+
+    "email": "Email",
+    "login": "Login",
+    "password": "Password",
+    "password_confirmation": "Password Confirmation",
+    "signup": "Sign Up",
+    "signin": "Sign In",
+
+    "profile": "Profile",
+    "send_message": "Send Message"
+}

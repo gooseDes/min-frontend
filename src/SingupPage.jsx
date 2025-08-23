@@ -3,6 +3,8 @@ import { address } from './wsClient';
 import './App.css'
 import './Signup.css'
 import { showError } from './utils';
+import { Trans } from 'react-i18next';
+import { t } from 'i18next';
 
 function SignupPage() {
     const particles = useRef([]);
@@ -94,11 +96,11 @@ function SignupPage() {
             <div id='bg_thing1'></div>
             <div id='bg_thing2'></div>
             <div className='SignupForm' id='signup_form'>
-                <input id='email_input' placeholder='Email' />
-                <input id='login_input' placeholder='Login'/>
-                <input id='password_input' placeholder='Password' type='password' />
-                <input id='password2_input' placeholder='Password Confirmation' type='password' />
-                <button id='signup_button' onClick={handleRegistration}>Sign Up</button>
+                <input id='email_input' placeholder={t('email')}/>
+                <input id='login_input' placeholder={t('login')}/>
+                <input id='password_input' placeholder={t('password')} type='password'/>
+                <input id='password2_input' placeholder={t('password_confirmation')} type='password'/>
+                <button id='signup_button' onClick={handleRegistration}><Trans>signup</Trans></button>
             </div>
         </div>
     )

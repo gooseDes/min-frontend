@@ -5,6 +5,7 @@ import logo from '../logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMessage, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { useSearchParams } from 'react-router-dom';
+import { t } from 'i18next';
 
 const ProfilePopup = forwardRef(({ id = '', username = '' }, ref) => {
     const [isShown, setIsShown] = useState(false);
@@ -18,7 +19,7 @@ const ProfilePopup = forwardRef(({ id = '', username = '' }, ref) => {
     return (
         <div className={`ProfilePopup${isShown ? ' show' : ''}`} id={id}>
             <div className='ProfilePopupHeader'>
-                <p>{`Profile: ${username}`}</p>
+                <p>{`${t('profile')}: ${username}`}</p>
                 <button className='CloseButton' onClick={() => { setIsShown(false); searchParams.delete('profile');  setSearchParams(searchParams); }}>
                     <FontAwesomeIcon icon={faXmark}/>
                 </button>
@@ -27,7 +28,7 @@ const ProfilePopup = forwardRef(({ id = '', username = '' }, ref) => {
                 <img src={logo} alt='logo' className='ProfilePopupAvatar'></img>
                 <p className='ProfilePopupUsername'>{username}</p>
                 <div className='ProfilePopupBottom'>
-                    <button className='MessageButton'><p>Send message</p><FontAwesomeIcon className='icon' icon={faMessage}/></button>
+                    <button className='MessageButton'><p>{t('send_message')}</p><FontAwesomeIcon className='icon' icon={faMessage}/></button>
                 </div>
             </div>
         </div>

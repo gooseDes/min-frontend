@@ -3,6 +3,8 @@ import { address } from './wsClient.jsx';
 import './App.css'
 import './Signup.css'
 import { showError } from './utils';
+import { t } from 'i18next';
+import { Trans } from 'react-i18next';
 
 function SigninPage() {
     const particles = useRef([]);
@@ -84,9 +86,9 @@ function SigninPage() {
             <div id='bg_thing1'></div>
             <div id='bg_thing2'></div>
             <div className='SignupForm' id='signup_form'>
-                <input id='email_input' placeholder='Email' />
-                <input id='password_input' placeholder='Password' type='password' />
-                <button id='signup_button' onClick={handleRegistration}>Sign In</button>
+                <input id='email_input' placeholder={t('email')}/>
+                <input id='password_input' placeholder={t('password')} type='password'/>
+                <button id='signup_button' onClick={handleRegistration}><Trans>signin</Trans></button>
             </div>
         </div>
     )

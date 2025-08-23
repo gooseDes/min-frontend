@@ -46,7 +46,7 @@ p {
   flex-direction: column;
   gap: 10px;
   width: 100%;
-  height: calc(100% - 60px);
+  height: calc(100% - 120px);
   padding: 10px;
   will-change: translate;
   overflow-x: hidden;
@@ -299,7 +299,7 @@ input:not(.MessageInput) {
   text-align: center;
   background-color: #33333399;
   color: #fff;
-  transition: all 0.5s ease, scale 0.2s ease,;
+  transition: all 0.5s ease, scale 0.2s ease;
   opacity: 0.8;
   min-width: 200px;
   width: fit-content;

@@ -1,11 +1,8 @@
 .ChatPlusButton {
-    position: absolute;
-    right: 24px;
-    bottom: 24px;
     background: transparent;
     border: none;
     color: #aaa;
-    font-size: 22px;
+    font-size: 24px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -35,4 +32,25 @@
         opacity: 1;
         scale: 1.5;
     }
+}
+
+.ChatsTitle {
+    font-size: 24px;
+    font-weight: bold;
+    color: #aaa;
+    text-align: center;
+}
+
+.ChatsHeader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #00000066;
+    width: 100%;
+    background: #242424dd;
+    backdrop-filter: blur(5px);
+    border-radius: 2svh;
+    gap: 10px;
+    padding: 10px;
+    height: 60px;
 }
