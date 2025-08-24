@@ -14,7 +14,7 @@ function App() {
     }
     const [profilePopupContent, setProfilePopupContent] = useState({});
     window.openProfilePopup = (username) => {
-        setProfilePopupContent({ 'username': username });
+        setProfilePopupContent({ 'username': username, 'id': -1 });
         const socket = getSocket();
         socket.on('userInfo', data => {
             console.log(data);
