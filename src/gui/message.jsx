@@ -6,7 +6,7 @@ function Message({ text = 'message', author = 'author', type = 'left' }) {
     return (
         <div className={`MessageDiv ${type}`}>
             <div className={`TextDiv ${type}`}>
-                <div className='Author' onClick={() => { searchParams.set('profile', author); setSearchParams(searchParams); }}>{author}</div>
+                <div className='Author' onClick={() => { searchParams.set('profile', author == 'You' ? localStorage.getItem('username') : author); setSearchParams(searchParams); }}>{author}</div>
                 <p>{text}</p>
             </div>
         </div>

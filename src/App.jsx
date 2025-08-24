@@ -5,6 +5,7 @@ import SigninPage from './SinginPage.jsx';
 import Popup from './gui/popup.jsx';
 import { useRef, useState } from 'react';
 import ProfilePopup from './gui/profile_popup.jsx';
+import { address, getSocket } from './wsClient.jsx';
 
 function App() {
     const [errorPopupContent, setErrorPopupContent] = useState(null);
@@ -14,6 +15,13 @@ function App() {
     const [profilePopupContent, setProfilePopupContent] = useState({});
     window.openProfilePopup = (username) => {
         setProfilePopupContent({ 'username': username });
+        const socket = getSocket();
+        socket.on('userInfo', data => {
+            console.log(data);
+            setProfilePopupContent({ 'username': data.user.name, 'id': data.user.id });
+            socket.off('userInfo');
+        });
+        socket.emit('getUserInfo', { 'name': username })
         profilePopupRef.current.show();
     }
     const profilePopupRef = useRef();
@@ -28,7 +36,7 @@ function App() {
             </Router>
             <Router>
                 <Popup title='Error' name='error'>{errorPopupContent}</Popup>
-                <ProfilePopup ref={profilePopupRef} username={profilePopupContent.username}/>
+                <ProfilePopup ref={profilePopupRef} username={profilePopupContent.username} src={`${address}/avatars/${profilePopupContent.id}.webp`}/>
             </Router>
         </div>
     );

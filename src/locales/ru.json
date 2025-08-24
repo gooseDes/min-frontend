@@ -6,6 +6,7 @@
     "account": "Аккаунт",
     "message_placeholder": "Введите сообщение...",
     "guest": "Гость",
+    "username_placeholder": "Имя пользователя",
 
     "email": "Почта",
     "login": "Логин",

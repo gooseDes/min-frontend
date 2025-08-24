@@ -6,6 +6,7 @@
     "account": "Account",
     "message_placeholder": "Enter message...",
     "guest": "Guest",
+    "username_placeholder": "Username",
 
     "email": "Email",
     "login": "Login",
