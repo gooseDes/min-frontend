@@ -1,13 +1,12 @@
 import { useImperativeHandle, forwardRef, useState } from 'react';
 import '../App.css';
 import './profile_popup.css';
-import logo from '../logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMessage, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { useSearchParams } from 'react-router-dom';
 import { t } from 'i18next';
 
-const ProfilePopup = forwardRef(({ id = '', username = '' }, ref) => {
+const ProfilePopup = forwardRef(({ id = '', src = '/logo512.png', username = '' }, ref) => {
     const [isShown, setIsShown] = useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
 
@@ -25,7 +24,7 @@ const ProfilePopup = forwardRef(({ id = '', username = '' }, ref) => {
                 </button>
             </div>
             <div className='ProfilePopupContent'>
-                <img src={logo} alt='logo' className='ProfilePopupAvatar'></img>
+                <img src={src} alt='logo' className='ProfilePopupAvatar' onError={(e) => e.currentTarget.src='/logo512.png'}/>
                 <p className='ProfilePopupUsername'>{username}</p>
                 <div className='ProfilePopupBottom'>
                     <button className='MessageButton'><p>{t('send_message')}</p><FontAwesomeIcon className='icon' icon={faMessage}/></button>

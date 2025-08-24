@@ -308,7 +308,7 @@ function ChatPage() {
                 <p id='create_chat_error' style={{ color: 'red',  fontSize: '12px' }} className='fade'>Totskiy</p>
                 <button className='CreateChatConfirmButton'><FontAwesomeIcon icon={faArrowRight} onClick={createChat}/></button>
             </Popup>
-            <ProfilePopup ref={ProfilePopupRef} username={localStorage.getItem('username') || <Trans>guest</Trans>}/>
+            <ProfilePopup ref={ProfilePopupRef} src={`${address}/avatars/${localStorage.getItem('id')}.webp`} username={localStorage.getItem('username') || <Trans>guest</Trans>}/>
         </div>
     );
 }
