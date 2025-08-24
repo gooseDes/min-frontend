@@ -16,7 +16,7 @@ body,
   height: 100%;
   margin: 0;
   padding: 0;
-  background-color: #383839;
+  background-color: #000;
 }
 
 .App {
@@ -26,9 +26,9 @@ body,
   align-items: center;
   padding: 10px;
   gap: 30px;
-  background-size: 100% 100%;
   transition: all 0.3s ease-in-out;
-  background-image: #000;
+  background: linear-gradient(135deg, #000000, #1c1c1c);
+  background-size: cover;
 }
 
 p {
@@ -121,7 +121,7 @@ p {
 
 .TopPanel {
   margin: 0;
-  background: #242424dd;
+  background: var(--background-panel);
   backdrop-filter: blur(10px);
   border-radius: 2svh 2svh 0 0;
   width: 100%;
@@ -170,7 +170,7 @@ p {
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: #9993 #0000;
-  background: #242424dd;
+  background: var(--background-panel);
   backdrop-filter: blur(10px);
   border-radius: 0 0 0 0;
   width: 100%;
@@ -185,6 +185,7 @@ p {
 
 *::-webkit-scrollbar-track {
   background: transparent;
+  margin: 30px;
 }
 
 *::-webkit-scrollbar-thumb {
@@ -201,7 +202,7 @@ p {
   justify-content: center;
   align-items: center;
   flex-direction: row;
-  background: #242424dd;
+  background: var(--background-panel);
   backdrop-filter: blur(10px);
   border-radius: 0 0 2svh 2svh;
   width: 100%;

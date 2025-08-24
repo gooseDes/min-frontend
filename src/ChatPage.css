@@ -59,3 +59,40 @@
         backdrop-filter: blur(10px);
     }
 }
+
+.MessageWhenEmpty {
+    position: absolute;
+    left: 400px;
+    top: 50%;
+    translate: 0 -50%;
+    color: #aaa;
+    opacity: 0.2;
+    z-index: 999999999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: calc(100% - 400px);
+    height: 100vh;
+    scale: 0.8;
+}
+
+@media screen and (orientation: portrait) {
+    .MessageWhenEmpty {
+        width: 100%;
+        left: 50%;
+        translate: -50% -50%;
+    }
+}
+
+.fade-down {
+    animation: fade-down-anim 0.5s forwards;
+}
+
+@keyframes fade-down-anim {
+    to {
+        opacity: 0;
+        scale: 0;
+        transform: translateY(100vh);
+        display: none;
+    }
+}

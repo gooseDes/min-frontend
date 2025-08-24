@@ -8,7 +8,7 @@ import { closePopup, isUserLogined, openPopup, showError, verifyToken } from './
 import { address, getSocket } from './wsClient';
 import ProfilePopup from './gui/profile_popup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight, faArrowRightFromBracket, faBars, faGear, faPaperPlane, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRight, faArrowRightFromBracket, faBars, faGear, faMessage, faPaperPlane, faPlus } from '@fortawesome/free-solid-svg-icons';
 import Popup from './gui/popup';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { Trans } from 'react-i18next';
@@ -193,6 +193,9 @@ function ChatPage() {
         Array.from(document.getElementById('input_panel').children).forEach((el) => {
             el.style.translate = '0 0';
         });
+        document.querySelectorAll('.MessageWhenEmpty').forEach((el) => {
+            el.classList.add('fade-down');
+        });
         inited.current = true;
     }
 
@@ -278,6 +281,7 @@ function ChatPage() {
                     </div>
                 </div>
                 <div className="RightPanel" id='right_panel'>
+                    <FontAwesomeIcon icon={faMessage} className='MessageWhenEmpty'/>
                     <div className='TopPanel' id='top_panel'>
                         <div className='TopPanelContent' id='top_panel_content'>
                             <button className='MenuButton' onClick={openMenu}><FontAwesomeIcon icon={faBars}/></button>
