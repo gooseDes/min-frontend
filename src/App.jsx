@@ -17,7 +17,6 @@ function App() {
         setProfilePopupContent({ 'username': username, 'id': -1 });
         const socket = getSocket();
         socket.on('userInfo', data => {
-            console.log(data);
             setProfilePopupContent({ 'username': data.user.name, 'id': data.user.id });
             socket.off('userInfo');
         });

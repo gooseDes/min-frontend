@@ -187,6 +187,11 @@ function ChatPage() {
         document.getElementById('content_panel').style.borderRadius = '2svh 2svh 2svh 2svh';
         document.getElementById('input_panel').style.borderRadius = '2svh 2svh 2svh 2svh';
         document.getElementById('top_panel_username').textContent = username;
+        const socket = getSocket();
+        socket.on('userInfo', data => {
+            document.getElementById('top_panel_avatar').src = `${address}/avatars/${data.user?.id}.webp`;
+        });
+        socket.emit('getUserInfo', { name: username });
         Array.from(document.getElementById('top_panel_content').children).forEach((el) => {
             el.style.translate = '0 0';
         });
@@ -286,7 +291,7 @@ function ChatPage() {
                         <div className='TopPanelContent' id='top_panel_content'>
                             <button className='MenuButton' onClick={openMenu}><FontAwesomeIcon icon={faBars}/></button>
                             <div className='TopPanelThing'>
-                                <img src={logo} alt='avatar'/>
+                                <img id='top_panel_avatar' src={logo} alt='avatar' onError={(e) => e.currentTarget.src='/logo512.png'}/>
                                 <p id='top_panel_username'>username</p>
                             </div>
                         </div>

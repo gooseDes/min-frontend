@@ -149,7 +149,7 @@ p {
   height: 80%;
   gap: 15px;
   background-color: #aaaaaa11;
-  padding: 10px;
+  padding: 10px 20px;
   border-radius: 2svh;
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   translate: 0 -12vh;
@@ -161,6 +161,8 @@ p {
 
   p {
     font-size: 2svh;
+    font-weight: bold;
+    color: #fff;
   }
 }
 
