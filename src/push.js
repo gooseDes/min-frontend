@@ -46,7 +46,7 @@ export async function sendPush(userId) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       title: "Новое сообщение!",
-      message: "Бро написал: Привет :3"
+      message: "asdfsadfdsafsdfsdafdsfdsfsdafssfadsfd"
     })
   });
 
