@@ -18,7 +18,7 @@ export async function subscribeUser() {
         await fetch(`${address}/subscribe`, {
             method: "POST",
             body: JSON.stringify({
-                subscription: JSON.stringify(subscription),
+                subscription: subscription,
                 token: localStorage.getItem('token')
             }),
             headers: { "Content-Type": "application/json" },
