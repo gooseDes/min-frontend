@@ -13,6 +13,7 @@ import Popup from './gui/popup';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { Trans } from 'react-i18next';
 import { t } from 'i18next';
+import { sendPush, subscribeUser } from './push';
 
 function ChatPage() {
     const [messages, setMessages] = useState([]);
@@ -266,10 +267,10 @@ function ChatPage() {
                 <div className="LeftPanel" id='left_panel'>
                     <div className='ChatsHeader'>
                         <p className='ChatsTitle'><Trans>chats</Trans></p>
-                        <button className='ChatPlusButton' onClick={() => openPopup('create-chat')}><FontAwesomeIcon icon={faPlus}/></button>
+                        <button className='ChatPlusButton' onClick={() => /*openPopup('create-chat')*/ subscribeUser()}><FontAwesomeIcon icon={faPlus}/></button>
                     </div>
                     <div className='ChatsPanel' id='chats_panel'>
-                        <ProfileThing text={<Trans>default_chat</Trans>} onClick={() => {localStorage.setItem('chatId', 1); openChat('Default Chat');}}/>
+                        <ProfileThing text={<Trans>default_chat</Trans>} onClick={() => {localStorage.setItem('chatId', 1); openChat('Default Chat'); sendPush(1);}}/>
                         {chats.map(chat => (
                             <ProfileThing text={chat.name} onClick={() => { localStorage.setItem('chatId', chat.id); openChat(chat.name); }} src={`${address}/avatars/${chat.participants.find(el => el.id != localStorage.getItem('id'))?.id}.webp`} key={chat.id}/>
                         ))}
