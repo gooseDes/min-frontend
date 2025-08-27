@@ -1,0 +1,10 @@
+.LeftPanel {
+    background-color: #00000066;
+    backdrop-filter: blur(5px);
+}
+
+.MenuButton {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+}

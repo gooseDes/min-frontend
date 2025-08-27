@@ -140,7 +140,6 @@ function ChatPage() {
         let behavior = 'smooth';
         if (lastMessages.length === 0) behavior = 'instant';
 
-        console.log(scrollBy);
         content_panel.scrollTo({
             top: content_panel.scrollTop+scrollBy,
             behavior: behavior

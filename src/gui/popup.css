@@ -4,7 +4,7 @@
     top: 50%;
     left: 50%;
     width: calc(100% * var(--popup-scale, 1));
-    height: calc(100vh * var(--popup-scale, 1));
+    height: calc(var(--vh, 1vh) * 100 * var(--popup-scale, 1));
     background-color: rgba(0, 0, 0, 0.8);
     border-radius: 4svh;
     display: flex;
