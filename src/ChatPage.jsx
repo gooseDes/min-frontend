@@ -54,7 +54,7 @@ function ChatPage() {
                         content_panel.scrollTop += content_panel_children[i].getBoundingClientRect().height*2
                         setTimeout(() => {
                             content_panel_children[i].classList.add('show');
-                        }, i > content_panel_children.length-25 ? (25-(i-(content_panel_children.length-25)))*50 : 0)
+                        }, Math.abs(i-content_panel_children.length) < 25 ? (25-(i-(content_panel_children.length-25)))*50 : 0)
                     }
                 });
             }
