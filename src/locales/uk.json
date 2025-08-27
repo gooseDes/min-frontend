@@ -16,5 +16,8 @@
     "signin": "Увійти",
 
     "profile": "Профіль",
-    "send_message": "Написати"
+    "send_message": "Написати",
+
+    "upload_avatar": "Завантажити аватар",
+    "subscribe_to_msges": "Підписатися на пуш повідомлення"
 }

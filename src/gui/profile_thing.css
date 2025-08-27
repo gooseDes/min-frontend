@@ -47,4 +47,8 @@
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
+
+    &.noimg {
+        height: 0;
+    }
 }

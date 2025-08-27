@@ -16,5 +16,8 @@
     "signin": "Sign In",
 
     "profile": "Profile",
-    "send_message": "Send Message"
+    "send_message": "Send Message",
+
+    "upload_avatar": "Upload avatar",
+    "subscribe_to_msges": "Subscribe to push messages"
 }

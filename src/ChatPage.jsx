@@ -223,39 +223,6 @@ function ChatPage() {
         socket.emit('createChat', { nickname: input.value.replace('@', '') })
     }
 
-    function uploadAvatar() {
-        const fileInput = document.createElement("input");
-        fileInput.type = "file";
-        fileInput.accept = "image/*";
-
-        fileInput.onchange = () => {
-            const file = fileInput.files[0];
-            if (!file) return;
-
-            const formData = new FormData();
-            formData.append("avatar", file);
-
-            fetch(`${address}/upload-avatar`, {
-            method: "POST",
-            headers: {
-                "Authorization": "Bearer " + localStorage.getItem("token"),
-            },
-            body: formData,
-            })
-            .then((res) => res.json())
-            .then((data) => {
-                console.log("Avatar loaded:", data.url);
-                window.location.href = window.location.href;
-            })
-            .catch((err) => {
-                console.error("Eror loading avatar:", err);
-            });
-        };
-
-        fileInput.click();
-    }
-
-
     setTimeout(() => {
         const socket = getSocket();
         socket.emit('getChats', {});
@@ -278,7 +245,7 @@ function ChatPage() {
                     <div className='UserPanel' id='user_panel'>
                         <div className='UserPanelContent' id='user_panel_content'>
                             <ProfileThing text={localStorage.getItem('username') || <Trans>guest</Trans>} onClick={openUserProfile} animation={false} src={`${address}/avatars/${localStorage.getItem('id')}.webp`}/>
-                            <button className='UserControlButton settings' onClick={uploadAvatar}><FontAwesomeIcon icon={faGear}/></button>
+                            <button className='UserControlButton settings' onClick={() => {window.location.href='/settings'}}><FontAwesomeIcon icon={faGear}/></button>
                             <button className='UserControlButton logout' onClick={() => {
                                 localStorage.clear();
                                 window.location.href = '/';

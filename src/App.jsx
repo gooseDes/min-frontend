@@ -6,6 +6,7 @@ import Popup from './gui/popup.jsx';
 import { useRef, useState } from 'react';
 import ProfilePopup from './gui/profile_popup.jsx';
 import { address, getSocket } from './wsClient.jsx';
+import SettingsPage from './SettingsPage.jsx';
 
 function App() {
     const [errorPopupContent, setErrorPopupContent] = useState(null);
@@ -31,6 +32,7 @@ function App() {
                     <Route path="/" element={<ChatPage />} />
                     <Route path="/signup" element={<SignupPage />} />
                     <Route path="/signin" element={<SigninPage />} />
+                    <Route path="/settings" element={<SettingsPage />} />
                 </Routes>
             </Router>
             <Router>
