@@ -35,7 +35,7 @@ function ChatPage() {
         });
         socket.on('message', (data) => {
             if (data.author === localStorage.getItem('username')) return;
-            setMessages((prev) => [...prev, { id: data.id, text: data.text, type: 'left', author: data.author }]);
+            setMessages((prev) => [...prev, { id: data.id, text: data.text, type: 'left', author: data.author, author_id: data.author_id }]);
         });
         socket.on('history', data => {
             if (isWaitingForHistory.current) {
@@ -43,7 +43,8 @@ function ChatPage() {
                     id: msg.id,
                     text: msg.text,
                     type: msg.author === localStorage.getItem('username') ? 'right' : 'left',
-                    author: msg.author === localStorage.getItem('username') ? 'You': msg.author
+                    author: msg.author === localStorage.getItem('username') ? 'You': msg.author,
+                    author_id: msg.author_id
                 })));
                 isWaitingForHistory.current = false;
                 requestAnimationFrame(() => {
@@ -271,9 +272,24 @@ function ChatPage() {
                         </div>
                     </div>
                     <div className='ContentPanel' id='content_panel'>
-                        {messages.map(msg => (
-                            <Message text={msg.text} type={msg.type} author={msg.author} key={msg.id}/>
-                        ))}
+                        {messages.map((msg, i) => {
+                            const prevMsg = messages[i - 1];
+                            const nextMsg = messages[i + 1];
+
+                            const isFirst = !prevMsg || prevMsg.author_id !== msg.author_id;
+                            const isLast = !nextMsg || nextMsg.author_id !== msg.author_id;
+
+                            return (
+                                <Message
+                                    key={msg.id}
+                                    text={msg.text}
+                                    type={msg.type}
+                                    author={msg.author}
+                                    src={`${address}/avatars/${msg.author_id}.webp`}
+                                    connected={!isLast}
+                                />
+                            );
+                        })}
                     </div>
                     <div className='InputPanel' id='input_panel'>
                         <input placeholder={t('message_placeholder')} onKeyDown={(event) => {if (event.key === 'Enter') sendMessage()}} className='MessageInput' id='message_input'/>

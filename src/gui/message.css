@@ -7,6 +7,7 @@
     align-items: center;
     transition: all 0.2s ease-in-out;
     transition: translate 0.3s cubic-bezier(0.175, 1, 0.32, 1.6), opacity 0.1s ease-in-out;
+    gap: 10px;
 
     &.left {
         translate: -35vh 0;
@@ -17,6 +18,7 @@
         justify-content: right;
         translate: 35vh 0;
         opacity: 0;
+        flex-direction: row-reverse;
     }
 
     &.show {
@@ -37,6 +39,7 @@
     border-radius: 1svh;
     text-align: left;
     margin-top: 0;
+    word-break: break-all;
 
     &.left {
         border-radius: 1svh 1svh 1svh 0;
@@ -57,5 +60,16 @@
 
     &:hover {
         text-decoration: underline;
+    }
+}
+
+.MessageAvatar {
+    aspect-ratio: 1;
+    width: 50px;
+    border-radius: 999px;
+    translate: 0 10px;
+
+    &.connected {
+        opacity: 0;
     }
 }
