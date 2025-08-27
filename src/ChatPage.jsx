@@ -13,7 +13,6 @@ import Popup from './gui/popup';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { Trans } from 'react-i18next';
 import { t } from 'i18next';
-import { sendPush, subscribeUser } from './push';
 
 function ChatPage() {
     const [messages, setMessages] = useState([]);
@@ -36,11 +35,12 @@ function ChatPage() {
         });
         socket.on('message', (data) => {
             if (data.author === localStorage.getItem('username')) return;
-            setMessages((prev) => [...prev, { text: data.text, type: 'left', author: data.author }]);
+            setMessages((prev) => [...prev, { id: data.id, text: data.text, type: 'left', author: data.author }]);
         });
         socket.on('history', data => {
             if (isWaitingForHistory.current) {
                 setMessages(data.messages.map(msg => ({
+                    id: msg.id,
                     text: msg.text,
                     type: msg.author === localStorage.getItem('username') ? 'right' : 'left',
                     author: msg.author === localStorage.getItem('username') ? 'You': msg.author
@@ -48,12 +48,12 @@ function ChatPage() {
                 isWaitingForHistory.current = false;
                 requestAnimationFrame(() => {
                     const content_panel = document.getElementById('content_panel');
-                    content_panel.scrollTop = content_panel.scrollTop + 10000;
+                    content_panel.scrollTop = content_panel.scrollTop;
                     const content_panel_children = Array.from(content_panel.children)
                     for (let i=0; i<content_panel_children.length; i++) {
+                        content_panel.scrollTop += content_panel_children[i].getBoundingClientRect().height*2
                         setTimeout(() => {
-                            content_panel_children[i].style.opacity = '1';
-                            content_panel_children[i].style.translate = '0 0';
+                            content_panel_children[i].classList.add('show');
                         }, i > content_panel_children.length-25 ? (25-(i-(content_panel_children.length-25)))*50 : 0)
                     }
                 });
@@ -121,21 +121,27 @@ function ChatPage() {
             content_panel?.children || []
         );
 
+        let scrollBy = 0;
+
         if (lastMessages.length !== 0) {
             if (dontTouch.current === -1) {
                 dontTouch.current = content_panel_children.length;
             }
             for (let i = dontTouch.current === -1 ? 0 : dontTouch.current; i < content_panel_children.length; i++) {
-                content_panel_children[i].style.opacity = '1';
-                content_panel_children[i].style.translate = '0 0';
+                scrollBy += content_panel_children[i].getBoundingClientRect().height*2;
+                requestAnimationFrame(() => {
+                    content_panel_children[i].classList.add('slow');
+                    content_panel_children[i].classList.add('show');
+                });
             }
         }
 
         let behavior = 'smooth';
         if (lastMessages.length === 0) behavior = 'instant';
 
+        console.log(scrollBy);
         content_panel.scrollTo({
-            top: content_panel.scrollTop+10000,
+            top: content_panel.scrollTop+scrollBy,
             behavior: behavior
         });
         setLastMessages(messages);
@@ -266,7 +272,7 @@ function ChatPage() {
                     </div>
                     <div className='ContentPanel' id='content_panel'>
                         {messages.map(msg => (
-                            <Message text={msg.text} type={msg.type} author={msg.author} key={msg.text}/>
+                            <Message text={msg.text} type={msg.type} author={msg.author} key={msg.id}/>
                         ))}
                     </div>
                     <div className='InputPanel' id='input_panel'>

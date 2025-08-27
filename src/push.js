@@ -39,17 +39,3 @@ function urlBase64ToUint8Array(base64String) {
     const rawData = atob(base64);
     return new Uint8Array([...rawData].map((char) => char.charCodeAt(0)));
 }
-
-export async function sendPush(userId) {
-  const res = await fetch(`${address}/send-to/${userId}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      title: "Новое сообщение!",
-      message: "asdfsadfdsafsdfsdafdsfdsfsdafssfadsfd"
-    })
-  });
-
-  const data = await res.json();
-  console.log(data);
-}

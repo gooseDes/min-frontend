@@ -6,17 +6,26 @@
     justify-content: left;
     align-items: center;
     transition: all 0.2s ease-in-out;
-    transition: translate 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: translate 0.3s cubic-bezier(0.175, 1, 0.32, 1.6), opacity 0.1s ease-in-out;
 
     &.left {
-        translate: -100% 0;
+        translate: -35vh 0;
         opacity: 0;
     }
 
     &.right {
         justify-content: right;
-        translate: 100% 0;
+        translate: 35vh 0;
         opacity: 0;
+    }
+
+    &.show {
+        translate: 0 0;
+        opacity: 1;
+    }
+
+    &.slow {
+        transition: translate 0.4s ease-in-out;
     }
 }
 
