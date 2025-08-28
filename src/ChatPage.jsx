@@ -34,8 +34,8 @@ function ChatPage() {
             isWaitingForHistory.current = true;
         });
         socket.on('message', (data) => {
-            if (data.author === localStorage.getItem('username')) return;
-            setMessages((prev) => [...prev, { id: data.id, text: data.text, type: 'left', author: data.author, author_id: data.author_id }]);
+            if (data.author === localStorage.getItem('username')) data.author = 'You';
+            setMessages((prev) => [...prev, { id: data.id, text: data.text, type: data.author == 'You' ? 'right' : 'left', author: data.author, author_id: data.author_id }]);
         });
         socket.on('history', data => {
             if (isWaitingForHistory.current) {
@@ -163,14 +163,6 @@ function ChatPage() {
         const value = document.getElementById('message_input').value;
         if (value.trim() === '') return;
         document.getElementById('message_input').value = '';
-        setMessages(prev => [
-            ...prev,
-            {
-                text: value,
-                author: 'You',
-                type: 'right',
-            }
-        ]);
         const socket = getSocket();
         socket.emit('msg', { text: value, chat: localStorage.getItem('chatId') || 1 });
         lastSended.current = value;
