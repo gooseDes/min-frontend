@@ -1,4 +1,4 @@
-import { address } from "../src/wsClient";
+const address = import.meta.env.VITE_SERVER_ADDRESS || 'https://server.msg-min.xyz';
 
 self.addEventListener("push", (event) => {
   console.log("Push received:", event);
