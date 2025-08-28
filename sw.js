@@ -1,5 +1,3 @@
-const address = import.meta.env.VITE_SERVER_ADDRESS || 'https://server.msg-min.xyz';
-
 self.addEventListener("push", (event) => {
   console.log("Push received:", event);
   let data;
@@ -13,8 +11,8 @@ self.addEventListener("push", (event) => {
   event.waitUntil(
     self.registration.showNotification(data.chat, {
       body: data.message,
-      icon: `${address}/avatars/${data.author}.webp`,
-      badge: `${address}/avatars/${data.author}.webp`,
+      icon: `https://server.msg-min.xyz/avatars/${data.author}.webp`,
+      badge: `https://server.msg-min.xyz}/avatars/${data.author}.webp`,
       tag: 'message',
       vibration: [200, 100, 200, 100, 400]
     })
