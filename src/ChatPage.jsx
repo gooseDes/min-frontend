@@ -53,9 +53,12 @@ function ChatPage() {
                     const content_panel_children = Array.from(content_panel.children)
                     for (let i=0; i<content_panel_children.length; i++) {
                         content_panel.scrollTop += content_panel_children[i].getBoundingClientRect().height*2
+                    }
+                    const reversed = content_panel_children.reverse()
+                    for (let i=0; i<content_panel_children.length; i++) {
                         setTimeout(() => {
-                            content_panel_children[i].classList.add('show');
-                        }, Math.abs(i-content_panel_children.length) < 25 ? (25-(i-(content_panel_children.length-25)))*50 : 0)
+                            reversed[i].classList.add('show');
+                        }, i<25 ? i*50 : 0);
                     }
                 });
             }
