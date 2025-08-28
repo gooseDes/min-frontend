@@ -1,3 +1,5 @@
+import { address } from "../src/wsClient";
+
 self.addEventListener("push", (event) => {
   console.log("Push received:", event);
   let data;
@@ -9,9 +11,21 @@ self.addEventListener("push", (event) => {
   }
 
   event.waitUntil(
-    self.registration.showNotification(data.title, {
+    self.registration.showNotification(data.chat, {
       body: data.message,
-      icon: "/logo512.png",
+      icon: `${address}/avatars/${data.author}.webp`,
+      badge: `${address}/avatars/${data.author}.webp`,
+      tag: 'message',
+      vibration: [200, 100, 200, 100, 400]
     })
   );
+});
+
+
+self.addEventListener("install", (event) => {
+  self.skipWaiting();
+});
+
+self.addEventListener("activate", (event) => {
+  event.waitUntil(clients.claim());
 });
