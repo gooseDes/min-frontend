@@ -3,6 +3,10 @@ import { address } from "./wsClient";
 export async function subscribeUser() {
     if ("serviceWorker" in navigator && "PushManager" in window) {
         try {
+            const oldReg = await navigator.serviceWorker.getRegistration("/sw.js");
+            if (oldReg) {
+                await oldReg.unregister();
+            }
             const reg = await navigator.serviceWorker.register("/sw.js", { type: 'module' });
             console.log("Service Worker registered");
 
