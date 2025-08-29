@@ -19,5 +19,7 @@
     "send_message": "Написать",
 
     "upload_avatar": "Загрузить аватар",
-    "subscribe_to_msges": "Подписаться на пуш уведомления"
+    "subscribe_to_msges": "Подписаться на пуш уведомления",
+    "messages": "Сообщения",
+    "back": "Назад"
 }

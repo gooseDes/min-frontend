@@ -4,7 +4,7 @@ import './SettingsPage.css';
 import ProfileThing from './gui/profile_thing';
 import { address } from './wsClient';
 import { subscribeUser } from './push';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faGear, faMessage, faPencil, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect } from 'react';
 
@@ -31,7 +31,17 @@ function SettingsPage() {
             .then((res) => res.json())
             .then((data) => {
                 console.log("Avatar loaded:", data.url);
-                window.location.href = window.location.href;
+                const avatar_settings = document.getElementById('avatar_settings');
+                setTimeout(() => {
+                    avatar_settings.style.scale = '0';
+                    setTimeout(() => {
+                        avatar_settings.src = '';
+                        setTimeout(() => {
+                            avatar_settings.src = `${address}/avatars/${localStorage.getItem('id')}.webp?t=${Date.now()}`;
+                            avatar_settings.style.scale = '1';
+                        }, 10);
+                    }, 500);
+                }, 100);
             })
             .catch((err) => {
                 console.error("Error loading avatar:", err);
@@ -44,25 +54,61 @@ function SettingsPage() {
     function openMenu() {
         const left_panel = document.getElementById('left_panel');
         left_panel.style.translate = '10px 10px'; 
-        left_panel.style.width = 'calc(100vw - 40px)';
+        left_panel.style.width = 'calc(100vw - 20px)';
         left_panel.style.opacity = '1';
         document.getElementById('right_panel').style.filter = 'blur(1px)';
     }
 
     useEffect(() => {
-        const menu_button = document.getElementById('menu_button')
-        if (menu_button.style.opacity)
-        menu_button.click();
+        setTimeout(() => {
+            const menu_button = document.getElementById('menu_button');
+            if (window.matchMedia("(orientation: portrait)").matches) menu_button.click();
+        }, 100);
     }, []);
+
+    function openSettingsScreen(screen) {
+        const settings_screens = document.querySelectorAll('.SettingsScreen');
+        settings_screens.forEach(screen => screen.classList.add('hide'));
+        const new_screen = document.querySelector(`.${screen}`);
+        new_screen.classList.remove('hide');
+        new_screen.classList.add('show');
+        const left_panel = document.getElementById('left_panel');
+        left_panel.style.translate = '';
+        left_panel.style.width = '';
+        left_panel.style.opacity = '';
+        document.getElementById('right_panel').style.filter = '';
+    }
 
     return (
         <div className="App">
             <div className="LeftPanel" id='left_panel'>
-                <ProfileThing text={t('upload_avatar')} image={false} onClick={uploadAvatar}/>
-                <ProfileThing text={t('subscribe_to_msges')} image={false} onClick={subscribeUser}/>
+                <div className="SettingsPanel">
+                    <ProfileThing text={t('back')} image={false} onClick={() => { location.href = '/' }}> <FontAwesomeIcon icon={faArrowLeft} /> </ProfileThing>
+                    <ProfileThing text={t('profile')} image={false} onClick={() => { openSettingsScreen('ProfileSettings') }}>  <FontAwesomeIcon icon={faUser} /> </ProfileThing>
+                    <ProfileThing text={t('messages')} image={false} onClick={() => { openSettingsScreen('MessagesSettings') }}>  <FontAwesomeIcon icon={faMessage} /> </ProfileThing>
+                </div>
             </div>
             <div className="RightPanel" id='right_panel'>
-                <button className='MenuButton' id='menu_button' onClick={openMenu}><FontAwesomeIcon icon={faBars}/></button>
+                <button className='MenuButton' id='menu_button' onClick={openMenu}><FontAwesomeIcon icon={faArrowLeft}/></button>
+                <div className='SettingsScreens'>
+                    <div className='SettingsScreen ProfileSettings hide'>
+                        <div className='Profile'>
+                            <div className='EditDiv' onClick={uploadAvatar}>
+                                <img src={`${address}/avatars/${localStorage.getItem('id')}.webp`} onError={ (e) => e.currentTarget.src = '/logo512.png' } className='AvatarSettings' id='avatar_settings' />
+                                <FontAwesomeIcon icon={faPencil} id='pencil' />
+                            </div>
+                            <p style={{ fontWeight: 'bold', fontSize: '28px' }}>{localStorage.getItem('username')}</p>
+                        </div>
+                    </div>
+                    <div className='SettingsScreen MessagesSettings hide'>
+                        <div className='thing'>
+                            <ProfileThing text={t('subscribe_to_msges')} image={false} animation={false} onClick={subscribeUser}/>
+                        </div>
+                    </div>
+                    <div className='SettingsScreen EmptySettings show'>
+                        <FontAwesomeIcon icon={faGear} style={{ color: '#aaa', fontSize: '24vh', filter: 'blur(5px)' }} />
+                    </div>
+                </div>
             </div>
         </div>
     )

@@ -274,11 +274,13 @@ p {
   margin: 0;
   position: absolute;
   left: 30px;
+  opacity: 1;
 }
 
 @media screen and (orientation: landscape) {
   .MenuButton {
     display: none;
+    opacity: 0;
   }
 }
 

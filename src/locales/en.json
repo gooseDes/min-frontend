@@ -19,5 +19,7 @@
     "send_message": "Send Message",
 
     "upload_avatar": "Upload avatar",
-    "subscribe_to_msges": "Subscribe to push messages"
+    "subscribe_to_msges": "Subscribe to push messages",
+    "messages": "Messages",
+    "back": "Back"
 }
