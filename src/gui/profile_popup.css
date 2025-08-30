@@ -96,6 +96,7 @@
     position: absolute;
     bottom: 0;
     padding: 10px;
+    margin-right: 10px;
 }
 
 .MessageButton {

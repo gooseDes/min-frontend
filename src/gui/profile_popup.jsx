@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMessage, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { useSearchParams } from 'react-router-dom';
 import { t } from 'i18next';
+import PulloutButton from './pullout_button';
 
 const ProfilePopup = forwardRef(({ id = '', src = '/logo512.png', username = '' }, ref) => {
     const [isShown, setIsShown] = useState(false);
@@ -14,6 +15,13 @@ const ProfilePopup = forwardRef(({ id = '', src = '/logo512.png', username = '' 
         show: () => setIsShown(true),
         hide: () => setIsShown(false),
     }));
+
+    function openChat() { 
+        searchParams.delete('profile');
+        setSearchParams(searchParams);
+        window.openChat(username);
+        setIsShown(false);
+    }
 
     return (
         <div className={`ProfilePopup${isShown ? ' show' : ''}`} id={id}>
@@ -26,8 +34,9 @@ const ProfilePopup = forwardRef(({ id = '', src = '/logo512.png', username = '' 
             <div className='ProfilePopupContent'>
                 <img src={src} alt='logo' className='ProfilePopupAvatar' onError={(e) => e.currentTarget.src='/logo512.png'}/>
                 <p className='ProfilePopupUsername'>{username}</p>
+                <div className='Filler' />
                 <div className='ProfilePopupBottom'>
-                    <button className='MessageButton'><p>{t('send_message')}</p><FontAwesomeIcon className='icon' icon={faMessage}/></button>
+                    {username != localStorage.getItem('username') ? <PulloutButton text={t('send_message')} icon={faMessage} onClick={openChat} /> : <div />}
                 </div>
             </div>
         </div>

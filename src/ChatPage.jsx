@@ -24,14 +24,19 @@ function ChatPage() {
     var isWaitingForHistory = useRef(false);
     const ProfilePopupRef = useRef();
     const location = useLocation();
-    const [searchParams] = useSearchParams();
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    window.openChat = username => {
+        searchParams.set('chat', username); 
+        searchParams.delete('profile');
+        setSearchParams(searchParams);
+    }
 
     useEffect(() => {
         verifyToken(localStorage.getItem('token'));
         const socket = getSocket();
         socket.on('connect', data => {
             console.log('Connected to server');
-            isWaitingForHistory.current = true;
         });
         socket.on('message', (data) => {
             if (data.author === localStorage.getItem('username')) data.author = 'You';
@@ -58,7 +63,7 @@ function ChatPage() {
                     for (let i=0; i<content_panel_children.length; i++) {
                         setTimeout(() => {
                             reversed[i].classList.add('show');
-                        }, i<25 ? i*50 : 0);
+                        }, i<25 ? i*50 : 1000);
                     }
                 });
             }
@@ -160,6 +165,32 @@ function ChatPage() {
         if (profile) {
             window.openProfilePopup(profile);
         }
+        const chat = searchParams.get('chat');
+        if (chat) {
+            const socket = getSocket();
+
+            function open(id, username) {
+                localStorage.setItem('chatId', id);
+                openChat(username);
+                searchParams.delete('chat');
+                setSearchParams(searchParams);
+            }
+
+            socket.on('getChatWithResult', data => {
+                if (data.chatId == -1) {
+                    socket.on('createChatResult', data => {
+                        if (success) {
+                            open(data.chatId, chat)
+                        }
+                        socket.off('createChatResult');
+                    });
+                } else {
+                    socket.off('getChatWithResult');
+                    open(data.chatId, chat)
+                }
+            });
+            socket.emit('getChatWith', { name: chat })
+        }
     }, [location, searchParams]);
 
     function sendMessage() {
@@ -175,8 +206,10 @@ function ChatPage() {
         setMessages([]);
         requestAnimationFrame(() => {
             isWaitingForHistory.current = true;
-            const socket = getSocket();
-            socket.emit('getChatHistory', { chat: localStorage.getItem('chatId') || 1 });
+            requestAnimationFrame(() => {
+                const socket = getSocket();
+                socket.emit('getChatHistory', { chat: localStorage.getItem('chatId') || 1 });
+            });
         });
         const left_panel = document.getElementById('left_panel');
         left_panel.style.translate = '';

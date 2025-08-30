@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useSearchParams } from 'react-router-dom';
 import ChatPage from './ChatPage.jsx';
 import SignupPage from './SingupPage.jsx';
 import SigninPage from './SinginPage.jsx';

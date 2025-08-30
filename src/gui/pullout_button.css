@@ -1,0 +1,44 @@
+.PulloutButton {
+    height: 80px;
+    width: 80px;
+    background-color: #000000;
+    border-radius: 999px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row-reverse;
+    color: #fff;
+    transition: all 0.3s ease;
+    cursor: pointer;
+
+    p {
+        opacity: 0;
+        position: fixed;
+        transition: all 0.3s ease;
+        text-align: center;
+        width: fit-content;
+        background-color: #000000;
+        height: 80px;
+        border-radius: 999px 999px 999px 999px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 20px;
+        scale: 0;
+        font-size: 16px;
+    }
+
+    .icon {
+        z-index: 1000;
+    }
+
+    &:hover {
+        border-radius: 0 999px 999px 0;
+        p {
+            opacity: 1;
+            transform: translateX(-50%);
+            border-radius: 999px 0 0 999px;
+            scale: 1;
+        }
+    }
+}
