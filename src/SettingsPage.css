@@ -50,11 +50,15 @@
     background-color: var(--background-panel);
     border-radius: 2svh;
     padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .Profile {
-    aspect-ratio: 1/2;
-    height: 90vh;
+    aspect-ratio: 1/2 !important;
+    height: 80%;
+    max-width: 80%;
     background-color: #111111aa;
     backdrop-filter: blur(10px);
     border-radius: 2svh;
