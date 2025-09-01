@@ -1,10 +1,3 @@
-.MenuButton {
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    z-index: 1000;
-}
-
 .SettingsPanel {
     width: 100%;
     height: 100%;
@@ -105,4 +98,36 @@
 
 .thing {
     aspect-ratio: 1/2;
+}
+
+.RightPanel {
+    &.Settings {
+        gap: 10px;
+    }
+}
+
+.BackButton {
+    position: fixed;
+    left: 20px;
+    top: 40px;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 24px;
+    z-index: 9999;
+    transition: all 0.3s ease;
+
+    &:hover {
+        scale: 1.5;
+    }
+
+    &.hide {
+        translate: -60px 0;
+    }
+}
+
+@media screen and (orientation: landscape) {
+    .BackButton {
+        display: none;
+    }
 }

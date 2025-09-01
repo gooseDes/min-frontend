@@ -1,9 +1,9 @@
 import { t } from 'i18next';
-import './App.css';
+import '@/App.css';
 import './SettingsPage.css';
-import ProfileThing from './gui/profile_thing';
-import { address } from './wsClient';
-import { subscribeUser } from './push';
+import ProfileThing from '../../gui/profile_thing';
+import { address } from '@/wsClient';
+import { subscribeUser } from '../../push';
 import { faArrowLeft, faGear, faMessage, faPencil, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect } from 'react';
@@ -53,10 +53,9 @@ function SettingsPage() {
 
     function openMenu() {
         const left_panel = document.getElementById('left_panel');
-        left_panel.style.translate = '10px 10px'; 
-        left_panel.style.width = 'calc(100vw - 20px)';
-        left_panel.style.opacity = '1';
+        left_panel.classList.add('show');
         document.getElementById('right_panel').style.filter = 'blur(1px)';
+        document.getElementById('menu_button').classList.add('hide');
     }
 
     useEffect(() => {
@@ -72,15 +71,14 @@ function SettingsPage() {
         const new_screen = document.querySelector(`.${screen}`);
         new_screen.classList.remove('hide');
         new_screen.classList.add('show');
-        const left_panel = document.getElementById('left_panel');
-        left_panel.style.translate = '';
-        left_panel.style.width = '';
-        left_panel.style.opacity = '';
+        document.getElementById('left_panel').classList.remove('show');
         document.getElementById('right_panel').style.filter = '';
+        document.getElementById('menu_button').classList.remove('hide');
     }
 
     return (
         <div className="App">
+            <button className='BackButton' id='menu_button' onClick={openMenu}><FontAwesomeIcon icon={faArrowLeft}/></button>
             <div className="LeftPanel" id='left_panel'>
                 <div className="SettingsPanel">
                     <ProfileThing text={t('back')} image={false} onClick={() => { location.href = '/' }}> <FontAwesomeIcon icon={faArrowLeft} /> </ProfileThing>
@@ -88,8 +86,7 @@ function SettingsPage() {
                     <ProfileThing text={t('messages')} image={false} onClick={() => { openSettingsScreen('MessagesSettings') }}>  <FontAwesomeIcon icon={faMessage} /> </ProfileThing>
                 </div>
             </div>
-            <div className="RightPanel" id='right_panel'>
-                <button className='MenuButton' id='menu_button' onClick={openMenu}><FontAwesomeIcon icon={faArrowLeft}/></button>
+            <div className="RightPanel Settings" id='right_panel'>
                 <div className='SettingsScreens'>
                     <div className='SettingsScreen ProfileSettings hide'>
                         <div className='Profile'>

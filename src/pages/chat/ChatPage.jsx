@@ -1,15 +1,15 @@
-import './App.css';
+import '@/App.css';
 import './ChatPage.css';
-import ProfileThing from './gui/profile_thing';
-import Message from './gui/message';
-import logo from './logo.png'
+import ProfileThing from '../../gui/profile_thing';
+import Message from '../../gui/message';
+import logo from '@/logo.png'
 import { useState, useEffect, useRef } from 'react';
-import { closePopup, isUserLogined, openPopup, showError, verifyToken } from './utils';
-import { address, getSocket } from './wsClient';
-import ProfilePopup from './gui/profile_popup';
+import { closePopup, isUserLogined, openPopup, showError, verifyToken } from '../../utils';
+import { address, getSocket } from '../../wsClient';
+import ProfilePopup from '../../gui/profile_popup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faArrowRightFromBracket, faBars, faGear, faMessage, faPaperPlane, faPlus } from '@fortawesome/free-solid-svg-icons';
-import Popup from './gui/popup';
+import Popup from '../../gui/popup';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { Trans } from 'react-i18next';
 import { t } from 'i18next';
@@ -20,7 +20,7 @@ function ChatPage() {
     const [chats, setChats] = useState([]);
     var inited = useRef(false);
     var lastSended = useRef('');
-    var dontTouch = useRef(-1);
+    var animateFrom = useRef(-1);
     var isWaitingForHistory = useRef(false);
     const ProfilePopupRef = useRef();
     const location = useLocation();
@@ -51,6 +51,7 @@ function ChatPage() {
                     author: msg.author === localStorage.getItem('username') ? 'You': msg.author,
                     author_id: msg.author_id
                 })));
+                animateFrom.current = data.messages.length;
                 isWaitingForHistory.current = false;
                 requestAnimationFrame(() => {
                     const content_panel = document.getElementById('content_panel');
@@ -85,6 +86,7 @@ function ChatPage() {
             }
         });
         socket.on('error', data => {
+            console.error(`Error: ${data}`)
             showError(data.msg);
         });
 
@@ -133,10 +135,7 @@ function ChatPage() {
         let scrollBy = 0;
 
         if (lastMessages.length !== 0) {
-            if (dontTouch.current === -1) {
-                dontTouch.current = content_panel_children.length;
-            }
-            for (let i = dontTouch.current === -1 ? 0 : dontTouch.current; i < content_panel_children.length; i++) {
+            for (let i = animateFrom.current; i < content_panel_children.length; i++) {
                 scrollBy += content_panel_children[i].getBoundingClientRect().height*2;
                 requestAnimationFrame(() => {
                     content_panel_children[i].classList.add('slow');
@@ -211,10 +210,7 @@ function ChatPage() {
                 socket.emit('getChatHistory', { chat: localStorage.getItem('chatId') || 1 });
             });
         });
-        const left_panel = document.getElementById('left_panel');
-        left_panel.style.translate = '';
-        left_panel.style.width = '';
-        left_panel.style.opacity = '';
+        document.getElementById('left_panel').classList.remove('show');
         const right_panel = document.getElementById('right_panel');
         right_panel.style.gap = '10px';
         right_panel.style.filter = '';
@@ -240,10 +236,7 @@ function ChatPage() {
     }
 
     function openMenu() {
-        const left_panel = document.getElementById('left_panel'); 
-        left_panel.style.translate = '10px 10px'; 
-        left_panel.style.width = 'calc(100vw - 40px)';
-        left_panel.style.opacity = '1';
+        document.getElementById('left_panel').classList.add('show'); 
         document.getElementById('right_panel').style.filter = 'blur(1px)';
     }
 
