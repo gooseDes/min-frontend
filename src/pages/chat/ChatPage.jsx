@@ -121,6 +121,7 @@ function ChatPage() {
         setTimeout(() => {
             if (!isUserLogined()) {
                 openPopup('account');
+                localStorage.clear();
             }
         }, 100);
     }, []);
