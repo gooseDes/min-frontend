@@ -217,6 +217,11 @@ p {
   padding: 10px;
   gap: 10px;
   overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  &.expanded {
+    height: 200px;
+  }
 }
 
 .MessageInput {
@@ -230,7 +235,12 @@ p {
   font-size: 16px;
   overflow: hidden;
   translate: 0 150%;
+  padding-top: 38px;
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  &.expanded {
+    padding-top: 10px;
+  }
 
   &::placeholder {
     color: #999;

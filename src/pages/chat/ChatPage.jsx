@@ -18,6 +18,8 @@ function ChatPage() {
     const [messages, setMessages] = useState([]);
     const [lastMessages, setLastMessages] = useState([]);
     const [chats, setChats] = useState([]);
+    const [lines, setLines] = useState(1);
+
     var inited = useRef(false);
     var lastSended = useRef('');
     var animateFrom = useRef(-1);
@@ -59,7 +61,7 @@ function ChatPage() {
                     content_panel.scrollTop = content_panel.scrollTop;
                     const content_panel_children = Array.from(content_panel.children)
                     for (let i=0; i<content_panel_children.length; i++) {
-                        content_panel.scrollTop += content_panel_children[i].getBoundingClientRect().height*2
+                        content_panel.scrollTop += content_panel_children[i].getBoundingClientRect().height*1000;
                     }
                     const reversed = content_panel_children.reverse()
                     for (let i=0; i<content_panel_children.length; i++) {
@@ -138,7 +140,7 @@ function ChatPage() {
 
         if (lastMessages.length !== 0) {
             for (let i = animateFrom.current; i < content_panel_children.length; i++) {
-                scrollBy += content_panel_children[i].getBoundingClientRect().height*2;
+                scrollBy += content_panel_children[i].getBoundingClientRect().height*1000;
                 requestAnimationFrame(() => {
                     content_panel_children[i].classList.add('slow');
                     content_panel_children[i].classList.add('show');
@@ -195,9 +197,11 @@ function ChatPage() {
     }, [location, searchParams]);
 
     function sendMessage() {
-        const value = document.getElementById('message_input').value;
+        const input = document.getElementById('message_input');
+        const value = input.value;
         if (value.trim() === '') return;
-        document.getElementById('message_input').value = '';
+        input.value = '';
+        setLines(1);
         const socket = getSocket();
         socket.emit('msg', { text: value, chat: localStorage.getItem('chatId') || 1 });
         lastSended.current = value;
@@ -280,6 +284,25 @@ function ChatPage() {
         }
     }
 
+    const handleInput = (e) => {
+        const value = e.target.value;
+        const count = value.split("\n").length;
+        setLines(count);
+    };
+
+    const handleKeyDownForInput = (e) => {
+        const input = document.getElementById('message_input');
+        if (e.key === "Enter") {
+            if (e.shiftKey) {
+                input.value += "\n";
+                setLines(lines + 1);
+            } else {
+                sendMessage();
+            }
+            e.preventDefault();
+        }
+    };
+
     setTimeout(() => {
         const socket = getSocket();
         socket.emit('getChats', {});
@@ -341,9 +364,9 @@ function ChatPage() {
                             );
                         })}
                     </div>
-                    <div className='InputPanel' id='input_panel'>
+                    <div className={`InputPanel ${lines > 1 ? 'expanded': ''}`} id='input_panel'>
                         <button className='InputButton AttachButton' onClick={attachImages}><FontAwesomeIcon icon={faPaperclip}/></button>
-                        <input placeholder={t('message_placeholder')} onKeyDown={(event) => {if (event.key === 'Enter') sendMessage()}} className='MessageInput' id='message_input'/>
+                        <textarea placeholder={t('message_placeholder')} onKeyDown={handleKeyDownForInput} className={`MessageInput ${lines > 1 ? 'expanded': ''}`} id='message_input' onInput={handleInput}/>
                         <button className='InputButton SendButton' onClick={sendMessage}><FontAwesomeIcon icon={faPaperPlane}/></button>
                     </div>
                 </div>
