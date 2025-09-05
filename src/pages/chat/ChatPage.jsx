@@ -46,7 +46,6 @@ function ChatPage() {
         });
         socket.on('history', data => {
             if (isWaitingForHistory.current) {
-                console.log(data.messages);
                 setMessages(data.messages.map(msg => ({
                     id: msg.id,
                     text: msg.text,
@@ -127,6 +126,14 @@ function ChatPage() {
                 localStorage.clear();
             }
         }, 100);
+        // Watching for changes
+        const content_panel = document.getElementById('content_panel');
+        const observer = new ResizeObserver((entries) => {
+            setTimeout(() => {
+                content_panel.scrollTop += 1000000;
+            }, 100);
+        });
+        observer.observe(content_panel);
     }, []);
 
     useEffect(() => {
