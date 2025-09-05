@@ -10,6 +10,8 @@ import SigninPage from './pages/signin/SinginPage.jsx';
 
 function App() {
     const [errorPopupContent, setErrorPopupContent] = useState(null);
+    const [imageOverlaySrc, setImageOverlaySrc] = useState(null);
+
     window.setErrorPopup = (content) => {
         setErrorPopupContent(content);
     }
@@ -23,6 +25,9 @@ function App() {
         });
         socket.emit('getUserInfo', { 'name': username })
         profilePopupRef.current.show();
+    }
+    window.openImageOverlay = (src) => {
+        setImageOverlaySrc(src);
     }
     const profilePopupRef = useRef();
     return (
@@ -38,6 +43,11 @@ function App() {
             <Router>
                 <Popup title='Error' name='error'>{errorPopupContent}</Popup>
                 <ProfilePopup ref={profilePopupRef} username={profilePopupContent.username} src={`${address}/avatars/${profilePopupContent.id}.webp`}/>
+                <div className={`ImageOverlay ${imageOverlaySrc ? 'show' : 'hide'}`} onClick={() => setImageOverlaySrc(null)}>
+                    <div className={`ImageOverlayContent ${imageOverlaySrc ? 'show' : 'hide'}`}>
+                        <img className='ImageFromOverlay' src={imageOverlaySrc} alt='img' />
+                    </div>
+                </div>
             </Router>
         </div>
     );

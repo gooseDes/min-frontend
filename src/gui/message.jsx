@@ -2,6 +2,7 @@ import { useSearchParams } from 'react-router-dom';
 import './message.css'
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { useState } from 'react';
 
 function Message({ text = 'message', author = 'author', type = 'left', src = '/logo512.png', connected = false }) {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -9,6 +10,10 @@ function Message({ text = 'message', author = 'author', type = 'left', src = '/l
     function openAuthorProfile() {
         searchParams.set('profile', author == 'You' ? localStorage.getItem('username') : author); 
         setSearchParams(searchParams);
+    }
+
+    function handleImageClick(src) {
+        window.openImageOverlay(src);
     }
 
     return (
@@ -20,10 +25,8 @@ function Message({ text = 'message', author = 'author', type = 'left', src = '/l
                     remarkPlugins={[remarkGfm]}
                     components={{
                         img: ({ node, ...props }) => (
-                        <a href={props.src} target="_blank" rel="noopener noreferrer">
-                            <img {...props} style={{ cursor: "pointer" }} />
-                        </a>
-                        ),
+                        <img {...props} style={{ cursor: "pointer" }} onClick={() => handleImageClick(props.src)} />
+                        )
                     }}
                 >
                     {text.replaceAll('\n', '  \n')}
