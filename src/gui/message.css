@@ -49,6 +49,11 @@
     &.right {
         border-radius: 1svh 1svh 0 1svh;
     }
+
+    img {
+        border-radius: 1svh;
+        max-width: 100%;
+    }
 }
 
 .Author {
