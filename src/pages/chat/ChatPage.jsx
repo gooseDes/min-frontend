@@ -44,6 +44,7 @@ function ChatPage() {
         });
         socket.on('history', data => {
             if (isWaitingForHistory.current) {
+                console.log(data.messages);
                 setMessages(data.messages.map(msg => ({
                     id: msg.id,
                     text: msg.text,
