@@ -1,5 +1,6 @@
 import { useSearchParams } from 'react-router-dom';
 import './message.css'
+import Markdown from 'react-markdown';
 
 function Message({ text = 'message', author = 'author', type = 'left', src = '/logo512.png', connected = false }) {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -14,7 +15,7 @@ function Message({ text = 'message', author = 'author', type = 'left', src = '/l
             <img className={`MessageAvatar${connected ? ' connected' : ''}`} src={src} onError={(e) => e.currentTarget.src='/logo512.png'} draggable='false' onClick={openAuthorProfile} />
             <div className={`TextDiv ${type}`}>
                 <div className='Author' onClick={openAuthorProfile}>{author}</div>
-                <p>{text}</p>
+                <Markdown>{text}</Markdown>
             </div>
         </div>
     )

@@ -1,12 +1,12 @@
 import { BrowserRouter as Router, Routes, Route, useSearchParams } from 'react-router-dom';
-import SignupPage from './SingupPage.jsx';
-import SigninPage from './SinginPage.jsx';
 import Popup from './gui/popup.jsx';
 import { useRef, useState } from 'react';
 import ProfilePopup from './gui/profile_popup.jsx';
 import { address, getSocket } from './wsClient.jsx';
 import ChatPage from './pages/chat/ChatPage.jsx';
 import SettingsPage from './pages/settings/SettingsPage.jsx';
+import SignupPage from './pages/signup/SingupPage.jsx';
+import SigninPage from './pages/signin/SinginPage.jsx';
 
 function App() {
     const [errorPopupContent, setErrorPopupContent] = useState(null);

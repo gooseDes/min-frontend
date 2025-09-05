@@ -4,11 +4,11 @@ import ProfileThing from '../../gui/profile_thing';
 import Message from '../../gui/message';
 import logo from '@/logo.png'
 import { useState, useEffect, useRef } from 'react';
-import { closePopup, isUserLogined, openPopup, showError, verifyToken } from '../../utils';
+import { closePopup, isUserLogined, loadFile, openPopup, showError, verifyToken } from '../../utils';
 import { address, getSocket } from '../../wsClient';
 import ProfilePopup from '../../gui/profile_popup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight, faArrowRightFromBracket, faBars, faGear, faMessage, faPaperPlane, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRight, faArrowRightFromBracket, faBars, faGear, faMessage, faPaperclip, faPaperPlane, faPlus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import Popup from '../../gui/popup';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { Trans } from 'react-i18next';
@@ -251,6 +251,34 @@ function ChatPage() {
         socket.emit('createChat', { nickname: input.value.replace('@', '') })
     }
 
+    function attachImages() {
+        try {
+            loadFile('image', true, (files) => {
+                fetch(`${address}/attach`, {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` },
+                    body: (() => {
+                        const formData = new FormData();
+                        files.forEach((file) => {
+                            formData.append('attachments', file);
+                        });
+                        return formData;
+                    })()
+                }).then(responce => responce.json()).then(data => {
+                    if (data.success) {
+                        const input = document.getElementById('message_input');
+                        input.value += ' ' + data.urls.map(att => `![attachment](${address}${att})`).join(' ');
+                        input.focus();
+                    } else {
+                        showError(data.msg);
+                    }
+                })
+            });
+        } catch (e) {
+            showError(e.message);
+        }
+    }
+
     setTimeout(() => {
         const socket = getSocket();
         socket.emit('getChats', {});
@@ -313,8 +341,9 @@ function ChatPage() {
                         })}
                     </div>
                     <div className='InputPanel' id='input_panel'>
+                        <button className='InputButton AttachButton' onClick={attachImages}><FontAwesomeIcon icon={faPaperclip}/></button>
                         <input placeholder={t('message_placeholder')} onKeyDown={(event) => {if (event.key === 'Enter') sendMessage()}} className='MessageInput' id='message_input'/>
-                        <button className='SendButton' onClick={sendMessage}><FontAwesomeIcon icon={faPaperPlane}/></button>
+                        <button className='InputButton SendButton' onClick={sendMessage}><FontAwesomeIcon icon={faPaperPlane}/></button>
                     </div>
                 </div>
             </div>

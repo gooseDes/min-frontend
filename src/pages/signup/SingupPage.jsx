@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
-import { address } from './wsClient';
-import './App.css'
-import './Signup.css'
-import { showError } from './utils';
+import { address } from '../../wsClient';
+import '@/App.css';
+import '@/Sign-in-up.css';
+import { showError } from '../../utils';
 import { Trans } from 'react-i18next';
 import { t } from 'i18next';
 

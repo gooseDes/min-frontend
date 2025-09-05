@@ -7,26 +7,23 @@ import { subscribeUser } from '../../push';
 import { faArrowLeft, faGear, faMessage, faPencil, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect } from 'react';
+import { loadFile } from '../../utils';
 
 function SettingsPage() {
     function uploadAvatar() {
-        const fileInput = document.createElement("input");
-        fileInput.type = "file";
-        fileInput.accept = "image/*";
-
-        fileInput.onchange = () => {
-            const file = fileInput.files[0];
+        loadFile('image', false, (files) => {
+            const file = files[0];
             if (!file) return;
 
             const formData = new FormData();
             formData.append("avatar", file);
 
             fetch(`${address}/upload-avatar`, {
-            method: "POST",
-            headers: {
-                "Authorization": "Bearer " + localStorage.getItem("token"),
-            },
-            body: formData,
+                method: "POST",
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("token"),
+                },
+                body: formData,
             })
             .then((res) => res.json())
             .then((data) => {
@@ -46,9 +43,7 @@ function SettingsPage() {
             .catch((err) => {
                 console.error("Error loading avatar:", err);
             });
-        };
-
-        fileInput.click();
+        });
     }
 
     function openMenu() {

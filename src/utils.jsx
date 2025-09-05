@@ -58,3 +58,24 @@ export function verifyToken(token) {
         }
     });
 }
+
+export function loadFile(type='image', multiple=false, callback) {
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.accept = `${type}/*`;
+    fileInput.multiple = multiple;
+
+    fileInput.onchange = () => {
+        const files = fileInput.files;
+        if (!files || files.length === 0) return;
+        if (multiple) {
+            callback(Array.from(files));
+            return;
+        }
+        const file = fileInput.files[0];
+        if (!file) return;
+        callback([file]);
+    };
+
+    fileInput.click();
+}

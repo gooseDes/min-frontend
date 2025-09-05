@@ -237,7 +237,7 @@ p {
   }
 }
 
-.SendButton {
+.InputButton {
   height: 100%;
   aspect-ratio: 1;
   background-color: transparent;
@@ -255,6 +255,10 @@ p {
   &:active {
     scale: 0.9;
   }
+}
+
+.AttachButton {
+  translate: -150% 0;
 }
 
 .scrollable-y {
