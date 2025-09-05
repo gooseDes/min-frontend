@@ -34,6 +34,7 @@
 .TextDiv {
     background-color: #272727c2;
     width: fit-content;
+    height: fit-content;
     max-width: 30vh;
     padding: 0 10px;
     border-radius: 1svh;
@@ -73,7 +74,7 @@
     aspect-ratio: 1;
     width: 50px;
     border-radius: 999px;
-    translate: 0 10px;
+    translate: 0 calc(100% - 40px);
 
     &.connected {
         opacity: 0;
