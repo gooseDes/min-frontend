@@ -80,3 +80,13 @@
         opacity: 0;
     }
 }
+
+@media screen and (max-width: 600px) {
+    .MessageAvatar {
+        width: 40px;
+    }
+
+    .TextDiv {
+        max-width: 25vh;
+    }
+}
