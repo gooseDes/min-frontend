@@ -4,7 +4,7 @@ import ProfileThing from '../../gui/profile_thing';
 import Message from '../../gui/message';
 import logo from '@/logo.png'
 import { useState, useEffect, useRef } from 'react';
-import { closePopup, isUserLogined, loadFile, openPopup, showError, verifyToken } from '../../utils';
+import { closePopup, isUserLogined, loadFile, openPopup, showError, validateString, verifyToken } from '../../utils';
 import { address, getSocket } from '../../wsClient';
 import ProfilePopup from '../../gui/profile_popup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -19,6 +19,7 @@ function ChatPage() {
     const [lastMessages, setLastMessages] = useState([]);
     const [chats, setChats] = useState([]);
     const [lines, setLines] = useState(1);
+    const [customEmojis, setCustomEmojis] = useState([]);
 
     var inited = useRef(false);
     var lastSended = useRef('');
@@ -86,6 +87,9 @@ function ChatPage() {
                     createError.classList.add('fade');
                 }, 1500);
             }
+        });
+        socket.on('customEmojis', (data) => {
+            setCustomEmojis(data.emojis);
         });
         socket.on('error', data => {
             console.error(`Error: ${data}`)
@@ -205,8 +209,16 @@ function ChatPage() {
 
     function sendMessage() {
         const input = document.getElementById('message_input');
-        const value = input.value;
+        let value = input.value;
         if (value.trim() === '') return;
+        const splitted = value.split(":");
+        for (let i=0; i<splitted.length-1; i++) {
+            if (validateString(splitted[i], 'username', 1, 64) && customEmojis.find(emoji => emoji.name === splitted[i])) {
+                splitted[i] = `![${splitted[i]}](${address}/emojis/${customEmojis.find(emoji => emoji.name === splitted[i]).id}.webp)`;
+            }
+        }
+        console.log(splitted);
+        value = splitted.join(":");
         input.value = '';
         setLines(1);
         const socket = getSocket();
@@ -313,6 +325,7 @@ function ChatPage() {
     setTimeout(() => {
         const socket = getSocket();
         socket.emit('getChats', {});
+        socket.emit('getCustomEmojis', {});
     }, 10000);
 
     return (

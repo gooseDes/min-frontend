@@ -1,4 +1,5 @@
 import { address } from "./wsClient";
+import Pica from "pica";
 
 export function getToken() {
     return localStorage.getItem('token');
@@ -78,4 +79,54 @@ export function loadFile(type='image', multiple=false, callback) {
     };
 
     fileInput.click();
+}
+
+export const USERNAME_ALLOWED_CHARS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-';
+export const EMAIL_ALLOWED_CHARS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@._-';
+export const PASSWORD_ALLOWED_CHARS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-={}[]|;:"<>,.?/~`';
+
+// Function for validating symbols in strings
+export function validateString(str, type="username", minLength=3, maxLength=32) {
+    let allowedChars = '';
+    if (type === "username") allowedChars = USERNAME_ALLOWED_CHARS;
+    else if (type === "email") allowedChars = EMAIL_ALLOWED_CHARS;
+    else if (type === "password") allowedChars = PASSWORD_ALLOWED_CHARS;
+    else throw new Error("Invalid type");
+
+    if (str.length < minLength || str.length > maxLength) return false;
+    for (let char of str) {
+        if (!allowedChars.includes(char)) return false;
+    }
+    return true;
+}
+
+export async function cropCenter(file, targetSize = 128) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.src = URL.createObjectURL(file);
+        img.onload = async () => {
+            try {
+                const size = Math.min(img.width, img.height);
+                const startX = (img.width - size) / 2;
+                const startY = (img.height - size) / 2;
+
+                const cropCanvas = document.createElement("canvas");
+                cropCanvas.width = size;
+                cropCanvas.height = size;
+                const ctx = cropCanvas.getContext("2d");
+                ctx.drawImage(img, startX, startY, size, size, 0, 0, size, size);
+
+                const pica = Pica();
+                const finalCanvas = document.createElement("canvas");
+                finalCanvas.width = targetSize;
+                finalCanvas.height = targetSize;
+
+                await pica.resize(cropCanvas, finalCanvas);
+                finalCanvas.toBlob(blob => resolve(blob), "image/webp", 0.9);
+            } catch (err) {
+                reject(err);
+            }
+        };
+        img.onerror = reject;
+    });
 }
