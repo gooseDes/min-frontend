@@ -1,7 +1,7 @@
 .SquareImgBtn {
     border-radius: 2svh;
-    aspect-ratio: 1;
-    width: 100px;
+    min-width: 100px;
+    width: fit-content;
     height: 100px;
     background-color: var(--background-panel);
     border: #aaa 1px solid;
@@ -23,7 +23,7 @@
 
     img {
         border-radius: 1svh;
-        width: 60%;
+        width: 60px;
         aspect-ratio: 1;
         object-fit: cover;
         padding: 0;
@@ -32,6 +32,7 @@
 
     p {
         height: fit-content;
+        width: fit-content;
         text-align: center;
         font-size: 18px;
         padding: 0;

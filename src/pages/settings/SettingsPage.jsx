@@ -4,7 +4,7 @@ import './SettingsPage.css';
 import ProfileThing from '../../gui/profile_thing';
 import { address } from '@/wsClient';
 import { subscribeUser } from '../../push';
-import { faArrowLeft, faFaceSmile, faGear, faMessage, faPencil, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faFaceSmile, faGear, faMessage, faPencil, faPlus, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import { closePopup, cropCenter, loadFile, openPopup, showError, validateString } from '../../utils';
@@ -98,7 +98,7 @@ function SettingsPage() {
             return;
         }
         if (!emojiFormData) {
-            showError(t('select_emoji_first'));
+            showError(t('upload_image_first'));
             return;
         }
         const formData = emojiFormData;
@@ -184,19 +184,21 @@ function SettingsPage() {
                                     {customEmojis.map(emoji => (
                                         <SquareImgBtn key={emoji.id} src={`${address}/emojis/${emoji.id}.webp`} onClick={() => {}} text={emoji.name}/>
                                     ))}
-                                    <button id='add_emoji_btn' onClick={() => openPopup('add-emoji')}>+</button>
+                                    <button id='add_emoji_btn' onClick={() => openPopup('add-emoji')}><FontAwesomeIcon icon={faPlus} />{t('add_emoji')}</button>
                                 </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <Popup title={t('adding_emoji')} name='add-emoji'>
-                <div className='EditDiv' style={{ marginBottom: '10px', width: 'fit-content' }} onClick={loadCustomEmoji}>
-                    <img src='/assets/select.svg' className='SelectEmojiImg' />
-                    <FontAwesomeIcon icon={faPencil} className='pencil' />
+            <Popup title={t('add_emoji')} name='add-emoji'>
+                <div className='AddEmojiPopupContent'>
+                    <div className='EditDiv' style={{ marginBottom: '10px', width: 'fit-content' }} onClick={loadCustomEmoji}>
+                        <img src='/assets/select.svg' className='SelectEmojiImg' />
+                        <FontAwesomeIcon icon={faPencil} className='pencil' />
+                    </div>
+                    <input type='text' className='EmojiNameInput' placeholder={t('emoji_name')} id='emoji_name_input' />
+                    <button className='SubmitEmojiBtn' onClick={submitEmoji}>{t('submit')}</button>
                 </div>
-                <input type='text' className='EmojiNameInput' placeholder={t('emoji_name')} id='emoji_name_input' />
-                <button className='SubmitEmojiBtn' onClick={submitEmoji}>{t('submit')}</button>
             </Popup>
         </>
     )

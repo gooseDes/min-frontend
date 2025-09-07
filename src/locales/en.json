@@ -21,5 +21,10 @@
     "upload_avatar": "Upload avatar",
     "subscribe_to_msges": "Subscribe to push messages",
     "messages": "Messages",
-    "back": "Back"
+    "back": "Back",
+    "emojis": "Emojis",
+    "add_emoji": "Add emoji",
+    "emoji_name": "Emoji name",
+    "submit": "Submit",
+    "upload_image_first": "Upload image first"
 }
