@@ -1,0 +1,11 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+	<title>New Project</title>
+	<style>
+		.s0 { fill: #333333 } 
+		.s1 { fill: none;stroke: #ffffff;stroke-miterlimit:100;stroke-width: 30 } 
+		.s2 { fill: #ffffff;stroke: #ffffff;stroke-miterlimit:100;stroke-width: 30 } 
+	</style>
+	<path id="Layer 1" fill-rule="evenodd" class="s0" d="m571-54v637h-613v-637z"/>
+	<path id="Shape 1" fill-rule="evenodd" class="s1" d="m256 417c-89.03 0-161-71.97-161-161 0-89.03 71.97-161 161-161 89.03 0 161 71.97 161 161 0 89.03-71.97 161-161 161z"/>
+	<path id="Shape 2" class="s2" d="m244.39 140.53c6.67-6.67 17.5-6.67 24.17 0l85.34 85.38c6.67 6.67 6.67 17.5 0 24.17-6.67 6.67-17.5 6.67-24.16 0l-56.22-56.3v163.72c0 9.45-7.63 17.08-17.07 17.08-9.44 0-17.07-7.63-17.07-17.08v-163.66l-56.22 56.19c-6.67 6.67-17.5 6.67-24.16 0-6.67-6.67-6.67-17.5 0-24.17 0 0 85.34-85.39 85.39-85.33z"/>
+</svg>
