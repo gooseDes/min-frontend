@@ -207,6 +207,22 @@ function ChatPage() {
         }
     }, [location, searchParams]);
 
+    useEffect(() => {
+        const handlePaste = (event) => {
+        const items = event.clipboardData.items;
+        for (const item of items) {
+            if (item.type.startsWith("image/")) {
+                const pastedFile = item.getAsFile();
+                uploadAttachments([pastedFile]);
+            }
+        }
+        };
+
+        const input = document.getElementById('message_input');
+        input.addEventListener("paste", handlePaste);
+        return () => input.removeEventListener("paste", handlePaste);
+    }, []);
+
     function sendMessage() {
         const input = document.getElementById('message_input');
         let value = input.value;
@@ -275,28 +291,32 @@ function ChatPage() {
         socket.emit('createChat', { nickname: input.value.replace('@', '') })
     }
 
+    function uploadAttachments(files) {
+        fetch(`${address}/attach`, {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` },
+            body: (() => {
+                const formData = new FormData();
+                files.forEach((file) => {
+                    formData.append('attachments', file);
+                });
+                return formData;
+            })()
+        }).then(responce => responce.json()).then(data => {
+            if (data.success) {
+                const input = document.getElementById('message_input');
+                input.value += ' ' + data.urls.map(att => `![attachment](${address}${att})`).join(' ');
+                input.focus();
+            } else {
+                showError(data.msg);
+            }
+        })
+    }
+
     function attachImages() {
         try {
             loadFile('image', true, (files) => {
-                fetch(`${address}/attach`, {
-                    method: 'POST',
-                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` },
-                    body: (() => {
-                        const formData = new FormData();
-                        files.forEach((file) => {
-                            formData.append('attachments', file);
-                        });
-                        return formData;
-                    })()
-                }).then(responce => responce.json()).then(data => {
-                    if (data.success) {
-                        const input = document.getElementById('message_input');
-                        input.value += ' ' + data.urls.map(att => `![attachment](${address}${att})`).join(' ');
-                        input.focus();
-                    } else {
-                        showError(data.msg);
-                    }
-                })
+                uploadAttachments(files);
             });
         } catch (e) {
             showError(e.message);
