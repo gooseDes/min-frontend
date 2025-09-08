@@ -400,6 +400,7 @@ input:not(.MessageInput) {
 
 .ImageFromOverlay {
   height: 80%;
+  object-fit: contain;
   max-width: 80%;
   border-radius: 1svh;
 }
