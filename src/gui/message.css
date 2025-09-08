@@ -40,7 +40,9 @@
     border-radius: 1svh;
     text-align: left;
     margin-top: 0;
-    word-break: break-all;
+    overflow-wrap: break-word;
+    word-break: normal;
+    hyphens: auto;
     color: #fff;
 
     &.left {

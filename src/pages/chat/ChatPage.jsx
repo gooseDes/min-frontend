@@ -391,14 +391,14 @@ function ChatPage() {
                     </div>
                 </div>
             </div>
-            <Popup title={<Trans>account</Trans>} name='account'>
+            <Popup title={<Trans>account</Trans>} name='account' disableCloseButton={true}>
                 <div className="scrollable-y">
                     <p style={{ fontSize: '3svh' }}><Trans i18nKey={'account_required'}><a href='/signup' style={{ color: '#4f7afbff' }}>create</a><a href='/signin' style={{ color: '#4f7afbff' }}>log in</a></Trans></p>
                 </div>
             </Popup>
             <Popup title={<Trans>chat_creation</Trans>} name='create-chat' scale={0.5}>
                 <input placeholder={t('username_placeholder')} className='CreateChatNicknameInput' id='create_chat_nickname_input' onKeyDown={(event) => {if (event.key === 'Enter') createChat()}}/>
-                <p id='create_chat_error' style={{ color: 'red',  fontSize: '12px' }} className='fade'>Totskiy</p>
+                <p id='create_chat_error' style={{ color: 'red',  fontSize: '12px' }} className='fade'>I Love Femboys :3</p>
                 <button className='CreateChatConfirmButton'><FontAwesomeIcon icon={faArrowRight} onClick={createChat}/></button>
             </Popup>
             <ProfilePopup ref={ProfilePopupRef} src={`${address}/avatars/${localStorage.getItem('id')}.webp`} username={localStorage.getItem('username') || <Trans>guest</Trans>}/>
