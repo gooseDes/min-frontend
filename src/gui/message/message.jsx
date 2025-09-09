@@ -2,9 +2,9 @@ import { useSearchParams } from 'react-router-dom';
 import './message.css'
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { useState } from 'react';
+import { formatTime } from '../../utils';
 
-function Message({ text = 'message', author = 'author', type = 'left', src = '/logo512.png', connected = false }) {
+function Message({ text = 'message', author = 'author', type = 'left', src = '/logo512.png', connected = false, sent_at = null }) {
     const [searchParams, setSearchParams] = useSearchParams();
 
     function openAuthorProfile() {
@@ -31,6 +31,7 @@ function Message({ text = 'message', author = 'author', type = 'left', src = '/l
                 >
                     {text.replaceAll('\n', '  \n')}
                 </Markdown>
+                <p className='DateText'>{formatTime(sent_at)}</p>
             </div>
         </div>
     )

@@ -1,7 +1,7 @@
 import '@/App.css';
 import './ChatPage.css';
 import ProfileThing from '../../gui/profile_thing';
-import Message from '../../gui/message';
+import Message from '@/gui/message/message';
 import logo from '@/logo.png'
 import { useState, useEffect, useRef } from 'react';
 import { closePopup, isUserLogined, loadFile, openPopup, showError, validateString, verifyToken } from '../../utils';
@@ -43,7 +43,8 @@ function ChatPage() {
         });
         socket.on('message', (data) => {
             if (data.author === localStorage.getItem('username')) data.author = 'You';
-            setMessages((prev) => [...prev, { id: data.id, text: data.text, type: data.author == 'You' ? 'right' : 'left', author: data.author, author_id: data.author_id }]);
+            console.log(data);
+            setMessages((prev) => [...prev, { id: data.id, text: data.text, type: data.author == 'You' ? 'right' : 'left', author: data.author, author_id: data.author_id, sent_at: data.sent_at }]);
         });
         socket.on('history', data => {
             if (isWaitingForHistory.current) {
@@ -52,7 +53,8 @@ function ChatPage() {
                     text: msg.text,
                     type: msg.author === localStorage.getItem('username') ? 'right' : 'left',
                     author: msg.author === localStorage.getItem('username') ? 'You': msg.author,
-                    author_id: msg.author_id
+                    author_id: msg.author_id,
+                    sent_at: msg.sent_at
                 })));
                 animateFrom.current = data.messages.length;
                 isWaitingForHistory.current = false;
@@ -398,6 +400,7 @@ function ChatPage() {
                                     text={msg.text}
                                     type={msg.type}
                                     author={msg.author}
+                                    sent_at={msg.sent_at}
                                     src={`${address}/avatars/${msg.author_id}.webp`}
                                     connected={!isLast}
                                 />

@@ -42,7 +42,7 @@
     margin-top: 0;
     overflow-wrap: break-word;
     word-break: normal;
-    hyphens: auto;
+    hyphens: none;
     color: #fff;
 
     &.left {
@@ -56,6 +56,14 @@
     img {
         border-radius: 1svh;
         max-width: 100%;
+        margin-bottom: 0;
+    }
+
+    .DateText {
+        color: #aaa;
+        font-size: 12px;
+        text-align: right;
+        margin-top: 0;
     }
 }
 

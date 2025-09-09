@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, useSearchParams } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Popup from './gui/popup.jsx';
 import { useRef, useState } from 'react';
 import ProfilePopup from './gui/profile_popup.jsx';
