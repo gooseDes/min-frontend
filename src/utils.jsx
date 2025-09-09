@@ -130,16 +130,3 @@ export async function cropCenter(file, targetSize = 128) {
         img.onerror = reject;
     });
 }
-
-export class Vector2 {
-    constructor (x, y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    add(other) {
-        this.x += other.x;
-        this.y += other.y;
-        return new Vector2(this.x, this.y);
-    }
-}
