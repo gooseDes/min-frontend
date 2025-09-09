@@ -11,6 +11,9 @@ import SigninPage from './pages/signin/SinginPage.jsx';
 function App() {
     const [errorPopupContent, setErrorPopupContent] = useState(null);
     const [imageOverlaySrc, setImageOverlaySrc] = useState(null);
+    const [imageOverlayShown, setImageOverlayShown] = useState(false);
+    const [imageOverlayZoom, setImageOverlayZoom] = useState(1);
+    const [imageOverlayPos, setImageOverlayPos] = useState({ x: 0, y: 0 });
 
     window.setErrorPopup = (content) => {
         setErrorPopupContent(content);
@@ -27,8 +30,31 @@ function App() {
         profilePopupRef.current.show();
     }
     window.openImageOverlay = (src) => {
+        setImageOverlayPos({ x: 0, y: 0 });
+        setImageOverlayZoom(1)
         setImageOverlaySrc(src);
+        if (src) setImageOverlayShown(true);
+        else setImageOverlayShown(false);
     }
+
+    function handleOverlayWheel(e) {
+        const rect = document.querySelector('.ImageOverlay').getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+
+        const delta = e.deltaY > 0 ? -0.1 : 0.1;
+        const newScale = Math.min(Math.max(imageOverlayZoom + delta, 0.5), 3);
+
+        const scaleRatio = newScale / imageOverlayZoom;
+
+        setImageOverlayPos((prev) => ({
+            x: mouseX - (mouseX - prev.x) * scaleRatio,
+            y: mouseY - (mouseY - prev.y) * scaleRatio,
+        }));
+
+        setImageOverlayZoom(newScale);
+    }
+
     const profilePopupRef = useRef();
     return (
         <div style={{width: '100%', height: '100%'}}>
@@ -43,9 +69,9 @@ function App() {
             <Router>
                 <Popup title='Error' name='error'>{errorPopupContent}</Popup>
                 <ProfilePopup ref={profilePopupRef} username={profilePopupContent.username} src={`${address}/avatars/${profilePopupContent.id}.webp`}/>
-                <div className={`ImageOverlay ${imageOverlaySrc ? 'show' : 'hide'}`} onClick={() => setImageOverlaySrc(null)}>
-                    <div className={`ImageOverlayContent ${imageOverlaySrc ? 'show' : 'hide'}`}>
-                        <img className='ImageFromOverlay' src={imageOverlaySrc} alt='img' />
+                <div className={`ImageOverlay ${imageOverlayShown ? 'show' : 'hide'}`} onClick={() => setImageOverlayShown(false)} onWheel={handleOverlayWheel}>
+                    <div className={`ImageOverlayContent ${imageOverlayShown ? 'show' : 'hide'}`}>
+                        <img className='ImageFromOverlay' src={imageOverlaySrc} alt='img' style={{ transform: `translate(${imageOverlayPos.x}px, ${imageOverlayPos.y}px) scale(${imageOverlayZoom})` }}/>
                     </div>
                 </div>
             </Router>

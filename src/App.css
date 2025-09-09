@@ -391,10 +391,12 @@ input:not(.MessageInput) {
 
   &.show {
     scale: 1;
+    pointer-events: auto;
   }
 
   &.hide {
     opacity: 0;
+    pointer-events: none;
   }
 }
 
@@ -403,4 +405,7 @@ input:not(.MessageInput) {
   object-fit: contain;
   max-width: 80%;
   border-radius: 1svh;
+  cursor: zoom-in;
+  z-index: 1000000;
+  transform-origin: 0 0;
 }

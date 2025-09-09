@@ -25,7 +25,7 @@ function Message({ text = 'message', author = 'author', type = 'left', src = '/l
                     remarkPlugins={[remarkGfm]}
                     components={{
                         img: ({ node, ...props }) => (
-                        <img {...props} style={{ cursor: "pointer" }} onClick={() => handleImageClick(props.src)} />
+                        <img {...props} style={{ cursor: "pointer" }} onClick={(e) => { e.preventDefault(); handleImageClick(props.src) }} />
                         )
                     }}
                 >
