@@ -7,6 +7,9 @@
     "message_placeholder": "Введіть повідомлення...",
     "guest": "Гість",
     "username_placeholder": "Ім'я користувача",
+    "today": "Сьогодні",
+    "yesterday": "Вчора",
+    "tommorow": "Завтра",
 
     "email": "Пошта",
     "login": "Логін",

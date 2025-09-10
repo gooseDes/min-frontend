@@ -100,3 +100,16 @@
         max-width: 25vh;
     }
 }
+
+.MessageAdditionsDiv {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    gap: 10px;
+    color: #aaa;
+    font-size: 12px;
+    text-align: right;
+    * {
+        margin-top: 0;
+    }
+}

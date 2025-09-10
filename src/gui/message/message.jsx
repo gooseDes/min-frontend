@@ -3,8 +3,10 @@ import './message.css'
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { formatTime } from '../../utils';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
-function Message({ text = 'message', author = 'author', type = 'left', src = '/logo512.png', connected = false, sent_at = null }) {
+function Message({ text = 'message', author = 'author', type = 'left', src = '/logo512.png', connected = false, sent_at = null, seen = false }) {
     const [searchParams, setSearchParams] = useSearchParams();
 
     function openAuthorProfile() {
@@ -31,7 +33,10 @@ function Message({ text = 'message', author = 'author', type = 'left', src = '/l
                 >
                     {text.replaceAll('\n', '  \n')}
                 </Markdown>
-                <p className='DateText'>{formatTime(sent_at)}</p>
+                <div className='MessageAdditionsDiv'>
+                    <p className='DateText'>{formatTime(sent_at)}</p>
+                    {seen && type=='right' ? <FontAwesomeIcon icon={faCheck}/> : <p />}
+                </div>
             </div>
         </div>
     )

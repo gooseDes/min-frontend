@@ -1,3 +1,4 @@
+import { t } from "i18next";
 import { address } from "./wsClient";
 import Pica from "pica";
 
@@ -132,8 +133,10 @@ export async function cropCenter(file, targetSize = 128) {
 }
 
 // Function for converting unix timestamp to human readable format e.g. 2025:09:31
-export function formatTime(unixTimestamp) {
+export function formatTime(unixTimestamp, advanced=false) {
     const dateObject = new Date(unixTimestamp*1000);
+
+    const now = new Date(Date.now());
 
     const year = dateObject.getFullYear();
     const month = (dateObject.getMonth() + 1).toString().padStart(2, '0');
@@ -142,6 +145,18 @@ export function formatTime(unixTimestamp) {
     const minutes = dateObject.getMinutes().toString().padStart(2, '0');
     const seconds = dateObject.getSeconds().toString().padStart(2, '0');
 
-    const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-    return formattedDate;
+    let formatted = null;
+
+    if (
+        now.getFullYear() == dateObject.getFullYear() &&
+        now.getMonth() == dateObject.getMonth() &&
+        Math.abs(now.getDate()-dateObject.getDate()) <= 1 &&
+        !advanced
+    ) {
+        const today = now.getDate() == dateObject.getDate();
+        formatted = `${today ? t('today') : `${now.getDate() >= dateObject.getDate() ? t('yesterday') : t('tommorow')}`} ${hours}:${minutes}${advanced ? `:${seconds}` : ''}`;
+    } else {
+        formatted = `${year}-${month}-${day} ${hours}:${minutes}${advanced ? `:${seconds}` : ''}`;
+    }
+    return formatted;
 }

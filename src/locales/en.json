@@ -7,6 +7,9 @@
     "message_placeholder": "Enter message...",
     "guest": "Guest",
     "username_placeholder": "Username",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "tommorow": "Tommorow",
 
     "email": "Email",
     "login": "Login",

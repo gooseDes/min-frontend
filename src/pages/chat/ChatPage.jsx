@@ -43,8 +43,7 @@ function ChatPage() {
         });
         socket.on('message', (data) => {
             if (data.author === localStorage.getItem('username')) data.author = 'You';
-            console.log(data);
-            setMessages((prev) => [...prev, { id: data.id, text: data.text, type: data.author == 'You' ? 'right' : 'left', author: data.author, author_id: data.author_id, sent_at: data.sent_at }]);
+            setMessages((prev) => [...prev, { id: data.id, text: data.text, type: data.author == 'You' ? 'right' : 'left', author: data.author, author_id: data.author_id, sent_at: data.sent_at, seen: data.seen }]);
         });
         socket.on('history', data => {
             if (isWaitingForHistory.current) {
@@ -54,7 +53,8 @@ function ChatPage() {
                     type: msg.author === localStorage.getItem('username') ? 'right' : 'left',
                     author: msg.author === localStorage.getItem('username') ? 'You': msg.author,
                     author_id: msg.author_id,
-                    sent_at: msg.sent_at
+                    sent_at: msg.sent_at,
+                    seen: msg.seen
                 })));
                 animateFrom.current = data.messages.length;
                 isWaitingForHistory.current = false;
@@ -72,6 +72,7 @@ function ChatPage() {
                         }, i<25 ? i*50 : 1000);
                     }
                 });
+                socket.emit('seenAll', { chat: localStorage.getItem('chatId') || 1 });
             }
         });
         socket.on('chats', data => {
@@ -93,6 +94,11 @@ function ChatPage() {
         socket.on('customEmojis', (data) => {
             setCustomEmojis(data.emojis);
         });
+        socket.on('seenAll', data => {
+            for (let i=0; i<messages.length; i++) {
+                messages[i].seen = data.chat == (localStorage.getItem('chatId') || 1) ? true : msg.seen
+            }
+        });
         socket.on('error', data => {
             console.error(`Error: ${data}`)
             showError(data.msg);
@@ -103,6 +109,7 @@ function ChatPage() {
             socket.off('history');
             socket.off('chats');
             socket.off('createChatResult');
+            socket.off('seenAll');
         };
     }, []);
 
@@ -401,6 +408,7 @@ function ChatPage() {
                                     type={msg.type}
                                     author={msg.author}
                                     sent_at={msg.sent_at}
+                                    seen={msg.seen}
                                     src={`${address}/avatars/${msg.author_id}.webp`}
                                     connected={!isLast}
                                 />
