@@ -36,6 +36,7 @@
     width: fit-content;
     height: fit-content;
     max-width: 30vh;
+    min-width: 10vh;
     padding: 0 10px;
     border-radius: 1svh;
     text-align: left;
@@ -44,6 +45,7 @@
     word-break: normal;
     hyphens: none;
     color: #fff;
+    box-shadow: 0 0 5px #272727c2;
 
     &.left {
         border-radius: 1svh 1svh 1svh 0;
@@ -112,4 +114,19 @@
     * {
         margin-top: 0;
     }
+}
+
+.MessageReply > p {
+    color: #aaa;
+    font-size: 12px;
+    line-height: 0.1;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

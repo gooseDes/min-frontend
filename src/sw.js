@@ -1,4 +1,4 @@
-import { address } from "./wsClient";
+import { address } from "./wsClient.js";
 
 self.addEventListener("push", (event) => {
   console.log("Push received:", event);

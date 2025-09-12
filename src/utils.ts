@@ -1,6 +1,12 @@
 import { t } from "i18next";
-import { address } from "./wsClient";
+import { address } from "./wsClient.js";
 import Pica from "pica";
+
+declare global {
+    interface Window {
+        setErrorPopup: (text: string) => void;
+    }
+}
 
 export function getToken() {
     return localStorage.getItem('token');
@@ -10,9 +16,9 @@ export function isUserLogined() {
     return localStorage.getItem('token') != null;
 }
 
-export function openPopup(popupName) {
+export function openPopup(popupName: string) {
     const app = document.getElementById('app');
-    app.style.filter = 'blur(2px)';
+    if (app) app.style.filter = 'blur(2px)';
     const popup = document.getElementById(`${popupName}-popup`);
     if (popup) {
         popup.classList.remove('PopupHide');
@@ -21,11 +27,11 @@ export function openPopup(popupName) {
     }
 }
 
-export function closePopup(popupName) {
+export function closePopup(popupName: string) {
     const popup = document.getElementById(`${popupName}-popup`);
     if (popup) {
         const app = document.getElementById('app');
-        app.style.filter = 'blur(0)';
+        if (app) app.style.filter = 'blur(0)';
         popup.classList.remove('PopupShow');
         popup.classList.add('PopupHide');
         setTimeout(() => {
@@ -34,14 +40,38 @@ export function closePopup(popupName) {
     }
 }
 
-export function showError(text) {
+export function openDropdown(name: string, caller: HTMLElement) {
+    const dropdown = document.getElementById(`${name}-dropdown`);
+    if (!dropdown) return;
+    const rect = caller.getBoundingClientRect();
+    dropdown.style.left = `${rect.right-rect.width/2}px`;
+    dropdown.style.bottom = `${window.innerHeight-(rect.top-rect.height/2)}px`;
+    dropdown.classList.add('open');
+    const app = document.getElementById('app');
+    if (app) app.style.filter = 'blur(5px)';
+    function close() {
+        closeDropdown(name);
+        document.removeEventListener('click', close);
+    }
+    document.addEventListener('click', close);
+}
+
+export function closeDropdown(name: string) {
+    const dropdown = document.getElementById(`${name}-dropdown`);
+    if (!dropdown) return;
+    dropdown.classList.remove('open');
+    const app = document.getElementById('app');
+    if (app) app.style.filter = '';
+}
+
+export function showError(text: string) {
     window.setErrorPopup(
         text
     );
     openPopup('error');
 }
 
-export function verifyToken(token) {
+export function verifyToken(token: string) {
     fetch(`${address}/verify`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -61,7 +91,11 @@ export function verifyToken(token) {
     });
 }
 
-export function loadFile(type='image', multiple=false, callback) {
+export function loadFile(
+    type: string = 'image',
+    multiple: boolean = false,
+    callback: (files: File[]) => void
+) {
     const fileInput = document.createElement("input");
     fileInput.type = "file";
     fileInput.accept = `${type}/*`;
@@ -74,7 +108,8 @@ export function loadFile(type='image', multiple=false, callback) {
             callback(Array.from(files));
             return;
         }
-        const file = fileInput.files[0];
+        if (!files || files.length === 0) return;
+        const file = files[0];
         if (!file) return;
         callback([file]);
     };
@@ -87,7 +122,7 @@ export const EMAIL_ALLOWED_CHARS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQR
 export const PASSWORD_ALLOWED_CHARS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-={}[]|;:"<>,.?/~`';
 
 // Function for validating symbols in strings
-export function validateString(str, type="username", minLength=3, maxLength=32) {
+export function validateString(str: string, type: string = "username", minLength: number = 3, maxLength: number = 32) {
     let allowedChars = '';
     if (type === "username") allowedChars = USERNAME_ALLOWED_CHARS;
     else if (type === "email") allowedChars = EMAIL_ALLOWED_CHARS;
@@ -101,7 +136,7 @@ export function validateString(str, type="username", minLength=3, maxLength=32) 
     return true;
 }
 
-export async function cropCenter(file, targetSize = 128) {
+export async function cropCenter(file: any, targetSize: number = 128) {
     return new Promise((resolve, reject) => {
         const img = new Image();
         img.src = URL.createObjectURL(file);
@@ -115,6 +150,7 @@ export async function cropCenter(file, targetSize = 128) {
                 cropCanvas.width = size;
                 cropCanvas.height = size;
                 const ctx = cropCanvas.getContext("2d");
+                if (!ctx) return;
                 ctx.drawImage(img, startX, startY, size, size, 0, 0, size, size);
 
                 const pica = Pica();
@@ -122,6 +158,7 @@ export async function cropCenter(file, targetSize = 128) {
                 finalCanvas.width = targetSize;
                 finalCanvas.height = targetSize;
 
+                if (!pica) return;
                 await pica.resize(cropCanvas, finalCanvas);
                 finalCanvas.toBlob(blob => resolve(blob), "image/webp", 0.9);
             } catch (err) {
@@ -133,7 +170,7 @@ export async function cropCenter(file, targetSize = 128) {
 }
 
 // Function for converting unix timestamp to human readable format e.g. 2025:09:31
-export function formatTime(unixTimestamp, advanced=false) {
+export function formatTime(unixTimestamp: number, advanced: boolean = false) {
     const dateObject = new Date(unixTimestamp*1000);
 
     const now = new Date(Date.now());

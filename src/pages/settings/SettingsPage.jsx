@@ -2,14 +2,13 @@ import { t } from 'i18next';
 import '@/App.css';
 import './SettingsPage.css';
 import ProfileThing from '../../gui/profile_thing';
-import { address } from '@/wsClient';
+import { getSocket, address } from '@/wsClient';
 import { subscribeUser } from '../../push';
 import { faArrowLeft, faFaceSmile, faGear, faMessage, faPencil, faPlus, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
-import { closePopup, cropCenter, loadFile, openPopup, showError, validateString } from '../../utils';
+import { closePopup, cropCenter, loadFile, openPopup, showError, validateString } from '@/utils.ts';
 import SquareImgBtn from '../../gui/square_img_btn/square_img_btn';
-import { getSocket } from '../../wsClient';
 import Popup from '../../gui/popup';
 
 function SettingsPage() {

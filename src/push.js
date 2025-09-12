@@ -1,4 +1,4 @@
-import { address } from "./wsClient";
+import { address } from "./wsClient.js";
 
 export async function subscribeUser() {
     if ("serviceWorker" in navigator && "PushManager" in window) {

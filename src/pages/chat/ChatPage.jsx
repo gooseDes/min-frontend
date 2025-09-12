@@ -12,8 +12,8 @@ import {
   showError,
   validateString,
   verifyToken,
-} from "../../utils";
-import { address, getSocket } from "../../wsClient";
+} from "@/utils";
+import { address, getSocket } from "@/wsClient.js";
 import ProfilePopup from "../../gui/profile_popup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -25,11 +25,14 @@ import {
   faPaperclip,
   faPaperPlane,
   faPlus,
+  faReply,
 } from "@fortawesome/free-solid-svg-icons";
 import Popup from "../../gui/popup";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { Trans } from "react-i18next";
 import { t } from "i18next";
+import Dropdown from "../../gui/dropdown/dropdown";
+import { openDropdown } from "../../utils";
 
 function ChatPage() {
   const [messages, setMessages] = useState([]);
@@ -47,6 +50,8 @@ function ChatPage() {
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
   const messageCount = useRef(-1);
+  const messagePrefix = useRef('');
+  const selectedMessage = useRef(null);
 
   window.openChat = (username) => {
     searchParams.set("chat", username);
@@ -333,10 +338,11 @@ function ChatPage() {
     setLines(1);
     const socket = getSocket();
     socket.emit("msg", {
-      text: value,
+      text: messagePrefix.current + value,
       chat: localStorage.getItem("chatId") || 1,
     });
     lastSended.current = value;
+    messagePrefix.current = "";
   }
 
   function openChat(username) {
@@ -575,6 +581,12 @@ function ChatPage() {
                   seen={msg.seen}
                   src={`${address}/avatars/${msg.author_id}.webp`}
                   connected={!isLast}
+                  onContextMenu={(e) => {
+                    e.preventDefault();
+                    selectedMessage.current = msg;
+                    openDropdown("msg", e.currentTarget);
+                  }}
+                  messages={messages}
                 />
               );
             })}
@@ -646,6 +658,16 @@ function ChatPage() {
         src={`${address}/avatars/${localStorage.getItem("id")}.webp`}
         username={localStorage.getItem("username") || <Trans>guest</Trans>}
       />
+      <Dropdown name="msg">
+        <div className="noanim">{t('message_actions')}</div>
+        <div onClick={() => {
+          messagePrefix.current = `/reply ${selectedMessage.current.id}\n`;
+          selectedMessage.current = null;
+        }}>
+          <FontAwesomeIcon icon={faReply} />
+          <p>{t('reply')}</p>
+        </div>
+      </Dropdown>
     </div>
   );
 }
