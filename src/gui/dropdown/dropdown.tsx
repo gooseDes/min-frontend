@@ -1,13 +1,13 @@
 import { JSX, ReactNode } from "react";
 import "./dropdown.css";
 
-type ThingProps = {
+type DropdownProps = {
   children?: ReactNode;
   direction?: string;
   name?: string;
 };
 
-function Dropdown({ children, direction='up', name='dropdown' }: ThingProps): JSX.Element {
+function Dropdown({ children, direction='up', name='dropdown' }: DropdownProps): JSX.Element {
     return (
         <div className={`DropDownDiv ${direction}`} id={`${name}-dropdown`}>
             {children}

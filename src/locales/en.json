@@ -20,6 +20,8 @@
     "password_confirmation": "Password Confirmation",
     "signup": "Sign Up",
     "signin": "Sign In",
+    "select_language": "Select Language",
+    "auto_lang": "Auto",
 
     "profile": "Profile",
     "send_message": "Send Message",

@@ -1,0 +1,12 @@
+.IconButton {
+    width: 50px;
+    height: 50px;
+    aspect-ratio: 1;
+    border-radius: 999px;
+    border: none;
+    background-color: #000000aa;
+    color: #fff;
+    cursor: pointer;
+    font-size: 24px;
+    backdrop-filter: blur(5px);
+}

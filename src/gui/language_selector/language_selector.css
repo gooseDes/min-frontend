@@ -1,0 +1,5 @@
+.LanguageSelector {
+    position: fixed;
+    left: calc(50% - 25px);
+    bottom: 50px;
+}

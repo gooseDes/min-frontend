@@ -41,19 +41,28 @@ export function closePopup(popupName: string) {
 }
 
 export function openDropdown(name: string, caller: HTMLElement) {
+    const app = document.getElementById('app');
+    if (app) app.style.filter = 'blur(5px)';
     const dropdown = document.getElementById(`${name}-dropdown`);
     if (!dropdown) return;
     const rect = caller.getBoundingClientRect();
     dropdown.style.left = `${rect.right-rect.width/2}px`;
     dropdown.style.bottom = `${window.innerHeight-(rect.top-rect.height/2)}px`;
     dropdown.classList.add('open');
-    const app = document.getElementById('app');
-    if (app) app.style.filter = 'blur(5px)';
     function close() {
         closeDropdown(name);
         document.removeEventListener('click', close);
     }
     document.addEventListener('click', close);
+}
+
+export function toggleDropdown(name: string, caller: HTMLElement) {
+    const dropdown = document.getElementById(`${name}-dropdown`);
+    if (!dropdown) return;
+    const rect = caller.getBoundingClientRect();
+    dropdown.style.left = `${rect.right-rect.width/2}px`;
+    dropdown.style.bottom = `${window.innerHeight-(rect.top-rect.height/2)}px`;
+    dropdown.classList.toggle('open');
 }
 
 export function closeDropdown(name: string) {

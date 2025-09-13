@@ -5,6 +5,7 @@ import '@/Sign-in-up.css';
 import { showError } from '@/utils.ts';
 import { Trans } from 'react-i18next';
 import { t } from 'i18next';
+import LanguageSelector from '../../gui/language_selector/language_selector';
 
 function SignupPage() {
     const particles = useRef([]);
@@ -103,6 +104,7 @@ function SignupPage() {
                 <input id='password2_input' placeholder={t('password_confirmation')} type='password'/>
                 <button id='signup_button' onClick={handleRegistration}><Trans>signup</Trans></button>
             </div>
+            <LanguageSelector />
         </div>
     )
 }

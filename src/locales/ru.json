@@ -20,6 +20,8 @@
     "password_confirmation": "Подтверждение пароля",
     "signup": "Создать",
     "signin": "Войти",
+    "select_language": "Выберите Язык",
+    "auto_lang": "Системный",
 
     "profile": "Профиль",
     "send_message": "Написать",

@@ -26,12 +26,12 @@ html, body, .App {
     box-shadow: #fff 0 0 25px 5px;
     opacity: 0;
     scale: 0;
+    width: 400px;
 
     input {
         border: none;
         outline: none;
-        max-width: 25svh;
-        width: 40vw;
+        width: 90%;
         height: 2svh;
         border-radius: 999px;
         padding: 0 1svh;
@@ -52,6 +52,12 @@ html, body, .App {
         &:hover {
             scale: 1.1;
         }
+    }
+}
+
+@media screen and (orientation: portrait) {
+    .SignupForm {
+        width: 80%;
     }
 }
 
