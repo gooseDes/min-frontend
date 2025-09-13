@@ -11,6 +11,8 @@
     "yesterday": "Yesterday",
     "tommorow": "Tommorow",
     "load_more_messages": "Load more messages...",
+    "message_actions": "Message Actions",
+    "reply": "Reply",
 
     "email": "Email",
     "login": "Login",

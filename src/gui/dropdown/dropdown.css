@@ -47,6 +47,7 @@
         overflow: hidden;
         transition: all 0.3s ease;
         border-radius: 2svh;
+        white-space: nowrap;
 
         &:not(.noanim) {
             cursor: pointer;
