@@ -1,6 +1,7 @@
 import { t } from "i18next";
 import { address } from "./wsClient.js";
 import Pica from "pica";
+import i18n from "./i18n.js";
 
 declare global {
     interface Window {
@@ -205,4 +206,14 @@ export function formatTime(unixTimestamp: number, advanced: boolean = false) {
         formatted = `${year}-${month}-${day} ${hours}:${minutes}${advanced ? `:${seconds}` : ''}`;
     }
     return formatted;
+}
+
+// Function that changes language of site
+export function changeLang(lang: string) {
+    if (lang == "") {
+        localStorage.removeItem("lang");
+        i18n.changeLanguage('');
+        document.cookie = "lang=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    } else localStorage.setItem("lang", lang);
+    location.href = location.href;
 }

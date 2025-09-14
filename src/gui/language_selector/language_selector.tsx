@@ -1,20 +1,10 @@
 import { t } from 'i18next';
-import { toggleDropdown } from '../../utils';
+import { changeLang, toggleDropdown } from '../../utils';
 import Dropdown from '../dropdown/dropdown';
 import IconButton from '../icon_button/icon_button';
 import './language_selector.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEarth } from '@fortawesome/free-solid-svg-icons';
-import i18n from '../../i18n';
-
-function changeLang(lang: string) {
-    if (lang == "") {
-        localStorage.removeItem("lang");
-        i18n.changeLanguage('');
-        document.cookie = "lang=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    } else localStorage.setItem("lang", lang);
-    location.href = location.href;
-}
 
 function LanguageSelector() {
     return (

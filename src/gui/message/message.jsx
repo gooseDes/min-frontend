@@ -5,6 +5,7 @@ import remarkGfm from 'remark-gfm';
 import { formatTime } from '../../utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faReply } from '@fortawesome/free-solid-svg-icons';
+import { t } from 'i18next';
 
 function Message({ text = 'message', author = 'author', type = 'left', src = '/logo512.png', connected = false, sent_at = null, seen = false, messages = [], onContextMenu }) {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -19,7 +20,11 @@ function Message({ text = 'message', author = 'author', type = 'left', src = '/l
     }
 
     function formatReplyText(msg) {
-        return `${msg.author}: ${msg.text}`;
+        try {
+            return `${msg.author}: ${msg.text}`;
+        } catch {
+            return t('old_message');
+        }
     }
 
     function convertText(text) {

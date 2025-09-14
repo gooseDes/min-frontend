@@ -82,6 +82,7 @@ function ChatPage() {
       messageCount.current += 1;
     });
     socket.on("history", (data) => {
+      console.log(data);
       if (isWaitingForHistory.current) {
         setMessages(
           data.messages.map((msg) => ({

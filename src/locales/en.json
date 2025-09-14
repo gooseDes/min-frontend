@@ -1,4 +1,6 @@
 {
+    "current_lang": "English",
+
     "default_chat": "Default Chat",
     "chats": "Chats",
     "chat_creation": "Chat Creation",
@@ -13,6 +15,7 @@
     "load_more_messages": "Load more messages...",
     "message_actions": "Message Actions",
     "reply": "Reply",
+    "old_message": "Too old message",
 
     "email": "Email",
     "login": "Login",
@@ -29,10 +32,12 @@
     "upload_avatar": "Upload avatar",
     "subscribe_to_msges": "Subscribe to push messages",
     "messages": "Messages",
+    "general": "General",
     "back": "Back",
     "emojis": "Emojis",
     "add_emoji": "Add emoji",
     "emoji_name": "Emoji name",
     "submit": "Submit",
-    "upload_image_first": "Upload image first"
+    "upload_image_first": "Upload image first",
+    "language": "Language"
 }

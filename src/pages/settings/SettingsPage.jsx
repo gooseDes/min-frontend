@@ -4,12 +4,14 @@ import './SettingsPage.css';
 import ProfileThing from '../../gui/profile_thing';
 import { getSocket, address } from '@/wsClient';
 import { subscribeUser } from '../../push';
-import { faArrowLeft, faFaceSmile, faGear, faMessage, faPencil, faPlus, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faEarth, faFaceSmile, faGear, faMessage, faPencil, faPlus, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import { closePopup, cropCenter, loadFile, openPopup, showError, validateString } from '@/utils.ts';
 import SquareImgBtn from '../../gui/square_img_btn/square_img_btn';
 import Popup from '../../gui/popup';
+import { changeLang, openDropdown, toggleDropdown } from '../../utils';
+import Dropdown from '../../gui/dropdown/dropdown';
 
 function SettingsPage() {
     const [customEmojis, setCustomEmojis] = useState([]);
@@ -150,6 +152,7 @@ function SettingsPage() {
                 <div className="LeftPanel" id='left_panel'>
                     <div className="SettingsPanel">
                         <ProfileThing text={t('back')} image={false} onClick={() => { location.href = '/' }}> <FontAwesomeIcon icon={faArrowLeft} /> </ProfileThing>
+                        <ProfileThing text={t('general')} image={false} onClick={() => { openSettingsScreen('GeneralSettings') }}>  <FontAwesomeIcon icon={faGear} /> </ProfileThing>
                         <ProfileThing text={t('profile')} image={false} onClick={() => { openSettingsScreen('ProfileSettings') }}>  <FontAwesomeIcon icon={faUser} /> </ProfileThing>
                         <ProfileThing text={t('messages')} image={false} onClick={() => { openSettingsScreen('MessagesSettings') }}>  <FontAwesomeIcon icon={faMessage} /> </ProfileThing>
                         <ProfileThing text={t('emojis')} image={false} onClick={() => { openSettingsScreen('EmojiSettings') }}>  <FontAwesomeIcon icon={faFaceSmile} /> </ProfileThing>
@@ -157,6 +160,14 @@ function SettingsPage() {
                 </div>
                 <div className="RightPanel Settings" id='right_panel'>
                     <div className='SettingsScreens'>
+                        <div className='SettingsScreen GeneralSettings hide'>
+                            <div className='Thing'> {/*Big brain moment*/}
+                                <div className='EditDiv' onClick={(e) => toggleDropdown('lang', e.currentTarget)}>
+                                    <p style={{ width: '100%', textAlign: 'center', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>{`${t('language')}: ${t('current_lang')}`}</p>
+                                    <FontAwesomeIcon icon={faPencil} className='pencil' />
+                                </div>
+                            </div>
+                        </div>
                         <div className='SettingsScreen ProfileSettings hide'>
                             <div className='Profile'>
                                 <div className='EditDiv' onClick={uploadAvatar}>
@@ -171,7 +182,7 @@ function SettingsPage() {
                             </div>
                         </div>
                         <div className='SettingsScreen MessagesSettings hide'>
-                            <div className='Thing'> {/*the hell is 'Thing'? Me in the past is such an asshole...*/}
+                            <div className='Thing'>
                                 <ProfileThing text={t('subscribe_to_msges')} image={false} animation={false} onClick={subscribeUser}/>
                             </div>
                         </div>
@@ -199,6 +210,21 @@ function SettingsPage() {
                     <button className='SubmitEmojiBtn' onClick={submitEmoji}>{t('submit')}</button>
                 </div>
             </Popup>
+            <Dropdown name='lang'>
+                <div className="noanim"><FontAwesomeIcon icon={faEarth}/>{t('select_language')}</div>
+                <div onClick={() => changeLang("")}>
+                    <p>{t('auto_lang')}</p>
+                </div>
+                <div onClick={() => changeLang("en")}>
+                    <p>English</p>
+                </div>
+                <div onClick={() => changeLang("ru")}>
+                    <p>Русский</p>
+                </div>
+                <div onClick={() => changeLang("uk")}>
+                    <p>Українська</p>
+                </div>
+            </Dropdown>
         </>
     )
 }
