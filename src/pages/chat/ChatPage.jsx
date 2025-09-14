@@ -82,7 +82,6 @@ function ChatPage() {
       messageCount.current += 1;
     });
     socket.on("history", (data) => {
-      console.log(data);
       if (isWaitingForHistory.current) {
         setMessages(
           data.messages.map((msg) => ({
@@ -104,7 +103,7 @@ function ChatPage() {
         messageCount.current = data.messages.length;
         animateFrom.current = data.messages.length;
         isWaitingForHistory.current = false;
-        requestAnimationFrame(() => {
+        setTimeout(() => {
           const content_panel = document.getElementById("content_panel");
           content_panel.scrollTop = content_panel.scrollTop;
           const content_panel_children = Array.from(content_panel.children);
@@ -113,7 +112,7 @@ function ChatPage() {
               content_panel_children[i].getBoundingClientRect().height * 1000;
           }
           const reversed = content_panel_children.reverse();
-          for (let i = 0; i < content_panel_children.length; i++) {
+          for (let i = 0; i < reversed.length; i++) {
             setTimeout(
               () => {
                 reversed[i].classList.add("show");
@@ -121,7 +120,7 @@ function ChatPage() {
               i < 25 ? i * 50 : 1000,
             );
           }
-        });
+        }, 100);
         socket.emit("seenAll", { chat: localStorage.getItem("chatId") || 1 });
       } else if (isWaitingForAdditionalHistory.current) {
         setMessages((prev) => [
