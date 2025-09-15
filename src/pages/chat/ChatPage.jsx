@@ -371,6 +371,7 @@ function ChatPage() {
     socket.on("userInfo", (data) => {
       document.getElementById("top_panel_avatar").src =
         `${address}/avatars/${data.user?.id}.webp`;
+      socket.off("userInfo");
     });
     socket.emit("getUserInfo", { name: username });
     Array.from(document.getElementById("top_panel_content").children).forEach(
