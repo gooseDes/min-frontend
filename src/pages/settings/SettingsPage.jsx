@@ -1,24 +1,24 @@
-import { t } from 'i18next';
-import '@/App.css';
-import './SettingsPage.css';
-import ProfileThing from '../../gui/profile_thing';
-import { getSocket, address } from '@/wsClient';
-import { subscribeUser } from '../../push';
-import { faArrowLeft, faEarth, faFaceSmile, faGear, faMessage, faPencil, faPlus, faUser } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useEffect, useState } from 'react';
-import { closePopup, cropCenter, loadFile, openPopup, showError, validateString } from '@/utils.ts';
-import SquareImgBtn from '../../gui/square_img_btn/square_img_btn';
-import Popup from '../../gui/popup';
-import { changeLang, openDropdown, toggleDropdown } from '../../utils';
-import Dropdown from '../../gui/dropdown/dropdown';
+import { t } from "i18next";
+import "@/App.css";
+import "./SettingsPage.css";
+import ProfileThing from "../../gui/profile_thing";
+import { getSocket, address } from "@/wsClient";
+import { subscribeUser } from "../../push";
+import { faArrowLeft, faEarth, faFaceSmile, faGear, faMessage, faPencil, faPlus, faUser } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect, useState } from "react";
+import { closePopup, cropCenter, loadFile, openPopup, showError, validateString } from "@/utils.ts";
+import SquareImgBtn from "../../gui/square_img_btn/square_img_btn";
+import Popup from "../../gui/popup";
+import { changeLang, openDropdown, toggleDropdown } from "../../utils";
+import Dropdown from "../../gui/dropdown/dropdown";
 
 function SettingsPage() {
     const [customEmojis, setCustomEmojis] = useState([]);
     const [emojiFormData, setEmojiFormData] = useState(null);
 
     function uploadAvatar() {
-        loadFile('image', false, (files) => {
+        loadFile("image", false, (files) => {
             const file = files[0];
             if (!file) return;
 
@@ -28,51 +28,51 @@ function SettingsPage() {
             fetch(`${address}/upload-avatar`, {
                 method: "POST",
                 headers: {
-                    "Authorization": "Bearer " + localStorage.getItem("token"),
+                    Authorization: "Bearer " + localStorage.getItem("token"),
                 },
                 body: formData,
             })
-            .then((res) => res.json())
-            .then((data) => {
-                console.log("Avatar loaded:", data.url);
-                const avatar_settings = document.getElementById('avatar_settings');
-                setTimeout(() => {
-                    avatar_settings.style.scale = '0';
+                .then((res) => res.json())
+                .then((data) => {
+                    console.log("Avatar loaded:", data.url);
+                    const avatar_settings = document.getElementById("avatar_settings");
                     setTimeout(() => {
-                        avatar_settings.src = '';
+                        avatar_settings.style.scale = "0";
                         setTimeout(() => {
-                            avatar_settings.src = `${address}/avatars/${localStorage.getItem('id')}.webp?t=${Date.now()}`;
-                            avatar_settings.style.scale = '1';
-                        }, 10);
-                    }, 500);
-                }, 100);
-            })
-            .catch((err) => {
-                console.error("Error loading avatar:", err);
-            });
+                            avatar_settings.src = "";
+                            setTimeout(() => {
+                                avatar_settings.src = `${address}/avatars/${localStorage.getItem("id")}.webp?t=${Date.now()}`;
+                                avatar_settings.style.scale = "1";
+                            }, 10);
+                        }, 500);
+                    }, 100);
+                })
+                .catch((err) => {
+                    console.error("Error loading avatar:", err);
+                });
         });
     }
 
     function openMenu() {
-        const left_panel = document.getElementById('left_panel');
-        left_panel.classList.add('show');
-        document.getElementById('right_panel').style.filter = 'blur(1px)';
-        document.getElementById('menu_button').classList.add('hide');
+        const left_panel = document.getElementById("left_panel");
+        left_panel.classList.add("show");
+        document.getElementById("right_panel").style.filter = "blur(1px)";
+        document.getElementById("menu_button").classList.add("hide");
     }
 
     function openSettingsScreen(screen) {
-        const settings_screens = document.querySelectorAll('.SettingsScreen');
-        settings_screens.forEach(screen => screen.classList.add('hide'));
+        const settings_screens = document.querySelectorAll(".SettingsScreen");
+        settings_screens.forEach((screen) => screen.classList.add("hide"));
         const new_screen = document.querySelector(`.${screen}`);
-        new_screen.classList.remove('hide');
-        new_screen.classList.add('show');
-        document.getElementById('left_panel').classList.remove('show');
-        document.getElementById('right_panel').style.filter = '';
-        document.getElementById('menu_button').classList.remove('hide');
+        new_screen.classList.remove("hide");
+        new_screen.classList.add("show");
+        document.getElementById("left_panel").classList.remove("show");
+        document.getElementById("right_panel").style.filter = "";
+        document.getElementById("menu_button").classList.remove("hide");
     }
 
     function loadCustomEmoji() {
-        loadFile('image', false, async (files) => {
+        loadFile("image", false, async (files) => {
             const file = files[0];
             if (!file) return;
             if (emojiFormData) {
@@ -85,21 +85,23 @@ function SettingsPage() {
             }
             const blob = await cropCenter(file, 128);
             const url = URL.createObjectURL(blob);
-            const img = document.querySelector('.SelectEmojiImg');
+            const img = document.querySelector(".SelectEmojiImg");
             img.src = url;
         });
     }
 
     function submitEmoji() {
-        const input = document.getElementById('emoji_name_input');
+        const input = document.getElementById("emoji_name_input");
         const name = input.value.trim();
-        if (!validateString(name, 'username', 1, 64)) {
-            input.classList.add('error');
-            setTimeout(() => {input.classList.remove('error')}, 1000);
+        if (!validateString(name, "username", 1, 64)) {
+            input.classList.add("error");
+            setTimeout(() => {
+                input.classList.remove("error");
+            }, 1000);
             return;
         }
         if (!emojiFormData) {
-            showError(t('upload_image_first'));
+            showError(t("upload_image_first"));
             return;
         }
         const formData = emojiFormData;
@@ -108,112 +110,170 @@ function SettingsPage() {
         fetch(`${address}/upload-emoji`, {
             method: "POST",
             headers: {
-                "Authorization": "Bearer " + localStorage.getItem("token"),
+                Authorization: "Bearer " + localStorage.getItem("token"),
             },
             body: formData,
         })
-        .then(res => res.json())
-        .then(data => {
-            console.log("Emoji uploaded:", data);
-            const socket = getSocket();
-            socket.emit('getCustomEmojis', {});
-            input.value = '';
-            document.querySelector('.SelectEmojiImg').src = '/assets/select.svg';
-            setEmojiFormData(null);
-            closePopup('add-emoji');
-        })
-        .catch(err => console.error("Error uploading emoji:", err));
+            .then((res) => res.json())
+            .then((data) => {
+                console.log("Emoji uploaded:", data);
+                const socket = getSocket();
+                socket.emit("getCustomEmojis", {});
+                input.value = "";
+                document.querySelector(".SelectEmojiImg").src = "/assets/select.svg";
+                setEmojiFormData(null);
+                closePopup("add-emoji");
+            })
+            .catch((err) => console.error("Error uploading emoji:", err));
     }
 
     useEffect(() => {
         setTimeout(() => {
-            const menu_button = document.getElementById('menu_button');
+            const menu_button = document.getElementById("menu_button");
             if (window.matchMedia("(orientation: portrait)").matches) menu_button.click();
         }, 100);
     }, []);
 
     useEffect(() => {
         const socket = getSocket();
-        socket.on('customEmojis', (data) => {
+        socket.on("customEmojis", (data) => {
             setTimeout(() => setCustomEmojis(data.emojis), 100);
         });
 
-        socket.emit('getCustomEmojis', {});
+        socket.emit("getCustomEmojis", {});
 
         return () => {
-            socket.off('customEmojis');
-        }
+            socket.off("customEmojis");
+        };
     });
 
     return (
         <>
-            <div className="App" id='app'>
-                <button className='BackButton' id='menu_button' onClick={openMenu}><FontAwesomeIcon icon={faArrowLeft}/></button>
-                <div className="LeftPanel" id='left_panel'>
+            <div className="App" id="app">
+                <button className="BackButton" id="menu_button" onClick={openMenu}>
+                    <FontAwesomeIcon icon={faArrowLeft} />
+                </button>
+                <div className="LeftPanel" id="left_panel">
                     <div className="SettingsPanel">
-                        <ProfileThing text={t('back')} image={false} onClick={() => { location.href = '/' }}> <FontAwesomeIcon icon={faArrowLeft} /> </ProfileThing>
-                        <ProfileThing text={t('general')} image={false} onClick={() => { openSettingsScreen('GeneralSettings') }}>  <FontAwesomeIcon icon={faGear} /> </ProfileThing>
-                        <ProfileThing text={t('profile')} image={false} onClick={() => { openSettingsScreen('ProfileSettings') }}>  <FontAwesomeIcon icon={faUser} /> </ProfileThing>
-                        <ProfileThing text={t('messages')} image={false} onClick={() => { openSettingsScreen('MessagesSettings') }}>  <FontAwesomeIcon icon={faMessage} /> </ProfileThing>
-                        <ProfileThing text={t('emojis')} image={false} onClick={() => { openSettingsScreen('EmojiSettings') }}>  <FontAwesomeIcon icon={faFaceSmile} /> </ProfileThing>
+                        <ProfileThing
+                            text={t("back")}
+                            image={false}
+                            onClick={() => {
+                                location.href = "/";
+                            }}
+                        >
+                            {" "}
+                            <FontAwesomeIcon icon={faArrowLeft} />{" "}
+                        </ProfileThing>
+                        <ProfileThing
+                            text={t("general")}
+                            image={false}
+                            onClick={() => {
+                                openSettingsScreen("GeneralSettings");
+                            }}
+                        >
+                            {" "}
+                            <FontAwesomeIcon icon={faGear} />{" "}
+                        </ProfileThing>
+                        <ProfileThing
+                            text={t("profile")}
+                            image={false}
+                            onClick={() => {
+                                openSettingsScreen("ProfileSettings");
+                            }}
+                        >
+                            {" "}
+                            <FontAwesomeIcon icon={faUser} />{" "}
+                        </ProfileThing>
+                        <ProfileThing
+                            text={t("messages")}
+                            image={false}
+                            onClick={() => {
+                                openSettingsScreen("MessagesSettings");
+                            }}
+                        >
+                            {" "}
+                            <FontAwesomeIcon icon={faMessage} />{" "}
+                        </ProfileThing>
+                        <ProfileThing
+                            text={t("emojis")}
+                            image={false}
+                            onClick={() => {
+                                openSettingsScreen("EmojiSettings");
+                            }}
+                        >
+                            {" "}
+                            <FontAwesomeIcon icon={faFaceSmile} />{" "}
+                        </ProfileThing>
                     </div>
                 </div>
-                <div className="RightPanel Settings" id='right_panel'>
-                    <div className='SettingsScreens'>
-                        <div className='SettingsScreen GeneralSettings hide'>
-                            <div className='Thing'> {/*Big brain moment*/}
-                                <div className='EditDiv' onClick={(e) => toggleDropdown('lang', e.currentTarget)}>
-                                    <p style={{ width: '100%', textAlign: 'center', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>{`${t('language')}: ${t('current_lang')}`}</p>
-                                    <FontAwesomeIcon icon={faPencil} className='pencil' />
+                <div className="RightPanel Settings" id="right_panel">
+                    <div className="SettingsScreens">
+                        <div className="SettingsScreen GeneralSettings hide">
+                            <div className="Thing">
+                                {" "}
+                                {/*Big brain moment*/}
+                                <div className="EditDiv" onClick={(e) => toggleDropdown("lang", e.currentTarget)}>
+                                    <p style={{ width: "100%", textAlign: "center", display: "flex", justifyContent: "center", alignItems: "center" }}>{`${t("language")}: ${t("current_lang")}`}</p>
+                                    <FontAwesomeIcon icon={faPencil} className="pencil" />
                                 </div>
                             </div>
                         </div>
-                        <div className='SettingsScreen ProfileSettings hide'>
-                            <div className='Profile'>
-                                <div className='EditDiv' onClick={uploadAvatar}>
-                                    <img src={`${address}/avatars/${localStorage.getItem('id')}.webp`}
-                                        onError={ (e) => e.currentTarget.src = '/logo512.png' }
-                                        className='AvatarSettings'
-                                        id='avatar_settings' 
+                        <div className="SettingsScreen ProfileSettings hide">
+                            <div className="Profile">
+                                <div className="EditDiv" onClick={uploadAvatar}>
+                                    <img
+                                        src={`${address}/avatars/${localStorage.getItem("id")}.webp`}
+                                        onError={(e) => (e.currentTarget.src = "/logo512.png")}
+                                        className="AvatarSettings"
+                                        id="avatar_settings"
                                     />
-                                    <FontAwesomeIcon icon={faPencil} className='pencil' />
+                                    <FontAwesomeIcon icon={faPencil} className="pencil" />
                                 </div>
-                                <p style={{ fontWeight: 'bold', fontSize: '28px' }}>{localStorage.getItem('username')}</p>
+                                <p style={{ fontWeight: "bold", fontSize: "28px" }}>{localStorage.getItem("username")}</p>
                             </div>
                         </div>
-                        <div className='SettingsScreen MessagesSettings hide'>
-                            <div className='Thing'>
-                                <ProfileThing text={t('subscribe_to_msges')} image={false} animation={false} onClick={subscribeUser}/>
+                        <div className="SettingsScreen MessagesSettings hide">
+                            <div className="Thing">
+                                <ProfileThing text={t("subscribe_to_msges")} image={false} animation={false} onClick={subscribeUser} />
                             </div>
                         </div>
-                        <div className='SettingsScreen EmptySettings show'>
-                            <FontAwesomeIcon icon={faGear} style={{ color: '#aaa', fontSize: '24vh', filter: 'blur(5px)' }} />
+                        <div className="SettingsScreen EmptySettings show">
+                            <FontAwesomeIcon icon={faGear} style={{ color: "#aaa", fontSize: "24vh", filter: "blur(5px)" }} />
                         </div>
-                        <div className='SettingsScreen EmojiSettings hide'>
-                                <div className='CurrentEmojis'>
-                                    {customEmojis.map(emoji => (
-                                        <SquareImgBtn key={emoji.id} src={`${address}/emojis/${emoji.id}.webp`} onClick={() => {}} text={emoji.name}/>
-                                    ))}
-                                    <button id='add_emoji_btn' onClick={() => openPopup('add-emoji')}><FontAwesomeIcon icon={faPlus} />{t('add_emoji')}</button>
-                                </div>
+                        <div className="SettingsScreen EmojiSettings hide">
+                            <div className="CurrentEmojis">
+                                {customEmojis.map((emoji) => (
+                                    <SquareImgBtn key={emoji.id} src={`${address}/emojis/${emoji.id}.webp`} onClick={() => {}} text={emoji.name} />
+                                ))}
+                                <button id="add_emoji_btn" onClick={() => openPopup("add-emoji")}>
+                                    <FontAwesomeIcon icon={faPlus} />
+                                    {t("add_emoji")}
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <Popup title={t('add_emoji')} name='add-emoji'>
-                <div className='AddEmojiPopupContent'>
-                    <div className='EditDiv' style={{ marginBottom: '10px', width: 'fit-content' }} onClick={loadCustomEmoji}>
-                        <img src='/assets/select.svg' className='SelectEmojiImg' />
-                        <FontAwesomeIcon icon={faPencil} className='pencil' />
+            <Popup title={t("add_emoji")} name="add-emoji">
+                <div className="AddEmojiPopupContent">
+                    <div className="EditDiv" style={{ marginBottom: "10px", width: "fit-content" }} onClick={loadCustomEmoji}>
+                        <img src="/assets/select.svg" className="SelectEmojiImg" />
+                        <FontAwesomeIcon icon={faPencil} className="pencil" />
                     </div>
-                    <input type='text' className='EmojiNameInput' placeholder={t('emoji_name')} id='emoji_name_input' />
-                    <button className='SubmitEmojiBtn' onClick={submitEmoji}>{t('submit')}</button>
+                    <input type="text" className="EmojiNameInput" placeholder={t("emoji_name")} id="emoji_name_input" />
+                    <button className="SubmitEmojiBtn" onClick={submitEmoji}>
+                        {t("submit")}
+                    </button>
                 </div>
             </Popup>
-            <Dropdown name='lang'>
-                <div className="noanim"><FontAwesomeIcon icon={faEarth}/>{t('select_language')}</div>
+            <Dropdown name="lang">
+                <div className="noanim">
+                    <FontAwesomeIcon icon={faEarth} />
+                    {t("select_language")}
+                </div>
                 <div onClick={() => changeLang("")}>
-                    <p>{t('auto_lang')}</p>
+                    <p>{t("auto_lang")}</p>
                 </div>
                 <div onClick={() => changeLang("en")}>
                     <p>English</p>
@@ -226,7 +286,7 @@ function SettingsPage() {
                 </div>
             </Dropdown>
         </>
-    )
+    );
 }
 
 export default SettingsPage;

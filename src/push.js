@@ -7,14 +7,12 @@ export async function subscribeUser() {
             if (oldReg) {
                 await oldReg.unregister();
             }
-            const reg = await navigator.serviceWorker.register("/sw.js", { type: 'module' });
+            const reg = await navigator.serviceWorker.register("/sw.js", { type: "module" });
             console.log("Service Worker registered");
 
             const subscription = await reg.pushManager.subscribe({
                 userVisibleOnly: true,
-                applicationServerKey: urlBase64ToUint8Array(
-                    import.meta.env.VITE_VAPID_PUBLIC
-                ),
+                applicationServerKey: urlBase64ToUint8Array(import.meta.env.VITE_VAPID_PUBLIC),
             });
 
             console.log("Got subscription:", subscription);
@@ -23,7 +21,7 @@ export async function subscribeUser() {
                 method: "POST",
                 body: JSON.stringify({
                     subscription: subscription,
-                    token: localStorage.getItem('token')
+                    token: localStorage.getItem("token"),
                 }),
                 headers: { "Content-Type": "application/json" },
             });

@@ -10,102 +10,96 @@ declare global {
 }
 
 export function getToken() {
-    return localStorage.getItem('token');
+    return localStorage.getItem("token");
 }
 
 export function isUserLogined() {
-    return localStorage.getItem('token') != null;
+    return localStorage.getItem("token") != null;
 }
 
 export function openPopup(popupName: string) {
-    const app = document.getElementById('app');
-    if (app) app.style.filter = 'blur(2px)';
+    const app = document.getElementById("app");
+    if (app) app.style.filter = "blur(2px)";
     const popup = document.getElementById(`${popupName}-popup`);
     if (popup) {
-        popup.classList.remove('PopupHide');
-        popup.style.display = 'flex';
-        popup.classList.add('PopupShow');
+        popup.classList.remove("PopupHide");
+        popup.style.display = "flex";
+        popup.classList.add("PopupShow");
     }
 }
 
 export function closePopup(popupName: string) {
     const popup = document.getElementById(`${popupName}-popup`);
     if (popup) {
-        const app = document.getElementById('app');
-        if (app) app.style.filter = 'blur(0)';
-        popup.classList.remove('PopupShow');
-        popup.classList.add('PopupHide');
+        const app = document.getElementById("app");
+        if (app) app.style.filter = "blur(0)";
+        popup.classList.remove("PopupShow");
+        popup.classList.add("PopupHide");
         setTimeout(() => {
-            popup.style.display = 'none';
+            popup.style.display = "none";
         }, 300);
     }
 }
 
 export function openDropdown(name: string, caller: HTMLElement) {
-    const app = document.getElementById('app');
-    if (app) app.style.filter = 'blur(5px)';
+    const app = document.getElementById("app");
+    if (app) app.style.filter = "blur(5px)";
     const dropdown = document.getElementById(`${name}-dropdown`);
     if (!dropdown) return;
     const rect = caller.getBoundingClientRect();
-    dropdown.style.left = `${rect.right-rect.width/2}px`;
-    dropdown.style.bottom = `${window.innerHeight-(rect.top-rect.height/2)}px`;
-    dropdown.classList.add('open');
+    dropdown.style.left = `${rect.right - rect.width / 2}px`;
+    dropdown.style.bottom = `${window.innerHeight - (rect.top - rect.height / 2)}px`;
+    dropdown.classList.add("open");
     function close() {
         closeDropdown(name);
-        document.removeEventListener('click', close);
+        document.removeEventListener("click", close);
     }
-    document.addEventListener('click', close);
+    document.addEventListener("click", close);
 }
 
 export function toggleDropdown(name: string, caller: HTMLElement) {
     const dropdown = document.getElementById(`${name}-dropdown`);
     if (!dropdown) return;
     const rect = caller.getBoundingClientRect();
-    dropdown.style.left = `${rect.right-rect.width/2}px`;
-    dropdown.style.bottom = `${window.innerHeight-(rect.top-rect.height/2)}px`;
-    dropdown.classList.toggle('open');
+    dropdown.style.left = `${rect.right - rect.width / 2}px`;
+    dropdown.style.bottom = `${window.innerHeight - (rect.top - rect.height / 2)}px`;
+    dropdown.classList.toggle("open");
 }
 
 export function closeDropdown(name: string) {
     const dropdown = document.getElementById(`${name}-dropdown`);
     if (!dropdown) return;
-    dropdown.classList.remove('open');
-    const app = document.getElementById('app');
-    if (app) app.style.filter = '';
+    dropdown.classList.remove("open");
+    const app = document.getElementById("app");
+    if (app) app.style.filter = "";
 }
 
 export function showError(text: string) {
-    window.setErrorPopup(
-        text
-    );
-    openPopup('error');
+    window.setErrorPopup(text);
+    openPopup("error");
 }
 
 export function verifyToken(token: string) {
     fetch(`${address}/verify`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token: token })
-    }).then(response => {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token: token }),
+    }).then((response) => {
         if (response.ok) {
             return true;
         } else {
             try {
-                openPopup('account-popup');
+                openPopup("account-popup");
             } catch (e) {}
-            localStorage.removeItem('token');
-            localStorage.removeItem('email');
-            localStorage.removeItem('username');
+            localStorage.removeItem("token");
+            localStorage.removeItem("email");
+            localStorage.removeItem("username");
             return false;
         }
     });
 }
 
-export function loadFile(
-    type: string = 'image',
-    multiple: boolean = false,
-    callback: (files: File[]) => void
-) {
+export function loadFile(type: string = "image", multiple: boolean = false, callback: (files: File[]) => void) {
     const fileInput = document.createElement("input");
     fileInput.type = "file";
     fileInput.accept = `${type}/*`;
@@ -127,13 +121,13 @@ export function loadFile(
     fileInput.click();
 }
 
-export const USERNAME_ALLOWED_CHARS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-';
-export const EMAIL_ALLOWED_CHARS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@._-';
+export const USERNAME_ALLOWED_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-";
+export const EMAIL_ALLOWED_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@._-";
 export const PASSWORD_ALLOWED_CHARS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-={}[]|;:"<>,.?/~`';
 
 // Function for validating symbols in strings
 export function validateString(str: string, type: string = "username", minLength: number = 3, maxLength: number = 32) {
-    let allowedChars = '';
+    let allowedChars = "";
     if (type === "username") allowedChars = USERNAME_ALLOWED_CHARS;
     else if (type === "email") allowedChars = EMAIL_ALLOWED_CHARS;
     else if (type === "password") allowedChars = PASSWORD_ALLOWED_CHARS;
@@ -170,7 +164,7 @@ export async function cropCenter(file: any, targetSize: number = 128) {
 
                 if (!pica) return;
                 await pica.resize(cropCanvas, finalCanvas);
-                finalCanvas.toBlob(blob => resolve(blob), "image/webp", 0.9);
+                finalCanvas.toBlob((blob) => resolve(blob), "image/webp", 0.9);
             } catch (err) {
                 reject(err);
             }
@@ -181,29 +175,24 @@ export async function cropCenter(file: any, targetSize: number = 128) {
 
 // Function for converting unix timestamp to human readable format e.g. 2025:09:31
 export function formatTime(unixTimestamp: number, advanced: boolean = false) {
-    const dateObject = new Date(unixTimestamp*1000);
+    const dateObject = new Date(unixTimestamp * 1000);
 
     const now = new Date(Date.now());
 
     const year = dateObject.getFullYear();
-    const month = (dateObject.getMonth() + 1).toString().padStart(2, '0');
-    const day = dateObject.getDate().toString().padStart(2, '0');
-    const hours = dateObject.getHours().toString().padStart(2, '0');
-    const minutes = dateObject.getMinutes().toString().padStart(2, '0');
-    const seconds = dateObject.getSeconds().toString().padStart(2, '0');
+    const month = (dateObject.getMonth() + 1).toString().padStart(2, "0");
+    const day = dateObject.getDate().toString().padStart(2, "0");
+    const hours = dateObject.getHours().toString().padStart(2, "0");
+    const minutes = dateObject.getMinutes().toString().padStart(2, "0");
+    const seconds = dateObject.getSeconds().toString().padStart(2, "0");
 
     let formatted = null;
 
-    if (
-        now.getFullYear() == dateObject.getFullYear() &&
-        now.getMonth() == dateObject.getMonth() &&
-        Math.abs(now.getDate()-dateObject.getDate()) <= 1 &&
-        !advanced
-    ) {
+    if (now.getFullYear() == dateObject.getFullYear() && now.getMonth() == dateObject.getMonth() && Math.abs(now.getDate() - dateObject.getDate()) <= 1 && !advanced) {
         const today = now.getDate() == dateObject.getDate();
-        formatted = `${today ? t('today') : `${now.getDate() >= dateObject.getDate() ? t('yesterday') : t('tommorow')}`} ${hours}:${minutes}${advanced ? `:${seconds}` : ''}`;
+        formatted = `${today ? t("today") : `${now.getDate() >= dateObject.getDate() ? t("yesterday") : t("tommorow")}`} ${hours}:${minutes}${advanced ? `:${seconds}` : ""}`;
     } else {
-        formatted = `${year}-${month}-${day} ${hours}:${minutes}${advanced ? `:${seconds}` : ''}`;
+        formatted = `${year}-${month}-${day} ${hours}:${minutes}${advanced ? `:${seconds}` : ""}`;
     }
     return formatted;
 }
@@ -212,7 +201,7 @@ export function formatTime(unixTimestamp: number, advanced: boolean = false) {
 export function changeLang(lang: string) {
     if (lang == "") {
         localStorage.removeItem("lang");
-        i18n.changeLanguage('');
+        i18n.changeLanguage("");
         document.cookie = "lang=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     } else localStorage.setItem("lang", lang);
     location.href = location.href;

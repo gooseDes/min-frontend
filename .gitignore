@@ -48,5 +48,3 @@ yarn-debug.log*
 yarn-error.log*
 
 /dist
-
-.prettierrc

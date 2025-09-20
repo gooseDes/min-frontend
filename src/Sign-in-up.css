@@ -6,7 +6,9 @@
     background-color: #000;
 }
 
-html, body, .App {
+html,
+body,
+.App {
     overflow: hidden;
 }
 

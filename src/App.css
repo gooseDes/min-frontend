@@ -1,411 +1,411 @@
 * {
-  font-family: 'Rubik' !important;
+    font-family: "Rubik" !important;
 }
 
 :root {
-  --background-panel: #242424dd;
-  --left-panel-bg: #242424dd;
-  @media screen and (orientation: portrait) {
-    --left-panel-bg: #00000066;
-  }
+    --background-panel: #242424dd;
+    --left-panel-bg: #242424dd;
+    @media screen and (orientation: portrait) {
+        --left-panel-bg: #00000066;
+    }
 }
 
 html,
 body,
 #root {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  background-color: #000;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #000;
 }
 
 .App {
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-  gap: 30px;
-  transition: all 0.3s ease-in-out;
-  background: linear-gradient(135deg, #000000, #1c1c1c);
-  background-size: cover;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    gap: 30px;
+    transition: all 0.3s ease-in-out;
+    background: linear-gradient(135deg, #000000, #1c1c1c);
+    background-size: cover;
 }
 
 p {
-  color: #fff;
+    color: #fff;
 }
 
 .LeftPanel {
-  display: flex;
-  justify-content: left;
-  flex-direction: column;
-  width: 400px;
-  height: calc(var(--vh, 1vh) * 100 - 40px);
-  gap: 10px;
-  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  z-index: 9999;
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    width: 400px;
+    height: calc(var(--vh, 1vh) * 100 - 40px);
+    gap: 10px;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 9999;
 }
 
 @media screen and (orientation: portrait) {
-  .LeftPanel {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: calc(100vw - 40px);
-    height: calc(var(--vh, 1vh) * 100 - 60px);
-    translate: -110% 10px;
+    .LeftPanel {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: calc(100vw - 40px);
+        height: calc(var(--vh, 1vh) * 100 - 60px);
+        translate: -110% 10px;
 
-    &.show {
-      translate: 10px 10px;
-      opacity: 1;
+        &.show {
+            translate: 10px 10px;
+            opacity: 1;
+        }
     }
-  }
 }
 
 .ChatsPanel {
-  display: flex;
-  background: var(--left-panel-bg);
-  backdrop-filter: blur(5px);
-  border-radius: 2svh;
-  flex-direction: column;
-  gap: 10px;
-  width: 100%;
-  height: calc(100% - 120px);
-  padding: 10px;
-  will-change: translate;
-  overflow-x: hidden;
-  overflow-y: auto;
+    display: flex;
+    background: var(--left-panel-bg);
+    backdrop-filter: blur(5px);
+    border-radius: 2svh;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    height: calc(100% - 120px);
+    padding: 10px;
+    will-change: translate;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 @media screen and (orientation: portrait) {
-  .ChatsPanel {
-    backdrop-filter: blur(10px);
-  }
+    .ChatsPanel {
+        backdrop-filter: blur(10px);
+    }
 }
 
 .UserPanel {
-  display: flex;
-  background: var(--left-panel-bg);
-  backdrop-filter: blur(10px);
-  border-radius: 2svh;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 60px;
-  padding: 10px;
+    display: flex;
+    background: var(--left-panel-bg);
+    backdrop-filter: blur(10px);
+    border-radius: 2svh;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 60px;
+    padding: 10px;
 }
 
 @media screen and (orientation: portrait) {
-  .UserPanel {
-    backdrop-filter: blur(10px);
-  }
+    .UserPanel {
+        backdrop-filter: blur(10px);
+    }
 }
 
 .UserPanelContent {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  width: 100%;
-  height: 100%;
-  gap: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    gap: 10px;
 }
 
 .RightPanel {
-  width: 100%;
-  height: calc(var(--vh, 1vh) * 100 - 40px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding: 0 10px;
-  gap: 0;
-  transition: gap 0.3s cubic-bezier(0.175, 0.885, 0.32, 2);
-  transition: filter 0.3s ease-in-out;
+    width: 100%;
+    height: calc(var(--vh, 1vh) * 100 - 40px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 0 10px;
+    gap: 0;
+    transition: gap 0.3s cubic-bezier(0.175, 0.885, 0.32, 2);
+    transition: filter 0.3s ease-in-out;
 }
 
 .TopPanel {
-  margin: 0;
-  background: var(--background-panel);
-  backdrop-filter: blur(10px);
-  border-radius: 2svh 2svh 0 0;
-  width: 100%;
-  height: 60px;
-  padding: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  transition: all 0.2s ease-in-out;
+    margin: 0;
+    background: var(--background-panel);
+    backdrop-filter: blur(10px);
+    border-radius: 2svh 2svh 0 0;
+    width: 100%;
+    height: 60px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    transition: all 0.2s ease-in-out;
 }
 
 .TopPanelContent {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .TopPanelThing {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 80%;
-  gap: 15px;
-  background-color: #aaaaaa11;
-  padding: 10px 20px;
-  border-radius: 2svh;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  translate: 0 -12vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80%;
+    gap: 15px;
+    background-color: #aaaaaa11;
+    padding: 10px 20px;
+    border-radius: 2svh;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    translate: 0 -12vh;
 
-  img {
-    height: 100%;
-    border-radius: 999px;
-  }
+    img {
+        height: 100%;
+        border-radius: 999px;
+    }
 
-  p {
-    font-size: 2svh;
-    font-weight: bold;
-    color: #fff;
-  }
+    p {
+        font-size: 2svh;
+        font-weight: bold;
+        color: #fff;
+    }
 }
 
 .ContentPanel {
-  margin: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: #9993 #0000;
-  background: var(--background-panel);
-  backdrop-filter: blur(10px);
-  border-radius: 0 0 0 0;
-  width: 100%;
-  height: 100%;
-  padding: 10px;
-  transition: all 0.2s ease-in-out;
+    margin: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #9993 #0000;
+    background: var(--background-panel);
+    backdrop-filter: blur(10px);
+    border-radius: 0 0 0 0;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    transition: all 0.2s ease-in-out;
 }
 
 *::-webkit-scrollbar {
-  width: 4px;
+    width: 4px;
 }
 
 *::-webkit-scrollbar-track {
-  background: transparent;
-  margin: 30px;
+    background: transparent;
+    margin: 30px;
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: #aaa;
-  border-radius: 10px;
+    background-color: #aaa;
+    border-radius: 10px;
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background-color: #888;
+    background-color: #888;
 }
 
 .InputPanel {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  background: var(--background-panel);
-  backdrop-filter: blur(10px);
-  border-radius: 0 0 2svh 2svh;
-  width: 100%;
-  height: 70px;
-  padding: 10px;
-  gap: 10px;
-  overflow: hidden;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    background: var(--background-panel);
+    backdrop-filter: blur(10px);
+    border-radius: 0 0 2svh 2svh;
+    width: 100%;
+    height: 70px;
+    padding: 10px;
+    gap: 10px;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
-  &.expanded {
-    height: 200px;
-  }
+    &.expanded {
+        height: 200px;
+    }
 }
 
 .MessageInput {
-  width: 100%;
-  height: 100%;
-  background-color: transparent;
-  border: none;
-  outline: none;
-  color: #fff;
-  padding: 0 1svh;
-  font-size: 16px;
-  overflow: hidden;
-  translate: 0 150%;
-  padding-top: 38px;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: #fff;
+    padding: 0 1svh;
+    font-size: 16px;
+    overflow: hidden;
+    translate: 0 150%;
+    padding-top: 38px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
-  &.expanded {
-    padding-top: 10px;
-  }
+    &.expanded {
+        padding-top: 10px;
+    }
 
-  &::placeholder {
-    color: #999;
-  }
+    &::placeholder {
+        color: #999;
+    }
 }
 
 .InputButton {
-  height: 100%;
-  aspect-ratio: 1;
-  background-color: transparent;
-  border: none;
-  color: #999;
-  font-size: 30px;
-  translate: 150% 0;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  overflow: hidden;
+    height: 100%;
+    aspect-ratio: 1;
+    background-color: transparent;
+    border: none;
+    color: #999;
+    font-size: 30px;
+    translate: 150% 0;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
 
-  &:hover {
-    scale: 1.1;
-  }
+    &:hover {
+        scale: 1.1;
+    }
 
-  &:active {
-    scale: 0.9;
-  }
+    &:active {
+        scale: 0.9;
+    }
 }
 
 .AttachButton {
-  translate: -150% 0;
+    translate: -150% 0;
 }
 
 .scrollable-y {
-  width: 100%;
-  height: 100%;
-  overflow-y: scroll;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
 }
 
 .MenuButton {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 50px;
-  background-color: #aaaaaa11;
-  padding: 10px;
-  border-radius: 2svh;
-  border: none;
-  color: #fff;
-  font-size: 2svh;
-  cursor: pointer;
-  aspect-ratio: 1;
-  margin: 0;
-  position: absolute;
-  left: 30px;
-  opacity: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    background-color: #aaaaaa11;
+    padding: 10px;
+    border-radius: 2svh;
+    border: none;
+    color: #fff;
+    font-size: 2svh;
+    cursor: pointer;
+    aspect-ratio: 1;
+    margin: 0;
+    position: absolute;
+    left: 30px;
+    opacity: 1;
 }
 
 @media screen and (orientation: landscape) {
-  .MenuButton {
-    display: none;
-    opacity: 0;
-  }
+    .MenuButton {
+        display: none;
+        opacity: 0;
+    }
 }
 
 .UserControlButton {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 50px;
-  aspect-ratio: 1;
-  background-color: transparent;
-  border: none;
-  color: #aaa;
-  font-size: 20px;
-  cursor: pointer;
-  transition: all 0.2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    aspect-ratio: 1;
+    background-color: transparent;
+    border: none;
+    color: #aaa;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
 
-  &.logout {
-    color: #b99d9d;
-  }
-
-  &:hover {
-    color: #fff;
     &.logout {
-      color: #ff8c8c;
+        color: #b99d9d;
     }
-    font-size: 30px;
-  }
+
+    &:hover {
+        color: #fff;
+        &.logout {
+            color: #ff8c8c;
+        }
+        font-size: 30px;
+    }
 }
 
 input:not(.MessageInput) {
-  border: 2px #fff solid;
-  border-radius: 999px;
-  font-size: 24px;
-  text-align: center;
-  background-color: #33333399;
-  color: #fff;
-  transition: all 0.5s ease, scale 0.2s ease;
-  opacity: 0.8;
-  min-width: 200px;
-  width: fit-content;
+    border: 2px #fff solid;
+    border-radius: 999px;
+    font-size: 24px;
+    text-align: center;
+    background-color: #33333399;
+    color: #fff;
+    transition: all 0.5s ease, scale 0.2s ease;
+    opacity: 0.8;
+    min-width: 200px;
+    width: fit-content;
 
-  &:hover {
-    opacity: 1;
-    scale: 1.1;
-  }
+    &:hover {
+        opacity: 1;
+        scale: 1.1;
+    }
 }
 
 .fade {
-  transition: opacity 1s ease;
-  opacity: 0;
+    transition: opacity 1s ease;
+    opacity: 0;
 }
 
 .ImageOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: #000000dd;
-  backdrop-filter: blur(10px);
-  opacity: 0;
-  z-index: 9999999;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  pointer-events: none;
-  transition: all 0.3s ease;
-
-  &.show {
-    pointer-events: auto;
-    opacity: 1;
-  }
-
-  &.hide {
-    pointer-events: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000000dd;
+    backdrop-filter: blur(10px);
     opacity: 0;
-  }
+    z-index: 9999999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    transition: all 0.3s ease;
+
+    &.show {
+        pointer-events: auto;
+        opacity: 1;
+    }
+
+    &.hide {
+        pointer-events: none;
+        opacity: 0;
+    }
 }
 
 .ImageOverlayContent {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  scale: 0;
-  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  opacity: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    scale: 0;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    opacity: 1;
 
-  &.show {
-    scale: 1;
-    pointer-events: auto;
-  }
+    &.show {
+        scale: 1;
+        pointer-events: auto;
+    }
 
-  &.hide {
-    opacity: 0;
-    pointer-events: none;
-  }
+    &.hide {
+        opacity: 0;
+        pointer-events: none;
+    }
 }
 
 .ImageFromOverlay {
-  height: 80%;
-  object-fit: contain;
-  max-width: 80%;
-  border-radius: 1svh;
-  cursor: zoom-in;
-  z-index: 1000000;
-  transform-origin: 0 0;
+    height: 80%;
+    object-fit: contain;
+    max-width: 80%;
+    border-radius: 1svh;
+    cursor: zoom-in;
+    z-index: 1000000;
+    transform-origin: 0 0;
 }
