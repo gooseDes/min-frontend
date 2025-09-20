@@ -8,7 +8,7 @@ import { closePopup, isUserLogined, loadFile, openPopup, showError, validateStri
 import { address, getSocket } from "@/wsClient.js";
 import ProfilePopup from "../../gui/profile_popup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight, faArrowRightFromBracket, faBars, faGear, faMessage, faPaperclip, faPaperPlane, faPlus, faReply } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight, faArrowRightFromBracket, faBars, faGear, faMessage, faPaperclip, faPaperPlane, faPlus, faReply, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import Popup from "../../gui/popup";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { Trans } from "react-i18next";
@@ -18,6 +18,7 @@ import { openDropdown } from "../../utils";
 
 function ChatPage() {
     const [messages, setMessages] = useState([]);
+    const messagesRef = useRef(messages);
     const [lastMessages, setLastMessages] = useState([]);
     const [chats, setChats] = useState([]);
     const [lines, setLines] = useState(1);
@@ -42,11 +43,19 @@ function ChatPage() {
     };
 
     useEffect(() => {
+        messagesRef.current = messages;
+    }, [messages]);
+
+    useEffect(() => {
         verifyToken(localStorage.getItem("token"));
         const socket = getSocket();
+
+        // Binding things to socket commands
+
         socket.on("connect", (data) => {
             console.log("Connected to server");
         });
+
         socket.on("message", (data) => {
             if (data.author === localStorage.getItem("username")) data.author = "You";
             setMessages((prev) => [
@@ -63,6 +72,7 @@ function ChatPage() {
             ]);
             messageCount.current += 1;
         });
+
         socket.on("history", (data) => {
             if (isWaitingForHistory.current) {
                 setMessages(
@@ -128,9 +138,11 @@ function ChatPage() {
                 });
             }
         });
+
         socket.on("chats", (data) => {
             setChats(() => data.chats);
         });
+
         socket.on("createChatResult", (data) => {
             if (data.success) {
                 closePopup("create-chat");
@@ -144,14 +156,34 @@ function ChatPage() {
                 }, 1500);
             }
         });
+
         socket.on("customEmojis", (data) => {
             setCustomEmojis(data.emojis);
         });
+
         socket.on("seenAll", (data) => {
             for (let i = 0; i < messages.length; i++) {
                 messages[i].seen = data.chat == (localStorage.getItem("chatId") || 1) ? true : msg.seen;
             }
         });
+
+        socket.on("deleteMessage", (data) => {
+            setMessages((prev) => {
+                const copy = [...prev];
+                const i = copy.findIndex((msg) => msg.id === data.message);
+                if (i !== -1) {
+                    copy.splice(i, 1);
+                }
+                return copy;
+            });
+
+            requestAnimationFrame(() => {
+                Array.from(document.getElementById("content_panel").children).forEach((msg) => {
+                    msg.classList.add("show");
+                });
+            });
+        });
+
         socket.on("error", (data) => {
             console.error(`Error: ${data}`);
             showError(data.msg);
@@ -163,6 +195,8 @@ function ChatPage() {
             socket.off("chats");
             socket.off("createChatResult");
             socket.off("seenAll");
+            socket.off("deleteMessage");
+            socket.off("error");
         };
     }, []);
 
@@ -592,6 +626,16 @@ function ChatPage() {
                 >
                     <FontAwesomeIcon icon={faReply} />
                     <p>{t("reply")}</p>
+                </div>
+                <div
+                    onClick={() => {
+                        const socket = getSocket();
+                        socket.emit("deleteMessage", { message: selectedMessage.current.id });
+                        selectedMessage.current = null;
+                    }}
+                >
+                    <FontAwesomeIcon icon={faTrashCan} />
+                    <p>{t("delete")}</p>
                 </div>
             </Dropdown>
         </div>
