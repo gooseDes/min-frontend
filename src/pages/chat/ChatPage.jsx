@@ -4,7 +4,7 @@ import ProfileThing from "../../gui/profile_thing";
 import Message from "@/gui/message/message";
 import logo from "@/logo.png";
 import { useState, useEffect, useRef } from "react";
-import { closePopup, isUserLogined, loadFile, openPopup, showError, validateString, verifyToken, a, a, a, a, a, a, a, a } from "@/utils";
+import { closePopup, isUserLogined, loadFile, openPopup, showError, validateString, verifyToken } from "@/utils";
 import { address, getSocket } from "@/wsClient.js";
 import ProfilePopup from "../../gui/profile_popup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
