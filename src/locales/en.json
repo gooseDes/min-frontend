@@ -15,6 +15,7 @@
     "load_more_messages": "Load more messages...",
     "message_actions": "Message Actions",
     "reply": "Reply",
+    "delete": "Delete",
     "old_message": "Too old message",
 
     "email": "Email",
