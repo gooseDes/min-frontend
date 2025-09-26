@@ -4,21 +4,21 @@ import path from "path";
 
 export default defineConfig({
     plugins: [react()],
-    base: "/",
+    base: "./",
     resolve: {
         alias: {
-            "@": path.resolve(__dirname, "src")
-        }
+            "@": path.resolve(__dirname, "src"),
+        },
     },
     server: {
         host: true,
         port: 3000,
         proxy: {
-            '/socket.io': {
-                target: 'https://server.msg-min.xyz',
+            "/socket.io": {
+                target: "https://server.msg-min.xyz",
                 ws: true,
-                changeOrigin: true
-            }
-        }
-    }
+                changeOrigin: true,
+            },
+        },
+    },
 });
