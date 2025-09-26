@@ -206,3 +206,8 @@ export function changeLang(lang: string) {
     } else localStorage.setItem("lang", lang);
     location.href = location.href;
 }
+
+// Check if site runs from electron or browser
+export function isElectron() {
+    return typeof window !== "undefined" && typeof window.process === "object" && (window.process as any).type === "renderer";
+}

@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter, HashRouter, Routes, Route } from "react-router-dom";
 import Popup from "./gui/popup.jsx";
 import { useRef, useState } from "react";
 import ProfilePopup from "./gui/profile_popup.jsx";
@@ -7,6 +7,9 @@ import ChatPage from "./pages/chat/ChatPage.jsx";
 import SettingsPage from "./pages/settings/SettingsPage.jsx";
 import SignupPage from "./pages/signup/SingupPage.jsx";
 import SigninPage from "./pages/signin/SinginPage.jsx";
+import { isElectron } from "./utils.js";
+
+const Router = isElectron() ? HashRouter : BrowserRouter;
 
 function App() {
     const [errorPopupContent, setErrorPopupContent] = useState(null);
