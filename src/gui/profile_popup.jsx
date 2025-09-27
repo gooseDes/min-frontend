@@ -7,7 +7,7 @@ import { useSearchParams } from "react-router-dom";
 import { t } from "i18next";
 import PulloutButton from "./pullout_button";
 
-const ProfilePopup = forwardRef(({ id = "", src = "/logo512.png", username = "" }, ref) => {
+const ProfilePopup = forwardRef(({ id = "", src = "./logo512.png", username = "" }, ref) => {
     const [isShown, setIsShown] = useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
 
@@ -39,7 +39,7 @@ const ProfilePopup = forwardRef(({ id = "", src = "/logo512.png", username = "" 
                 </button>
             </div>
             <div className="ProfilePopupContent">
-                <img src={src} alt="logo" className="ProfilePopupAvatar" onError={(e) => (e.currentTarget.src = "/logo512.png")} />
+                <img src={src} alt="logo" className="ProfilePopupAvatar" onError={(e) => (e.currentTarget.src = "./logo512.png")} />
                 <p className="ProfilePopupUsername">{username}</p>
                 <div className="Filler" />
                 <div className="ProfilePopupBottom">{username != localStorage.getItem("username") ? <PulloutButton text={t("send_message")} icon={faMessage} onClick={openChat} /> : <div />}</div>

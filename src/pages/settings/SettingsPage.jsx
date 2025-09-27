@@ -224,7 +224,7 @@ function SettingsPage() {
                                 <div className="EditDiv" onClick={uploadAvatar}>
                                     <img
                                         src={`${address}/avatars/${localStorage.getItem("id")}.webp`}
-                                        onError={(e) => (e.currentTarget.src = "/logo512.png")}
+                                        onError={(e) => (e.currentTarget.src = "./logo512.png")}
                                         className="AvatarSettings"
                                         id="avatar_settings"
                                     />

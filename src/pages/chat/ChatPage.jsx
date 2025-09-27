@@ -530,7 +530,7 @@ function ChatPage() {
                                 <FontAwesomeIcon icon={faBars} />
                             </button>
                             <div className="TopPanelThing">
-                                <img id="top_panel_avatar" src={logo} alt="avatar" onError={(e) => (e.currentTarget.src = "/logo512.png")} />
+                                <img id="top_panel_avatar" src={logo} alt="avatar" onError={(e) => (e.currentTarget.src = "./logo512.png")} />
                                 <p id="top_panel_username">username</p>
                             </div>
                         </div>

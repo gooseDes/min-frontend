@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faReply } from "@fortawesome/free-solid-svg-icons";
 import { t } from "i18next";
 
-function Message({ text = "message", author = "author", type = "left", src = "/logo512.png", connected = false, sent_at = null, seen = false, messages = [], onContextMenu }) {
+function Message({ text = "message", author = "author", type = "left", src = "./logo512.png", connected = false, sent_at = null, seen = false, messages = [], onContextMenu }) {
     const [searchParams, setSearchParams] = useSearchParams();
 
     function openAuthorProfile() {
@@ -36,7 +36,7 @@ function Message({ text = "message", author = "author", type = "left", src = "/l
 
     return (
         <div className={`MessageDiv ${type}`}>
-            <img className={`MessageAvatar${connected ? " connected" : ""}`} src={src} onError={(e) => (e.currentTarget.src = "/logo512.png")} draggable="false" onClick={openAuthorProfile} />
+            <img className={`MessageAvatar${connected ? " connected" : ""}`} src={src} onError={(e) => (e.currentTarget.src = "./logo512.png")} draggable="false" onClick={openAuthorProfile} />
             <div className={`TextDiv ${type}`} onContextMenu={onContextMenu}>
                 <div className="Author" onClick={openAuthorProfile}>
                     {author}
