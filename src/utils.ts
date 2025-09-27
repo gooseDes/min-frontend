@@ -216,10 +216,11 @@ export function isElectron() {
 // Function for locating between pages
 export function goTo(path: string) {
     const loc = location.href;
-    const locWithoutLastPart = loc.substring(0, loc.lastIndexOf("/"));
     if (isElectron()) {
+        const locWithoutLastPart = loc.substring(0, loc.lastIndexOf("#"));
         location.href = locWithoutLastPart + "#" + path;
     } else {
+        const locWithoutLastPart = loc.substring(0, loc.lastIndexOf("/"));
         location.href = locWithoutLastPart + "/" + path;
     }
 }
