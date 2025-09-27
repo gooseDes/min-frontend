@@ -6,6 +6,7 @@ import i18n from "./i18n.js";
 declare global {
     interface Window {
         setErrorPopup: (text: string) => void;
+        process?: any;
     }
 }
 
@@ -209,5 +210,16 @@ export function changeLang(lang: string) {
 
 // Check if site runs from electron or browser
 export function isElectron() {
-    return typeof window !== "undefined" && typeof window.process === "object" && (window.process as any).type === "renderer";
+    return typeof window !== "undefined" && typeof window.process === "object" && window.process.type === "renderer";
+}
+
+// Function for locating between pages
+export function goTo(path: string) {
+    const loc = location.href;
+    const locWithoutLastPart = loc.substring(0, loc.lastIndexOf("/"));
+    if (isElectron()) {
+        location.href = locWithoutLastPart + "#" + path;
+    } else {
+        location.href = locWithoutLastPart + "/" + path;
+    }
 }

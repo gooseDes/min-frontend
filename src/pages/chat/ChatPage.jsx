@@ -14,7 +14,7 @@ import { useLocation, useSearchParams } from "react-router-dom";
 import { Trans } from "react-i18next";
 import { t } from "i18next";
 import Dropdown from "../../gui/dropdown/dropdown";
-import { openDropdown } from "../../utils";
+import { goTo, openDropdown } from "../../utils";
 
 function ChatPage() {
     const [messages, setMessages] = useState([]);
@@ -505,7 +505,7 @@ function ChatPage() {
                             <button
                                 className="UserControlButton settings"
                                 onClick={() => {
-                                    window.location.href = "/settings";
+                                    goTo("settings");
                                 }}
                             >
                                 <FontAwesomeIcon icon={faGear} />
@@ -514,7 +514,7 @@ function ChatPage() {
                                 className="UserControlButton logout"
                                 onClick={() => {
                                     localStorage.clear();
-                                    window.location.href = "/";
+                                    goTo("/");
                                 }}
                             >
                                 <FontAwesomeIcon icon={faArrowRightFromBracket} />
@@ -589,10 +589,10 @@ function ChatPage() {
                 <div className="scrollable-y">
                     <p style={{ fontSize: "3svh" }}>
                         <Trans i18nKey={"account_required"}>
-                            <a href="/signup" style={{ color: "#4f7afbff" }}>
+                            <a onClick={() => goTo("signup")} style={{ color: "#4f7afbff", textDecoration: "underline", cursor: "pointer" }}>
                                 create
                             </a>
-                            <a href="/signin" style={{ color: "#4f7afbff" }}>
+                            <a onClick={() => goTo("signin")} style={{ color: "#4f7afbff", textDecoration: "underline", cursor: "pointer" }}>
                                 log in
                             </a>
                         </Trans>

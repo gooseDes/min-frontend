@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { closePopup, cropCenter, loadFile, openPopup, showError, validateString } from "@/utils.ts";
 import SquareImgBtn from "../../gui/square_img_btn/square_img_btn";
 import Popup from "../../gui/popup";
-import { changeLang, openDropdown, toggleDropdown } from "../../utils";
+import { changeLang, goTo, openDropdown, toggleDropdown } from "../../utils";
 import Dropdown from "../../gui/dropdown/dropdown";
 
 function SettingsPage() {
@@ -159,7 +159,7 @@ function SettingsPage() {
                             text={t("back")}
                             image={false}
                             onClick={() => {
-                                location.href = "/";
+                                goTo("/");
                             }}
                         >
                             {" "}

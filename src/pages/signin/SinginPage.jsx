@@ -6,6 +6,7 @@ import { showError } from "@/utils.ts";
 import { t } from "i18next";
 import { Trans } from "react-i18next";
 import LanguageSelector from "../../gui/language_selector/language_selector";
+import { goTo } from "../../utils";
 
 function SigninPage() {
     const particles = useRef([]);
@@ -74,7 +75,7 @@ function SigninPage() {
                     localStorage.setItem("email", email_input.value);
                     localStorage.setItem("username", json.username);
                     localStorage.setItem("id", json.id);
-                    window.location.href = "/";
+                    goTo("/");
                 } else {
                     showError(json.msg || "Unknown error");
                     signup_form.classList.add("error");
