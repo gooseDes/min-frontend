@@ -210,7 +210,7 @@ export function changeLang(lang: string) {
 
 // Check if site runs from electron or browser
 export function isElectron() {
-    return typeof window !== "undefined" && typeof window.process === "object" && window.process.type === "renderer";
+    return typeof navigator === "object" && typeof navigator.userAgent === "string" && navigator.userAgent.indexOf("Electron") >= 0;
 }
 
 // Function for locating between pages
