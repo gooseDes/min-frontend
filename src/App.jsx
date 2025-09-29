@@ -16,9 +16,9 @@ function PageWrapper({ children }) {
     return (
         <motion.div
             initial={{ opacity: 0, y: 250, height: 0 }}
-            animate={{ opacity: 1, y: 0, height: "100%" }}
+            animate={{ opacity: 1, y: 0, height: "" }}
             exit={{ opacity: 0, y: -250, height: 0 }}
-            transition={{ default: { type: "spring", stiffness: 200, damping: 12, bounce: 0.3, delay: 0.5 }, opacity: { duration: 1, delay: 0.5 } }}
+            transition={{ default: { type: "spring", stiffness: 200, damping: 12, bounce: 0.3, delay: 0.5 }, opacity: { duration: 1, delay: 0.5 }, duration: 0.5 }}
         >
             {children}
         </motion.div>

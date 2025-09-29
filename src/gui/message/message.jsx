@@ -6,9 +6,11 @@ import { formatTime } from "../../utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faReply } from "@fortawesome/free-solid-svg-icons";
 import { t } from "i18next";
+import { motion, useAnimationControls } from "framer-motion";
 
 function Message({ text = "message", author = "author", type = "left", src = "./logo512.png", connected = false, sent_at = null, seen = false, messages = [], onContextMenu }) {
     const [searchParams, setSearchParams] = useSearchParams();
+    const controls = useAnimationControls();
 
     function openAuthorProfile() {
         searchParams.set("profile", author == "You" ? localStorage.getItem("username") : author);
@@ -34,10 +36,31 @@ function Message({ text = "message", author = "author", type = "left", src = "./
         }
     }
 
+    const handleClick = async () => {
+        await controls.start({
+            y: -10,
+            transition: {
+                type: "tween",
+                duration: 0.1,
+                ease: "easeOut",
+            },
+        });
+
+        await controls.start({
+            y: 0,
+            transition: {
+                type: "spring",
+                stiffness: 200,
+                damping: 10,
+                mass: 1.2,
+            },
+        });
+    };
+
     return (
-        <div className={`MessageDiv ${type}`}>
+        <motion.div className={`MessageDiv ${type}`} animate={controls}>
             <img className={`MessageAvatar${connected ? " connected" : ""}`} src={src} onError={(e) => (e.currentTarget.src = "./logo512.png")} draggable="false" onClick={openAuthorProfile} />
-            <div className={`TextDiv ${type}`} onContextMenu={onContextMenu}>
+            <div className={`TextDiv ${type}`} onContextMenu={onContextMenu} onClick={handleClick}>
                 <div className="Author" onClick={openAuthorProfile}>
                     {author}
                 </div>
@@ -73,7 +96,7 @@ function Message({ text = "message", author = "author", type = "left", src = "./
                     {seen && type == "right" ? <FontAwesomeIcon icon={faCheck} /> : <p />}
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 }
 

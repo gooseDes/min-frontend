@@ -15,6 +15,8 @@ import { Trans } from "react-i18next";
 import { t } from "i18next";
 import Dropdown from "../../gui/dropdown/dropdown";
 import { goTo, openDropdown } from "../../utils";
+import { motion } from "framer-motion";
+import TransitionButton from "../../gui/transition_btn/transition_btn";
 
 function ChatPage() {
     const [messages, setMessages] = useState([]);
@@ -465,7 +467,7 @@ function ChatPage() {
     return (
         <div>
             <div className="App" id="app">
-                <div className="LeftPanel" id="left_panel">
+                <motion.div initial={{ x: "-100%" }} animate={{ x: 0 }} transition={{ type: "spring", stiffness: 200, damping: 12, delay: 0.5 }} className="LeftPanel" id="left_panel">
                     <div className="ChatsHeader">
                         <p className="ChatsTitle">
                             <Trans>chats</Trans>
@@ -502,14 +504,13 @@ function ChatPage() {
                                 animation={false}
                                 src={`${address}/avatars/${localStorage.getItem("id")}.webp`}
                             />
-                            <button
-                                className="UserControlButton settings"
+                            <TransitionButton
                                 onClick={() => {
                                     goTo("settings");
                                 }}
                             >
                                 <FontAwesomeIcon icon={faGear} />
-                            </button>
+                            </TransitionButton>
                             <button
                                 className="UserControlButton logout"
                                 onClick={() => {
@@ -521,7 +522,7 @@ function ChatPage() {
                             </button>
                         </div>
                     </div>
-                </div>
+                </motion.div>
                 <div className="RightPanel" id="right_panel">
                     <FontAwesomeIcon icon={faMessage} className="MessageWhenEmpty" />
                     <div className="TopPanel" id="top_panel">
