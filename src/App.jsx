@@ -1,4 +1,4 @@
-import { BrowserRouter, HashRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, HashRouter, Routes, Route, useLocation } from "react-router-dom";
 import Popup from "./gui/popup.jsx";
 import { useRef, useState } from "react";
 import ProfilePopup from "./gui/profile_popup.jsx";
@@ -8,8 +8,65 @@ import SettingsPage from "./pages/settings/SettingsPage.jsx";
 import SignupPage from "./pages/signup/SingupPage.jsx";
 import SigninPage from "./pages/signin/SinginPage.jsx";
 import { isElectron } from "./utils.js";
+import { AnimatePresence, motion } from "framer-motion";
 
 const Router = isElectron() ? HashRouter : BrowserRouter;
+
+function PageWrapper({ children }) {
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 250, height: 0 }}
+            animate={{ opacity: 1, y: 0, height: "100%" }}
+            exit={{ opacity: 0, y: -250, height: 0 }}
+            transition={{ default: { type: "spring", stiffness: 200, damping: 12, bounce: 0.3, delay: 0.5 }, opacity: { duration: 1, delay: 0.5 } }}
+        >
+            {children}
+        </motion.div>
+    );
+}
+
+function AnimatedRoutes() {
+    const location = useLocation();
+
+    return (
+        <AnimatePresence mode="wait">
+            <Routes key={location.pathname} location={location}>
+                <Route
+                    path="/"
+                    element={
+                        <PageWrapper>
+                            <ChatPage />
+                        </PageWrapper>
+                    }
+                />
+                <Route
+                    path="/signup"
+                    element={
+                        <PageWrapper>
+                            <SignupPage />
+                        </PageWrapper>
+                    }
+                />
+                <Route
+                    path="/signin"
+                    element={
+                        <PageWrapper>
+                            <SigninPage />
+                        </PageWrapper>
+                    }
+                />
+                <Route
+                    path="/settings"
+                    element={
+                        <PageWrapper>
+                            <SettingsPage />
+                        </PageWrapper>
+                    }
+                />
+            </Routes>
+        </AnimatePresence>
+    );
+}
 
 function App() {
     const [errorPopupContent, setErrorPopupContent] = useState(null);
@@ -60,16 +117,9 @@ function App() {
 
     const profilePopupRef = useRef();
     return (
-        <div style={{ width: "100%", height: "100%" }}>
-            <Router>
-                <Routes>
-                    <Route path="/" element={<ChatPage />} />
-                    <Route path="/signup" element={<SignupPage />} />
-                    <Route path="/signin" element={<SigninPage />} />
-                    <Route path="/settings" element={<SettingsPage />} />
-                </Routes>
-            </Router>
-            <Router>
+        <Router>
+            <div style={{ width: "100%", height: "100%" }}>
+                <AnimatedRoutes />
                 <Popup title="Error" name="error">
                     {errorPopupContent}
                 </Popup>
@@ -86,8 +136,8 @@ function App() {
                         />
                     </div>
                 </div>
-            </Router>
-        </div>
+            </div>
+        </Router>
     );
 }
 

@@ -221,6 +221,6 @@ export function goTo(path: string) {
         location.href = locWithoutLastPart + "#" + path;
     } else {
         const locWithoutLastPart = loc.substring(0, loc.lastIndexOf("/"));
-        location.href = locWithoutLastPart + "/" + path;
+        location.href = locWithoutLastPart + "/" + (path.startsWith("/") ? path.substring(1) : path);
     }
 }
