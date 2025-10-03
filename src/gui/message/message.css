@@ -5,30 +5,31 @@
     display: flex;
     justify-content: left;
     align-items: center;
-    transition: all 0.2s ease-in-out;
-    transition: translate 0.3s cubic-bezier(0.175, 1, 0.32, 1.6), opacity 0.1s ease-in-out;
+    /*transition: all 0.2s ease-in-out;
+    transition: translate 0.3s cubic-bezier(0.175, 1, 0.32, 1.6), opacity 0.1s ease-in-out;*/
     gap: 10px;
+    opacity: 0;
 
-    &.left {
+    /*&.left {
         translate: -35vh 0;
         opacity: 0;
-    }
+    }*/
 
     &.right {
+        /*translate: 35vh 0;
+        opacity: 0;*/
         justify-content: right;
-        translate: 35vh 0;
-        opacity: 0;
         flex-direction: row-reverse;
     }
 
-    &.show {
+    /*&.show {
         translate: 0 0;
         opacity: 1;
     }
 
     &.slow {
         transition: translate 0.4s ease-in-out;
-    }
+    }*/
 }
 
 .TextDiv {

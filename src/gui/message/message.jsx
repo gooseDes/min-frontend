@@ -7,10 +7,43 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faReply } from "@fortawesome/free-solid-svg-icons";
 import { t } from "i18next";
 import { motion, useAnimationControls } from "framer-motion";
+import { useEffect, useState } from "react";
 
-function Message({ text = "message", author = "author", type = "left", src = "./logo512.png", connected = false, sent_at = null, seen = false, messages = [], onContextMenu }) {
+function Message({
+    id = -1,
+    text = "message",
+    author = "author",
+    type = "left",
+    src = "./logo512.png",
+    connected = false,
+    sent_at = null,
+    seen = false,
+    shown = false,
+    messages = [],
+    anim_delay = true,
+    onContextMenu,
+}) {
     const [searchParams, setSearchParams] = useSearchParams();
+    const [isShown, setIsShown] = useState(shown);
     const controls = useAnimationControls();
+
+    function calculateDelay() {
+        if (!anim_delay) return 0;
+        const index_from_end = messages.length - messages.indexOf(messages.find((msg) => msg.id === id));
+        const delay = index_from_end < 25 ? index_from_end * 0.05 : 0;
+        return delay;
+    }
+
+    useEffect(() => {
+        setIsShown(shown);
+        if (shown) {
+            controls.start({
+                opacity: 1,
+                translateX: 0,
+                transition: { delay: calculateDelay() },
+            });
+        }
+    }, [shown]);
 
     function openAuthorProfile() {
         searchParams.set("profile", author == "You" ? localStorage.getItem("username") : author);
@@ -58,7 +91,7 @@ function Message({ text = "message", author = "author", type = "left", src = "./
     };
 
     return (
-        <motion.div className={`MessageDiv ${type}`} animate={controls}>
+        <motion.div className={`MessageDiv ${type}`} initial={{ translateX: type === "left" ? "-35vh" : "35vh" }} animate={controls}>
             <img className={`MessageAvatar${connected ? " connected" : ""}`} src={src} onError={(e) => (e.currentTarget.src = "./logo512.png")} draggable="false" onClick={openAuthorProfile} />
             <div className={`TextDiv ${type}`} onContextMenu={onContextMenu} onClick={handleClick}>
                 <div className="Author" onClick={openAuthorProfile}>

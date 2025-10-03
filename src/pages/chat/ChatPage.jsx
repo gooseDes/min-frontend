@@ -70,6 +70,8 @@ function ChatPage() {
                     author_id: data.author_id,
                     sent_at: data.sent_at,
                     seen: data.seen,
+                    shown: true,
+                    anim_delay: false,
                 },
             ]);
             messageCount.current += 1;
@@ -86,6 +88,8 @@ function ChatPage() {
                         author_id: msg.author_id,
                         sent_at: msg.sent_at,
                         seen: msg.seen,
+                        shown: false,
+                        anim_delay: true,
                     }))
                 );
                 messageCount.current = data.messages.length;
@@ -98,15 +102,13 @@ function ChatPage() {
                     for (let i = 0; i < content_panel_children.length; i++) {
                         content_panel.scrollTop += content_panel_children[i].getBoundingClientRect().height * 1000;
                     }
-                    const reversed = content_panel_children.reverse();
-                    for (let i = 0; i < reversed.length; i++) {
-                        setTimeout(
-                            () => {
-                                reversed[i].classList.add("show");
-                            },
-                            i < 25 ? i * 50 : 1000
-                        );
-                    }
+                    messagesRef.current.reverse().forEach((_, i) => {
+                        setMessages((prev) => {
+                            const copy = [...prev].reverse();
+                            if (copy[i]) copy[i].shown = true;
+                            return copy.reverse();
+                        });
+                    });
                 }, 100);
                 socket.emit("seenAll", {
                     chat: localStorage.getItem("chatId") || 1,
@@ -121,23 +123,13 @@ function ChatPage() {
                         author_id: msg.author_id,
                         sent_at: msg.sent_at,
                         seen: msg.seen,
+                        shown: true,
+                        anim_delay: false,
                     })),
                     ...prev,
                 ]);
                 messageCount.current += data.messages.length;
                 isWaitingForHistory.current = false;
-                requestAnimationFrame(() => {
-                    const content_panel = document.getElementById("content_panel");
-                    Array.from(content_panel.children).forEach((child, i) => {
-                        setTimeout(
-                            () => {
-                                child.classList.add("show");
-                                content_panel.scrollTop = 0;
-                            },
-                            i < 25 ? i * 50 : 0
-                        );
-                    });
-                });
             }
         });
 
@@ -206,6 +198,7 @@ function ChatPage() {
         const initialMessages = [];
         for (let i = 0; i < 100; i++) {
             initialMessages.push({
+                id: i,
                 text: `Message ${i}! Lorem ipsum, epta, idi nahui`,
                 type: Math.random() < 0.5 ? "left" : "right",
             });
@@ -228,6 +221,7 @@ function ChatPage() {
                 localStorage.clear();
             }
         }, 100);
+
         // Watching for changes
         const content_panel = document.getElementById("content_panel");
         const observer = new ResizeObserver((entries) => {
@@ -538,9 +532,11 @@ function ChatPage() {
                     </div>
                     <div className="ContentPanel" id="content_panel">
                         <div className="LoadMoreMessagesDiv">
-                            <button className="LoadMoreMessagesButton" onClick={loadMoreMessages}>
-                                {t("load_more_messages")}
-                            </button>
+                            {messageCount.current >= 99 && (
+                                <button className="LoadMoreMessagesButton" onClick={loadMoreMessages}>
+                                    {t("load_more_messages")}
+                                </button>
+                            )}
                         </div>
                         {messages.map((msg, i) => {
                             const prevMsg = messages[i - 1];
@@ -551,12 +547,15 @@ function ChatPage() {
 
                             return (
                                 <Message
+                                    id={msg.id}
                                     key={msg.id}
                                     text={msg.text}
                                     type={msg.type}
                                     author={msg.author}
                                     sent_at={msg.sent_at}
                                     seen={msg.seen}
+                                    shown={msg.shown}
+                                    anim_delay={msg.anim_delay}
                                     src={`${address}/avatars/${msg.author_id}.webp`}
                                     connected={!isLast}
                                     onContextMenu={(e) => {
