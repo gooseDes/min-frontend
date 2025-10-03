@@ -15,11 +15,12 @@ function SigninPage() {
             particles.current.push({ x: (window.innerWidth / 100) * i, y: Math.random() * window.innerHeight, speed: Math.random() + 0.5, index: i });
         }
         const canvas = document.getElementById("bg_canvas");
-        const ctx = canvas.getContext("2d");
+        const ctx = canvas?.getContext("2d");
 
         let lastTime = performance.now();
 
         function update() {
+            if (!ctx) return;
             const currentTime = performance.now();
             const deltaTime = (currentTime - lastTime) / 1000;
             lastTime = currentTime;
