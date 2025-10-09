@@ -257,7 +257,7 @@ function ChatPage() {
             behavior: behavior,
         });
         setLastMessages(messages);
-    }, [messages, lastMessages]);
+    }, [messages]);
 
     useEffect(() => {
         const socket = getSocket();
@@ -268,6 +268,8 @@ function ChatPage() {
         const profile = searchParams.get("profile");
         if (profile) {
             window.openProfilePopup(profile);
+            searchParams.delete("profile");
+            setSearchParams(searchParams);
         }
         const chat = searchParams.get("chat");
         if (chat) {

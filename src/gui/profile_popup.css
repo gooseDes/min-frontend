@@ -1,11 +1,11 @@
 .ProfilePopup {
     z-index: 99999;
     position: fixed;
-    top: 150%;
+    top: 50%;
     left: 50%;
     height: 90%;
     aspect-ratio: 1/2;
-    opacity: 0;
+    opacity: 1;
     background-color: #111111aa;
     backdrop-filter: blur(10px);
     border-radius: 2svh;
@@ -16,12 +16,6 @@
     border: 2px solid #fff;
     overflow: hidden;
     translate: -50% -50%;
-    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.1);
-
-    &.show {
-        top: 50%;
-        opacity: 1;
-    }
 }
 
 @media screen and (orientation: landscape) {

@@ -1,6 +1,6 @@
 import { BrowserRouter, HashRouter, Routes, Route, useLocation } from "react-router-dom";
 import Popup from "./gui/popup.jsx";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ProfilePopup from "./gui/profile_popup.jsx";
 import { address, getSocket } from "./wsClient.js";
 import ChatPage from "./pages/chat/ChatPage.jsx";
@@ -75,28 +75,31 @@ function App() {
     const [imageOverlayShown, setImageOverlayShown] = useState(false);
     const [imageOverlayZoom, setImageOverlayZoom] = useState(1);
     const [imageOverlayPos, setImageOverlayPos] = useState({ x: 0, y: 0 });
-
-    window.setErrorPopup = (content) => {
-        setErrorPopupContent(content);
-    };
     const [profilePopupContent, setProfilePopupContent] = useState({});
-    window.openProfilePopup = (username) => {
-        setProfilePopupContent({ username: username, id: -1 });
-        const socket = getSocket();
-        socket.on("userInfo", (data) => {
-            setProfilePopupContent({ username: data.user.name, id: data.user.id });
-            socket.off("userInfo");
-        });
-        socket.emit("getUserInfo", { name: username });
-        profilePopupRef.current.show();
-    };
-    window.openImageOverlay = (src) => {
-        setImageOverlayPos({ x: 0, y: 0 });
-        setImageOverlayZoom(1);
-        setImageOverlaySrc(src);
-        if (src) setImageOverlayShown(true);
-        else setImageOverlayShown(false);
-    };
+    const profilePopupRef = useRef();
+
+    useEffect(() => {
+        window.setErrorPopup = (content) => {
+            setErrorPopupContent(content);
+        };
+        window.openProfilePopup = (username) => {
+            setProfilePopupContent({ username: username, id: -1 });
+            profilePopupRef.current.show();
+            const socket = getSocket();
+            socket.on("userInfo", (data) => {
+                setProfilePopupContent({ username: data.user.name, id: data.user.id });
+                socket.off("userInfo");
+            });
+            socket.emit("getUserInfo", { name: username });
+        };
+        window.openImageOverlay = (src) => {
+            setImageOverlayPos({ x: 0, y: 0 });
+            setImageOverlayZoom(1);
+            setImageOverlaySrc(src);
+            if (src) setImageOverlayShown(true);
+            else setImageOverlayShown(false);
+        };
+    }, []);
 
     function handleOverlayWheel(e) {
         const rect = document.querySelector(".ImageOverlay").getBoundingClientRect();
@@ -116,7 +119,6 @@ function App() {
         setImageOverlayZoom(newScale);
     }
 
-    const profilePopupRef = useRef();
     return (
         <Router>
             <div style={{ width: "100%", height: "100%" }}>
