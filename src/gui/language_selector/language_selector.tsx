@@ -9,7 +9,9 @@ import { faEarth } from "@fortawesome/free-solid-svg-icons";
 function LanguageSelector() {
     return (
         <div className="LanguageSelector">
-            <IconButton onClick={(e) => toggleDropdown("lang", e.currentTarget)} />
+            <IconButton onClick={(e) => toggleDropdown("lang", e.currentTarget)}>
+                <FontAwesomeIcon icon={faEarth} />
+            </IconButton>
             <Dropdown name="lang">
                 <div className="noanim">
                     <FontAwesomeIcon icon={faEarth} />

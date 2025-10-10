@@ -7,9 +7,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faReply } from "@fortawesome/free-solid-svg-icons";
 import { t } from "i18next";
 import { motion, useAnimationControls } from "framer-motion";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
-function Message({
+function MessageBase({
     id = -1,
     text = "message",
     author = "author",
@@ -132,5 +132,20 @@ function Message({
         </motion.div>
     );
 }
+
+export const Message = React.memo(MessageBase, (prevProps, nextProps) => {
+    return (
+        prevProps.id === nextProps.id &&
+        prevProps.text === nextProps.text &&
+        prevProps.author === nextProps.author &&
+        prevProps.type === nextProps.type &&
+        prevProps.src === nextProps.src &&
+        prevProps.connected === nextProps.connected &&
+        prevProps.sent_at === nextProps.sent_at &&
+        prevProps.seen === nextProps.seen &&
+        prevProps.shown === nextProps.shown &&
+        prevProps.anim_delay === nextProps.anim_delay
+    );
+});
 
 export default Message;

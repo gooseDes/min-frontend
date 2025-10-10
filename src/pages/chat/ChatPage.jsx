@@ -480,17 +480,20 @@ function ChatPage() {
                                 openChat("Default Chat");
                             }}
                         />
-                        {chats.map((chat) => (
-                            <ProfileThing
-                                text={chat.name}
-                                onClick={() => {
-                                    localStorage.setItem("chatId", chat.id);
-                                    openChat(chat.name);
-                                }}
-                                src={`${address}/avatars/${chat.participants.find((el) => el.id != localStorage.getItem("id"))?.id}.webp`}
-                                key={chat.id}
-                            />
-                        ))}
+                        {chats.map((chat) => {
+                            const other = chat.participants.find((el) => el.id != localStorage.getItem("id"));
+                            return (
+                                <ProfileThing
+                                    text={chat.name}
+                                    onClick={() => {
+                                        localStorage.setItem("chatId", chat.id);
+                                        openChat(chat.name);
+                                    }}
+                                    src={`${address}/avatars/${other?.id}.webp`}
+                                    key={chat.id}
+                                />
+                            );
+                        })}
                     </div>
                     <div className="UserPanel" id="user_panel">
                         <div className="UserPanelContent" id="user_panel_content">
