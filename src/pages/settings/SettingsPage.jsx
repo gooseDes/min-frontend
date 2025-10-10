@@ -5,13 +5,13 @@ import ProfileThing from "../../gui/profile_thing";
 import { getSocket, address } from "@/wsClient";
 import { subscribeUser } from "../../push";
 import { faArrowLeft, faEarth, faFaceSmile, faGear, faMessage, faPencil, faPlus, faUser } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { closePopup, cropCenter, loadFile, openPopup, showError, validateString } from "@/utils.ts";
 import SquareImgBtn from "../../gui/square_img_btn/square_img_btn";
 import Popup from "../../gui/popup";
-import { changeLang, goTo, openDropdown, toggleDropdown } from "../../utils";
+import { changeLang, goTo, toggleDropdown } from "../../utils";
 import Dropdown from "../../gui/dropdown/dropdown";
+import Icon from "../../gui/icon";
 
 function SettingsPage() {
     const [customEmojis, setCustomEmojis] = useState([]);
@@ -151,7 +151,7 @@ function SettingsPage() {
         <>
             <div className="App" id="app">
                 <button className="BackButton" id="menu_button" onClick={openMenu}>
-                    <FontAwesomeIcon icon={faArrowLeft} />
+                    <Icon icon={faArrowLeft} />
                 </button>
                 <div className="LeftPanel" id="left_panel">
                     <div className="SettingsPanel">
@@ -163,7 +163,7 @@ function SettingsPage() {
                             }}
                         >
                             {" "}
-                            <FontAwesomeIcon icon={faArrowLeft} />{" "}
+                            <Icon icon={faArrowLeft} />{" "}
                         </ProfileThing>
                         <ProfileThing
                             text={t("general")}
@@ -173,7 +173,7 @@ function SettingsPage() {
                             }}
                         >
                             {" "}
-                            <FontAwesomeIcon icon={faGear} />{" "}
+                            <Icon icon={faGear} />{" "}
                         </ProfileThing>
                         <ProfileThing
                             text={t("profile")}
@@ -183,7 +183,7 @@ function SettingsPage() {
                             }}
                         >
                             {" "}
-                            <FontAwesomeIcon icon={faUser} />{" "}
+                            <Icon icon={faUser} />{" "}
                         </ProfileThing>
                         <ProfileThing
                             text={t("messages")}
@@ -193,7 +193,7 @@ function SettingsPage() {
                             }}
                         >
                             {" "}
-                            <FontAwesomeIcon icon={faMessage} />{" "}
+                            <Icon icon={faMessage} />{" "}
                         </ProfileThing>
                         <ProfileThing
                             text={t("emojis")}
@@ -203,7 +203,7 @@ function SettingsPage() {
                             }}
                         >
                             {" "}
-                            <FontAwesomeIcon icon={faFaceSmile} />{" "}
+                            <Icon icon={faFaceSmile} />{" "}
                         </ProfileThing>
                     </div>
                 </div>
@@ -215,7 +215,7 @@ function SettingsPage() {
                                 {/*Big brain moment*/}
                                 <div className="EditDiv" onClick={(e) => toggleDropdown("lang", e.currentTarget)}>
                                     <p style={{ width: "100%", textAlign: "center", display: "flex", justifyContent: "center", alignItems: "center" }}>{`${t("language")}: ${t("current_lang")}`}</p>
-                                    <FontAwesomeIcon icon={faPencil} className="pencil" />
+                                    <Icon icon={faPencil} className="pencil" />
                                 </div>
                             </div>
                         </div>
@@ -228,7 +228,7 @@ function SettingsPage() {
                                         className="AvatarSettings"
                                         id="avatar_settings"
                                     />
-                                    <FontAwesomeIcon icon={faPencil} className="pencil" />
+                                    <Icon icon={faPencil} className="pencil" />
                                 </div>
                                 <p style={{ fontWeight: "bold", fontSize: "28px" }}>{localStorage.getItem("username")}</p>
                             </div>
@@ -239,7 +239,7 @@ function SettingsPage() {
                             </div>
                         </div>
                         <div className="SettingsScreen EmptySettings show">
-                            <FontAwesomeIcon icon={faGear} style={{ color: "#aaa", fontSize: "24vh", filter: "blur(5px)" }} />
+                            <Icon icon={faGear} style={{ color: "#aaa", fontSize: "24vh", filter: "blur(5px)" }} />
                         </div>
                         <div className="SettingsScreen EmojiSettings hide">
                             <div className="CurrentEmojis">
@@ -247,7 +247,7 @@ function SettingsPage() {
                                     <SquareImgBtn key={emoji.id} src={`${address}/emojis/${emoji.id}.webp`} onClick={() => {}} text={emoji.name} />
                                 ))}
                                 <button id="add_emoji_btn" onClick={() => openPopup("add-emoji")}>
-                                    <FontAwesomeIcon icon={faPlus} />
+                                    <Icon icon={faPlus} />
                                     {t("add_emoji")}
                                 </button>
                             </div>
@@ -259,7 +259,7 @@ function SettingsPage() {
                 <div className="AddEmojiPopupContent">
                     <div className="EditDiv" style={{ marginBottom: "10px", width: "fit-content" }} onClick={loadCustomEmoji}>
                         <img src="/assets/select.svg" className="SelectEmojiImg" />
-                        <FontAwesomeIcon icon={faPencil} className="pencil" />
+                        <Icon icon={faPencil} className="pencil" />
                     </div>
                     <input type="text" className="EmojiNameInput" placeholder={t("emoji_name")} id="emoji_name_input" />
                     <button className="SubmitEmojiBtn" onClick={submitEmoji}>
@@ -269,7 +269,7 @@ function SettingsPage() {
             </Popup>
             <Dropdown name="lang">
                 <div className="noanim">
-                    <FontAwesomeIcon icon={faEarth} />
+                    <Icon icon={faEarth} />
                     {t("select_language")}
                 </div>
                 <div onClick={() => changeLang("")}>

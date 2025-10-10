@@ -3,18 +3,18 @@ import { changeLang, toggleDropdown } from "../../utils";
 import Dropdown from "../dropdown/dropdown";
 import IconButton from "../icon_button/icon_button";
 import "./language_selector.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEarth, faLanguage } from "@fortawesome/free-solid-svg-icons";
+import Icon from "../icon";
 
 function LanguageSelector() {
     return (
         <div className="LanguageSelector">
             <IconButton onClick={(e) => toggleDropdown("lang", e.currentTarget)}>
-                <FontAwesomeIcon icon={faLanguage} />
+                <Icon icon={faLanguage} />
             </IconButton>
             <Dropdown name="lang">
                 <div className="noanim">
-                    <FontAwesomeIcon icon={faEarth} />
+                    <Icon icon={faEarth} />
                     {t("select_language")}
                 </div>
                 <div onClick={() => changeLang("")}>

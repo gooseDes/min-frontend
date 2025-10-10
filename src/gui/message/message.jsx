@@ -3,11 +3,11 @@ import "./message.css";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { formatTime } from "../../utils";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faReply } from "@fortawesome/free-solid-svg-icons";
 import { t } from "i18next";
 import { motion, useAnimationControls } from "framer-motion";
 import React, { useEffect, useState } from "react";
+import Icon from "../icon";
 
 function MessageBase({
     id = -1,
@@ -100,7 +100,7 @@ function MessageBase({
                 {text[0] == "/" ? (
                     <div className="MessageReply">
                         <p>
-                            <FontAwesomeIcon icon={faReply} />
+                            <Icon icon={faReply} />
                             {formatReplyText(messages.find((msg) => msg.id == parseInt(text.split(" ")[1])))}
                         </p>
                     </div>
@@ -126,7 +126,7 @@ function MessageBase({
                 </Markdown>
                 <div className="MessageAdditionsDiv">
                     <p className="DateText">{formatTime(sent_at)}</p>
-                    {seen && type == "right" ? <FontAwesomeIcon icon={faCheck} /> : <p />}
+                    {seen && type == "right" ? <Icon icon={faCheck} /> : <p />}
                 </div>
             </div>
         </motion.div>

@@ -1,12 +1,12 @@
 import { useImperativeHandle, forwardRef, useState } from "react";
 import "../App.css";
 import "./profile_popup.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMessage, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useSearchParams } from "react-router-dom";
 import { t } from "i18next";
 import PulloutButton from "./pullout_button";
 import { AnimatePresence, motion } from "framer-motion";
+import Icon from "./icon";
 
 const ProfilePopup = forwardRef(({ id = "", src = "./logo512.png", username = "" }, ref) => {
     const [isShown, setIsShown] = useState(false);
@@ -38,7 +38,7 @@ const ProfilePopup = forwardRef(({ id = "", src = "./logo512.png", username = ""
                                 setIsShown(false);
                             }}
                         >
-                            <FontAwesomeIcon icon={faXmark} />
+                            <Icon icon={faXmark} />
                         </button>
                     </div>
                     <div className="ProfilePopupContent">

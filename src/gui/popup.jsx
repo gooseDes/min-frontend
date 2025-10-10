@@ -1,7 +1,7 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { closePopup } from "../utils";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import "./popup.css";
+import Icon from "./icon";
 
 function Popup({ title = "Title", name = "default", scale = 0.9, children, disableCloseButton = false }) {
     return (
@@ -15,7 +15,7 @@ function Popup({ title = "Title", name = "default", scale = 0.9, children, disab
                             closePopup(name);
                         }}
                     >
-                        <FontAwesomeIcon icon={faXmark} />
+                        <Icon icon={faXmark} />
                     </button>
                 )}
             </div>

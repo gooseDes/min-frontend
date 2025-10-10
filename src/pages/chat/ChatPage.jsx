@@ -7,7 +7,6 @@ import { useState, useEffect, useRef } from "react";
 import { closePopup, isUserLogined, loadFile, openPopup, showError, validateString, verifyToken } from "@/utils";
 import { address, getSocket } from "@/wsClient.js";
 import ProfilePopup from "../../gui/profile_popup";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faArrowRightFromBracket, faBars, faGear, faMessage, faPaperclip, faPaperPlane, faPlus, faReply, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import Popup from "../../gui/popup";
 import { useLocation, useSearchParams } from "react-router-dom";
@@ -17,6 +16,7 @@ import Dropdown from "../../gui/dropdown/dropdown";
 import { goTo, openDropdown } from "../../utils";
 import { motion } from "framer-motion";
 import TransitionButton from "../../gui/transition_btn/transition_btn";
+import Icon from "../../gui/icon";
 
 function ChatPage() {
     const [messages, setMessages] = useState([]);
@@ -470,7 +470,7 @@ function ChatPage() {
                     <div className="ChatsHeader">
                         <p className="ChatsTitle">{t("chats")}</p>
                         <button className="ChatPlusButton" onClick={() => openPopup("create-chat")}>
-                            <FontAwesomeIcon icon={faPlus} />
+                            <Icon icon={faPlus} />
                         </button>
                     </div>
                     <div className="ChatsPanel" id="chats_panel">
@@ -509,7 +509,7 @@ function ChatPage() {
                                     goTo("settings");
                                 }}
                             >
-                                <FontAwesomeIcon icon={faGear} />
+                                <Icon icon={faGear} />
                             </TransitionButton>
                             <button
                                 className="UserControlButton logout"
@@ -518,17 +518,17 @@ function ChatPage() {
                                     goTo("/");
                                 }}
                             >
-                                <FontAwesomeIcon icon={faArrowRightFromBracket} />
+                                <Icon icon={faArrowRightFromBracket} />
                             </button>
                         </div>
                     </div>
                 </motion.div>
                 <div className="RightPanel" id="right_panel">
-                    <FontAwesomeIcon icon={faMessage} className="MessageWhenEmpty" />
+                    <Icon icon={faMessage} className="MessageWhenEmpty" />
                     <div className="TopPanel" id="top_panel">
                         <div className="TopPanelContent" id="top_panel_content">
                             <button className="MenuButton" onClick={openMenu}>
-                                <FontAwesomeIcon icon={faBars} />
+                                <Icon icon={faBars} />
                             </button>
                             <div className="TopPanelThing">
                                 <img id="top_panel_avatar" src={logo} alt="avatar" onError={(e) => (e.currentTarget.src = "./logo512.png")} />
@@ -577,7 +577,7 @@ function ChatPage() {
                     </div>
                     <div className={`InputPanel ${lines > 1 ? "expanded" : ""}`} id="input_panel">
                         <button className="InputButton AttachButton" onClick={attachImages}>
-                            <FontAwesomeIcon icon={faPaperclip} />
+                            <Icon icon={faPaperclip} />
                         </button>
                         <textarea
                             placeholder={t("message_placeholder")}
@@ -587,7 +587,7 @@ function ChatPage() {
                             onInput={handleInput}
                         />
                         <button className="InputButton SendButton" onClick={sendMessage}>
-                            <FontAwesomeIcon icon={faPaperPlane} />
+                            <Icon icon={faPaperPlane} />
                         </button>
                     </div>
                 </div>
@@ -619,7 +619,7 @@ function ChatPage() {
                     I Love Femboys :3
                 </p>
                 <button className="CreateChatConfirmButton">
-                    <FontAwesomeIcon icon={faArrowRight} onClick={createChat} />
+                    <Icon icon={faArrowRight} onClick={createChat} />
                 </button>
             </Popup>
             <ProfilePopup ref={ProfilePopupRef} src={`${address}/avatars/${localStorage.getItem("id")}.webp`} username={localStorage.getItem("username") || t("guest")} />
@@ -631,7 +631,7 @@ function ChatPage() {
                         selectedMessage.current = null;
                     }}
                 >
-                    <FontAwesomeIcon icon={faReply} />
+                    <Icon icon={faReply} />
                     <p>{t("reply")}</p>
                 </div>
                 <div
@@ -641,7 +641,7 @@ function ChatPage() {
                         selectedMessage.current = null;
                     }}
                 >
-                    <FontAwesomeIcon icon={faTrashCan} />
+                    <Icon icon={faTrashCan} />
                     <p>{t("delete")}</p>
                 </div>
             </Dropdown>

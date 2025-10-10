@@ -1,3 +1,4 @@
+import React from "react";
 import "./transition_btn.css";
 import { motion, useAnimationControls } from "framer-motion";
 
@@ -6,7 +7,7 @@ type TransitionButtonProps = {
     children?: React.ReactNode;
 };
 
-function TransitionButton({ children, onClick }: TransitionButtonProps) {
+function TransitionButtonBase({ children, onClick }: TransitionButtonProps) {
     const controls = useAnimationControls();
 
     async function handleClick() {
@@ -30,5 +31,7 @@ function TransitionButton({ children, onClick }: TransitionButtonProps) {
         </motion.button>
     );
 }
+
+const TransitionButton = React.memo(TransitionButtonBase);
 
 export default TransitionButton;
