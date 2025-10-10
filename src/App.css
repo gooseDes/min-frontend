@@ -172,10 +172,8 @@ p {
     margin: 0;
     overflow-x: hidden;
     overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: #9993 #0000;
     background: var(--background-panel);
-    border-radius: 0 0 0 0;
+    border-radius: 0 0 2svh 2svh;
     width: 100%;
     height: 100%;
     padding: 10px;
@@ -206,16 +204,33 @@ p {
     align-items: center;
     flex-direction: row;
     background: var(--background-panel);
-    border-radius: 0 0 2svh 2svh;
-    width: 100%;
+    border-radius: 2svh;
+    width: calc(100vw - 440px);
     height: 70px;
     padding: 10px;
     gap: 10px;
     overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s ease;
+    position: absolute;
+    bottom: 50px;
+    backdrop-filter: blur(10px);
+    border: #aaaaaa33 1px solid;
+    translate: 0 150%;
+    opacity: 0;
 
     &.expanded {
         height: 200px;
+    }
+
+    &.shown {
+        translate: 0 0;
+        opacity: 1;
+    }
+}
+
+@media screen and (orientation: portrait) {
+    .InputPanel {
+        width: calc(100vw - 80px);
     }
 }
 

@@ -355,7 +355,7 @@ function ChatPage() {
         right_panel.style.filter = "";
         document.getElementById("top_panel").style.borderRadius = "2svh 2svh 2svh 2svh";
         document.getElementById("content_panel").style.borderRadius = "2svh 2svh 2svh 2svh";
-        document.getElementById("input_panel").style.borderRadius = "2svh 2svh 2svh 2svh";
+        document.getElementById("input_panel").classList.add("shown");
         document.getElementById("top_panel_username").textContent = username;
         const socket = getSocket();
         socket.on("userInfo", (data) => {
@@ -569,6 +569,7 @@ function ChatPage() {
                                 />
                             );
                         })}
+                        <div style={{ opacity: 0, height: "100px" }} />
                     </div>
                     <div className={`InputPanel ${lines > 1 ? "expanded" : ""}`} id="input_panel">
                         <button className="InputButton AttachButton" onClick={attachImages}>
