@@ -9,6 +9,7 @@ import SignupPage from "./pages/signup/SingupPage.jsx";
 import SigninPage from "./pages/signin/SinginPage.jsx";
 import { isElectron } from "./utils.js";
 import { AnimatePresence, motion } from "framer-motion";
+import VoicePage from "./pages/voice/VoicePage.jsx";
 
 const Router = isElectron() ? HashRouter : BrowserRouter;
 
@@ -61,6 +62,14 @@ function AnimatedRoutes() {
                     element={
                         <PageWrapper>
                             <SettingsPage />
+                        </PageWrapper>
+                    }
+                />
+                <Route
+                    path="/voice"
+                    element={
+                        <PageWrapper>
+                            <VoicePage />
                         </PageWrapper>
                     }
                 />
