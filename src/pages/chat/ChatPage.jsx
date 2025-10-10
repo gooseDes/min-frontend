@@ -80,17 +80,20 @@ function ChatPage() {
         socket.on("history", (data) => {
             if (isWaitingForHistory.current) {
                 setMessages(
-                    data.messages.map((msg) => ({
-                        id: msg.id,
-                        text: msg.text,
-                        type: msg.author === localStorage.getItem("username") ? "right" : "left",
-                        author: msg.author === localStorage.getItem("username") ? "You" : msg.author,
-                        author_id: msg.author_id,
-                        sent_at: msg.sent_at,
-                        seen: msg.seen,
-                        shown: false,
-                        anim_delay: true,
-                    }))
+                    data.messages
+                        .slice()
+                        .reverse()
+                        .map((msg) => ({
+                            id: msg.id,
+                            text: msg.text,
+                            type: msg.author === localStorage.getItem("username") ? "right" : "left",
+                            author: msg.author === localStorage.getItem("username") ? "You" : msg.author,
+                            author_id: msg.author_id,
+                            sent_at: msg.sent_at,
+                            seen: msg.seen,
+                            shown: false,
+                            anim_delay: true,
+                        }))
                 );
                 messageCount.current = data.messages.length;
                 animateFrom.current = data.messages.length;
@@ -465,16 +468,14 @@ function ChatPage() {
             <div className="App" id="app">
                 <motion.div initial={{ x: "-100%" }} animate={{ x: 0 }} transition={{ type: "spring", stiffness: 200, damping: 12, delay: 0.5 }} className="LeftPanel" id="left_panel">
                     <div className="ChatsHeader">
-                        <p className="ChatsTitle">
-                            <Trans>chats</Trans>
-                        </p>
+                        <p className="ChatsTitle">{t("chats")}</p>
                         <button className="ChatPlusButton" onClick={() => openPopup("create-chat")}>
                             <FontAwesomeIcon icon={faPlus} />
                         </button>
                     </div>
                     <div className="ChatsPanel" id="chats_panel">
                         <ProfileThing
-                            text={<Trans>default_chat</Trans>}
+                            text={t("default_chat")}
                             onClick={() => {
                                 localStorage.setItem("chatId", 1);
                                 openChat("Default Chat");
@@ -498,7 +499,7 @@ function ChatPage() {
                     <div className="UserPanel" id="user_panel">
                         <div className="UserPanelContent" id="user_panel_content">
                             <ProfileThing
-                                text={localStorage.getItem("username") || <Trans>guest</Trans>}
+                                text={localStorage.getItem("username") || t("guest")}
                                 onClick={openUserProfile}
                                 animation={false}
                                 src={`${address}/avatars/${localStorage.getItem("id")}.webp`}
@@ -591,7 +592,7 @@ function ChatPage() {
                     </div>
                 </div>
             </div>
-            <Popup title={<Trans>account</Trans>} name="account" disableCloseButton={true}>
+            <Popup title={t("account")} name="account" disableCloseButton={true}>
                 <div className="scrollable-y">
                     <p style={{ fontSize: "3svh" }}>
                         <Trans i18nKey={"account_required"}>
@@ -605,7 +606,7 @@ function ChatPage() {
                     </p>
                 </div>
             </Popup>
-            <Popup title={<Trans>chat_creation</Trans>} name="create-chat" scale={0.5}>
+            <Popup title={t("chat_creation")} name="create-chat" scale={0.5}>
                 <input
                     placeholder={t("username_placeholder")}
                     className="CreateChatNicknameInput"
@@ -621,7 +622,7 @@ function ChatPage() {
                     <FontAwesomeIcon icon={faArrowRight} onClick={createChat} />
                 </button>
             </Popup>
-            <ProfilePopup ref={ProfilePopupRef} src={`${address}/avatars/${localStorage.getItem("id")}.webp`} username={localStorage.getItem("username") || <Trans>guest</Trans>} />
+            <ProfilePopup ref={ProfilePopupRef} src={`${address}/avatars/${localStorage.getItem("id")}.webp`} username={localStorage.getItem("username") || t("guest")} />
             <Dropdown name="msg">
                 <div className="noanim">{t("message_actions")}</div>
                 <div
