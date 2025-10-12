@@ -29,6 +29,7 @@ body,
     transition: all 0.3s ease-in-out;
     background: linear-gradient(135deg, #000000, #1c1c1c);
     background-size: cover;
+    filter: blur(0px);
 }
 
 p {
@@ -212,7 +213,7 @@ p {
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s ease;
     position: absolute;
-    bottom: 50px;
+    bottom: 25px;
     backdrop-filter: blur(10px);
     border: #aaaaaa33 1px solid;
     translate: 0 150%;

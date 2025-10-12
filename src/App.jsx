@@ -15,13 +15,7 @@ const Router = isElectron() ? HashRouter : BrowserRouter;
 
 function PageWrapper({ children }) {
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 250, height: 0 }}
-            animate={{ opacity: 1, y: 0, height: "100%" }}
-            exit={{ opacity: 0, y: -250, height: 0 }}
-            transition={{ default: { type: "spring", stiffness: 200, damping: 12, bounce: 0.3, delay: 0.5 }, opacity: { duration: 1, delay: 0.5 }, duration: 0.5 }}
-            style={{ width: "100%", height: "100%" }}
-        >
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ opacity: { duration: 0.5, delay: 0.5 } }} style={{ width: "100%", height: "100%" }}>
             {children}
         </motion.div>
     );

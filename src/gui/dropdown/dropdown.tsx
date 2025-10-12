@@ -1,4 +1,4 @@
-import { JSX, ReactNode } from "react";
+import React, { JSX, ReactNode } from "react";
 import "./dropdown.css";
 
 type DropdownProps = {
@@ -7,12 +7,14 @@ type DropdownProps = {
     name?: string;
 };
 
-function Dropdown({ children, direction = "up", name = "dropdown" }: DropdownProps): JSX.Element {
+function DropdownBase({ children, direction = "up", name = "dropdown" }: DropdownProps): JSX.Element {
     return (
         <div className={`DropDownDiv ${direction}`} id={`${name}-dropdown`}>
             {children}
         </div>
     );
 }
+
+const Dropdown = React.memo(DropdownBase);
 
 export default Dropdown;

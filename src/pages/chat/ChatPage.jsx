@@ -466,7 +466,7 @@ function ChatPage() {
     return (
         <div>
             <div className="App" id="app">
-                <motion.div initial={{ x: "-100%" }} animate={{ x: 0 }} transition={{ type: "spring", stiffness: 200, damping: 12, delay: 0.5 }} className="LeftPanel" id="left_panel">
+                <div className="LeftPanel" id="left_panel">
                     <div className="ChatsHeader">
                         <p className="ChatsTitle">{t("chats")}</p>
                         <button className="ChatPlusButton" onClick={() => openPopup("create-chat")}>
@@ -522,7 +522,7 @@ function ChatPage() {
                             </button>
                         </div>
                     </div>
-                </motion.div>
+                </div>
                 <div className="RightPanel" id="right_panel">
                     <Icon icon={faMessage} className="MessageWhenEmpty" />
                     <div className="TopPanel" id="top_panel">
@@ -539,9 +539,16 @@ function ChatPage() {
                     <div className="ContentPanel" id="content_panel">
                         <div className="LoadMoreMessagesDiv">
                             {messageCount.current >= 99 && (
-                                <button className="LoadMoreMessagesButton" onClick={loadMoreMessages}>
+                                <motion.button
+                                    className="LoadMoreMessagesButton"
+                                    onClick={loadMoreMessages}
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{ type: "tween" }}
+                                >
                                     {t("load_more_messages")}
-                                </button>
+                                </motion.button>
                             )}
                         </div>
                         {messages.map((msg, i) => {
