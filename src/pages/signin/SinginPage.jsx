@@ -99,6 +99,9 @@ function SigninPage() {
                 <button id="signup_button" onClick={handleRegistration}>
                     <Trans>signin</Trans>
                 </button>
+                <a onClick={() => goTo("/signup")} style={{ cursor: "pointer", textDecoration: "underline", color: "#0756b6ff" }}>
+                    {t("dont_have_account")}
+                </a>
             </div>
             <LanguageSelector />
         </div>

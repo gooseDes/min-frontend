@@ -26,6 +26,8 @@
     "signin": "Увійти",
     "select_language": "Виберіть Мову",
     "auto_lang": "Системна",
+    "dont_have_account": "Немає акаунта? Зареєструйтесь тут.",
+    "have_account": "Вже є акаунт? Увійдіть тут.",
 
     "profile": "Профіль",
     "send_message": "Написати",

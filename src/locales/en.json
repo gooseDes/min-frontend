@@ -26,6 +26,8 @@
     "signin": "Sign In",
     "select_language": "Select Language",
     "auto_lang": "Auto",
+    "dont_have_account": "No account? Sign up here.",
+    "have_account": "Have an account? Sign in here.",
 
     "profile": "Profile",
     "send_message": "Send Message",

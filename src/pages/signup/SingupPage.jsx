@@ -108,8 +108,11 @@ function SignupPage() {
                 <input id="password_input" placeholder={t("password")} type="password" />
                 <input id="password2_input" placeholder={t("password_confirmation")} type="password" />
                 <button id="signup_button" onClick={handleRegistration}>
-                    <Trans>signup</Trans>
+                    {t("signup")}
                 </button>
+                <a onClick={() => goTo("/signin")} style={{ cursor: "pointer", textDecoration: "underline", color: "#0756b6ff" }}>
+                    {t("have_account")}
+                </a>
             </div>
             <LanguageSelector />
         </div>
