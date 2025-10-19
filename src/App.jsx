@@ -16,7 +16,7 @@ const Router = isElectron() ? HashRouter : BrowserRouter;
 
 function PageWrapper({ children }) {
     return (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ opacity: { duration: 0.5, delay: 0.5 } }} style={{ width: "100%", height: "100%" }}>
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ opacity: { duration: 0.5, delay: 0.3 } }} style={{ width: "100%", height: "100%" }}>
             {children}
         </motion.div>
     );
@@ -27,7 +27,19 @@ function AnimatedRoutes() {
 
     return (
         <AnimatePresence mode="wait">
-            <Suspense fallback={<div />}>
+            <Suspense
+                fallback={
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ type: "tween", ease: "easeInOut" }}
+                        style={{ color: "#fff", display: "flex", justifyContent: "center", alignItems: "center", height: "100%", fontSize: "24px" }}
+                    >
+                        Loading...
+                    </motion.div>
+                }
+            >
                 <Routes key={location.pathname} location={location}>
                     <Route
                         path="/"
