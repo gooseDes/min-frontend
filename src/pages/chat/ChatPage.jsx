@@ -356,8 +356,8 @@ function ChatPage() {
         const right_panel = document.getElementById("right_panel");
         right_panel.style.gap = "10px";
         right_panel.style.filter = "";
-        document.getElementById("top_panel").style.borderRadius = "2svh 2svh 2svh 2svh";
-        document.getElementById("content_panel").style.borderRadius = "2svh 2svh 2svh 2svh";
+        document.getElementById("top_panel").classList.add("shown");
+        document.getElementById("content_panel").classList.add("shown");
         document.getElementById("input_panel").classList.add("shown");
         document.getElementById("top_panel_username").textContent = username;
         const socket = getSocket();

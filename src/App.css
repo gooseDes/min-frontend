@@ -3,11 +3,12 @@
 }
 
 :root {
-    --background-panel: #242424dd;
-    --left-panel-bg: #242424dd;
+    --background-panel: #1f1f23dd;
+    --left-panel-bg: #1f1f23dd;
     @media screen and (orientation: portrait) {
         --left-panel-bg: #00000066;
     }
+    --panel-border: #2d2d32dd;
 }
 
 html,
@@ -25,9 +26,9 @@ body,
     justify-content: center;
     align-items: center;
     padding: 10px;
-    gap: 30px;
+    gap: 34px;
     transition: all 0.3s ease-in-out;
-    background: linear-gradient(135deg, #000000, #1c1c1c);
+    background: linear-gradient(0deg, #131317);
     background-size: cover;
     filter: blur(0px);
 }
@@ -66,6 +67,7 @@ p {
 .ChatsPanel {
     display: flex;
     background: var(--left-panel-bg);
+    border: var(--panel-border) 2px solid;
     border-radius: 2svh;
     flex-direction: column;
     gap: 10px;
@@ -86,6 +88,7 @@ p {
 .UserPanel {
     display: flex;
     background: var(--left-panel-bg);
+    border: var(--panel-border) 2px solid;
     border-radius: 2svh;
     justify-content: center;
     align-items: center;
@@ -126,6 +129,8 @@ p {
 .TopPanel {
     margin: 0;
     background: var(--background-panel);
+    border: var(--panel-border) 2px solid;
+    border-bottom: 0px solid;
     border-radius: 2svh 2svh 0 0;
     width: 100%;
     height: 60px;
@@ -135,6 +140,11 @@ p {
     align-items: center;
     gap: 20px;
     transition: all 0.2s ease-in-out;
+
+    &.shown {
+        border: var(--panel-border) 2px solid;
+        border-radius: 2svh;
+    }
 }
 
 .TopPanelContent {
@@ -174,11 +184,18 @@ p {
     overflow-x: hidden;
     overflow-y: auto;
     background: var(--background-panel);
+    border: var(--panel-border) 2px solid;
+    border-top: 0px solid;
     border-radius: 0 0 2svh 2svh;
     width: 100%;
     height: 100%;
     padding: 10px;
     transition: all 0.2s ease-in-out;
+
+    &.shown {
+        border: var(--panel-border) 2px solid;
+        border-radius: 2svh;
+    }
 }
 
 *::-webkit-scrollbar {
@@ -215,7 +232,7 @@ p {
     position: absolute;
     bottom: 25px;
     backdrop-filter: blur(10px);
-    border: #aaaaaa33 1px solid;
+    border: var(--panel-border) 2px solid;
     translate: 0 150%;
     opacity: 0;
 
