@@ -1,15 +1,16 @@
 import { BrowserRouter, HashRouter, Routes, Route, useLocation } from "react-router-dom";
 import Popup from "./gui/popup.jsx";
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import ProfilePopup from "./gui/profile_popup.jsx";
 import { address, getSocket } from "./wsClient.js";
-import ChatPage from "./pages/chat/ChatPage.jsx";
-import SettingsPage from "./pages/settings/SettingsPage.jsx";
-import SignupPage from "./pages/signup/SingupPage.jsx";
-import SigninPage from "./pages/signin/SinginPage.jsx";
 import { isElectron } from "./utils.js";
 import { AnimatePresence, motion } from "framer-motion";
 import VoicePage from "./pages/voice/VoicePage.jsx";
+
+const ChatPage = lazy(() => import("./pages/chat/ChatPage.jsx"));
+const SignupPage = lazy(() => import("./pages/signup/SignupPage.jsx"));
+const SigninPage = lazy(() => import("./pages/signin/SigninPage.jsx"));
+const SettingsPage = lazy(() => import("./pages/settings/SettingsPage.jsx"));
 
 const Router = isElectron() ? HashRouter : BrowserRouter;
 
@@ -26,48 +27,50 @@ function AnimatedRoutes() {
 
     return (
         <AnimatePresence mode="wait">
-            <Routes key={location.pathname} location={location}>
-                <Route
-                    path="/"
-                    element={
-                        <PageWrapper>
-                            <ChatPage />
-                        </PageWrapper>
-                    }
-                />
-                <Route
-                    path="/signup"
-                    element={
-                        <PageWrapper>
-                            <SignupPage />
-                        </PageWrapper>
-                    }
-                />
-                <Route
-                    path="/signin"
-                    element={
-                        <PageWrapper>
-                            <SigninPage />
-                        </PageWrapper>
-                    }
-                />
-                <Route
-                    path="/settings"
-                    element={
-                        <PageWrapper>
-                            <SettingsPage />
-                        </PageWrapper>
-                    }
-                />
-                <Route
-                    path="/voice"
-                    element={
-                        <PageWrapper>
-                            <VoicePage />
-                        </PageWrapper>
-                    }
-                />
-            </Routes>
+            <Suspense fallback={<div />}>
+                <Routes key={location.pathname} location={location}>
+                    <Route
+                        path="/"
+                        element={
+                            <PageWrapper>
+                                <ChatPage />
+                            </PageWrapper>
+                        }
+                    />
+                    <Route
+                        path="/signup"
+                        element={
+                            <PageWrapper>
+                                <SignupPage />
+                            </PageWrapper>
+                        }
+                    />
+                    <Route
+                        path="/signin"
+                        element={
+                            <PageWrapper>
+                                <SigninPage />
+                            </PageWrapper>
+                        }
+                    />
+                    <Route
+                        path="/settings"
+                        element={
+                            <PageWrapper>
+                                <SettingsPage />
+                            </PageWrapper>
+                        }
+                    />
+                    <Route
+                        path="/voice"
+                        element={
+                            <PageWrapper>
+                                <VoicePage />
+                            </PageWrapper>
+                        }
+                    />
+                </Routes>
+            </Suspense>
         </AnimatePresence>
     );
 }
