@@ -15,7 +15,7 @@
 }
 
 .TextDiv {
-    background-color: #1f1f23c2;
+    background-color: var(--message-bg);
     width: fit-content;
     height: fit-content;
     max-width: 30vh;
@@ -29,7 +29,7 @@
     hyphens: none;
     color: #fff;
     border: var(--panel-border) 2px solid;
-    box-shadow: 0 0 5px #1f1f23c2;
+    box-shadow: 0 0 10px var(--message-bg);
 
     &.left {
         border-radius: 1svh 1svh 1svh 0;

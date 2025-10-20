@@ -220,7 +220,7 @@ function ChatPage() {
     useEffect(() => {
         setTimeout(() => {
             if (!isUserLogined()) {
-                openPopup("account");
+                setTimeout(() => openPopup("account"), 500);
                 localStorage.clear();
             }
         }, 100);

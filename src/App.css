@@ -9,6 +9,7 @@
         --left-panel-bg: #00000066;
     }
     --panel-border: #2d2d32dd;
+    --message-bg: #1f1f23c2;
 }
 
 html,
@@ -221,7 +222,7 @@ p {
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    background: var(--background-panel);
+    background: var(--message-bg);
     border-radius: 2svh;
     width: calc(100vw - 440px);
     height: 70px;
