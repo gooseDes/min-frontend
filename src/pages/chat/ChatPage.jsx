@@ -13,7 +13,7 @@ import { useLocation, useSearchParams } from "react-router-dom";
 import { Trans } from "react-i18next";
 import { t } from "i18next";
 import Dropdown from "../../gui/dropdown/dropdown";
-import { goTo, openDropdown } from "../../utils";
+import { goTo, isElectron, openDropdown } from "../../utils";
 import { motion } from "framer-motion";
 import TransitionButton from "../../gui/transition_btn/transition_btn";
 import Icon from "../../gui/icon";
@@ -75,6 +75,9 @@ function ChatPage() {
                 },
             ]);
             messageCount.current += 1;
+            if (isElectron()) {
+                window.api.notify(data.author, data.text);
+            }
         });
 
         socket.on("history", (data) => {
