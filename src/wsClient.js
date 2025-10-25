@@ -1,6 +1,6 @@
 import { io } from "socket.io-client";
 
-export const address = import.meta.env.VITE_SERVER_ADDRESS || "https://server.msg-min.xyz";
+export const address = import.meta.env.VITE_SERVER_ADDRESS || "https://serv.msg-min.xyz";
 
 let socket;
 
