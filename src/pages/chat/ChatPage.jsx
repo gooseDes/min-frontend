@@ -76,7 +76,7 @@ function ChatPage() {
             ]);
             messageCount.current += 1;
             if (isElectron()) {
-                window.api.notify(data.author, data.text);
+                window.api.notify(data.author, data.text, `${address}/avatars/${data.author_id}.webp`);
             }
         });
 
