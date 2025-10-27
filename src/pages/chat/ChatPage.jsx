@@ -75,7 +75,7 @@ function ChatPage() {
                 },
             ]);
             messageCount.current += 1;
-            if (isElectron()) {
+            if (isElectron() && data.author !== "You") {
                 window.api.notify(data.author, data.text, `${address}/avatars/${data.author_id}.webp`);
             }
         });
@@ -96,7 +96,7 @@ function ChatPage() {
                             seen: msg.seen,
                             shown: false,
                             anim_delay: true,
-                        }))
+                        })),
                 );
                 messageCount.current = data.messages.length;
                 animateFrom.current = data.messages.length;
