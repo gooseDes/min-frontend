@@ -52,28 +52,30 @@ function ChatPage() {
         verifyToken(localStorage.getItem("token"));
         const socket = getSocket();
 
-        // Binding things to socket commands
+        localStorage.removeItem("chatId");
 
+        // Binding things to socket commands
         socket.on("connect", (data) => {
             console.log("Connected to server");
         });
 
         socket.on("message", (data) => {
             if (data.author === localStorage.getItem("username")) data.author = "You";
-            setMessages((prev) => [
-                ...prev,
-                {
-                    id: data.id,
-                    text: data.text,
-                    type: data.author == "You" ? "right" : "left",
-                    author: data.author,
-                    author_id: data.author_id,
-                    sent_at: data.sent_at,
-                    seen: data.seen,
-                    shown: true,
-                    anim_delay: false,
-                },
-            ]);
+            if (data.chat === (localStorage.getItem("chatId") || 1))
+                setMessages((prev) => [
+                    ...prev,
+                    {
+                        id: data.id,
+                        text: data.text,
+                        type: data.author == "You" ? "right" : "left",
+                        author: data.author,
+                        author_id: data.author_id,
+                        sent_at: data.sent_at,
+                        seen: data.seen,
+                        shown: true,
+                        anim_delay: false,
+                    },
+                ]);
             messageCount.current += 1;
             if (isElectron() && data.author !== "You") {
                 window.api.notify(data.author, data.text, `${address}/avatars/${data.author_id}.webp`);

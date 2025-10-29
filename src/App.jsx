@@ -5,12 +5,13 @@ import ProfilePopup from "./gui/profile_popup.jsx";
 import { address, getSocket } from "./wsClient.js";
 import { isElectron } from "./utils.js";
 import { AnimatePresence, motion } from "framer-motion";
-import VoicePage from "./pages/voice/VoicePage.jsx";
+import Loader from "./gui/loader/loader.js";
 
 const ChatPage = lazy(() => import("./pages/chat/ChatPage.jsx"));
 const SignupPage = lazy(() => import("./pages/signup/SignupPage.jsx"));
 const SigninPage = lazy(() => import("./pages/signin/SigninPage.jsx"));
 const SettingsPage = lazy(() => import("./pages/settings/SettingsPage.jsx"));
+const VoicePage = lazy(() => import("./pages/voice/VoicePage.jsx"));
 
 const Router = isElectron() ? HashRouter : BrowserRouter;
 
@@ -36,7 +37,7 @@ function AnimatedRoutes() {
                         transition={{ type: "tween", ease: "easeInOut" }}
                         style={{ color: "#fff", display: "flex", justifyContent: "center", alignItems: "center", height: "100%", fontSize: "24px" }}
                     >
-                        Loading...
+                        <Loader />
                     </motion.div>
                 }
             >
