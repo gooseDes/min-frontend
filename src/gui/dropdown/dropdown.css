@@ -9,7 +9,7 @@
     bottom: 100px;
     z-index: 999999;
     backdrop-filter: blur(5px);
-    color: #fff;
+    color: var(--primary);
     border-radius: 2svh;
     opacity: 0;
     width: 0;
@@ -20,7 +20,9 @@
     transform-origin: center;
     translate: -50% 0;
     gap: 10px;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), left 0s linear;
+    transition:
+        all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+        left 0s linear;
     border: var(--panel-border) 2px solid;
 
     &.open {
