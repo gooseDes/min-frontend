@@ -27,7 +27,7 @@
     overflow-wrap: break-word;
     word-break: normal;
     hyphens: none;
-    color: #fff;
+    color: var(--primary);
     border: var(--panel-border) 2px solid;
     box-shadow: 0 0 10px var(--message-bg);
 
@@ -46,7 +46,7 @@
     }
 
     .DateText {
-        color: #aaa;
+        color: var(--secondary);
         font-size: 12px;
         text-align: right;
         margin-top: 0;
@@ -54,7 +54,7 @@
 }
 
 .Author {
-    color: #aaa;
+    color: var(--secondary);
     font-size: 16px;
     font-weight: bold;
     margin: 5px;
@@ -92,7 +92,7 @@
     justify-content: flex-end;
     align-items: flex-start;
     gap: 10px;
-    color: #aaa;
+    color: var(--secondary);
     font-size: 12px;
     text-align: right;
     * {
@@ -101,7 +101,7 @@
 }
 
 .MessageReply > p {
-    color: #aaa;
+    color: var(--secondary);
     font-size: 12px;
     line-height: 0.1;
     display: flex;

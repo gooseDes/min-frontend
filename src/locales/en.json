@@ -38,9 +38,22 @@
     "general": "General",
     "back": "Back",
     "emojis": "Emojis",
+    "appearance": "Appearance",
     "add_emoji": "Add emoji",
     "emoji_name": "Emoji name",
     "submit": "Submit",
     "upload_image_first": "Upload image first",
-    "language": "Language"
+    "language": "Language",
+    "select_theme": "Select Theme",
+    "select_scheme": "Select Scheme",
+
+    "theme": "Theme",
+    "default_theme": "Default",
+    "midnight_theme": "Midnight",
+    "material_theme": "Material",
+    "material_scheme": "Material Scheme",
+    "dark_scheme": "Dark",
+    "light_scheme": "Light",
+    "default_scheme": "Default",
+    "material_color": "Material Color"
 }

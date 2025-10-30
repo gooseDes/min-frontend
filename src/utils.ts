@@ -2,6 +2,7 @@ import { t } from "i18next";
 import { address } from "./wsClient.js";
 import Pica from "pica";
 import i18n from "./i18n.js";
+import { argbFromHex, hexFromArgb, themeFromSourceColor } from "@material/material-color-utilities";
 
 declare global {
     interface Window {
@@ -187,7 +188,7 @@ export function formatTime(unixTimestamp: number, advanced: boolean = false) {
     const minutes = dateObject.getMinutes().toString().padStart(2, "0");
     const seconds = dateObject.getSeconds().toString().padStart(2, "0");
 
-    let formatted = null;
+    let formatted: null | string = null;
 
     if (now.getFullYear() == dateObject.getFullYear() && now.getMonth() == dateObject.getMonth() && Math.abs(now.getDate() - dateObject.getDate()) <= 1 && !advanced) {
         const today = now.getDate() == dateObject.getDate();
@@ -222,5 +223,53 @@ export function goTo(path: string) {
     } else {
         const locWithoutLastPart = loc.substring(0, loc.lastIndexOf("/"));
         location.href = locWithoutLastPart + "/" + (path.startsWith("/") ? path.substring(1) : path);
+    }
+}
+
+// Function that changes theme of site
+export function changeTheme(theme: string) {
+    localStorage.setItem("theme", theme);
+    applyTheme();
+}
+
+// Function that changes scheme of site
+export function changeScheme(scheme: string) {
+    localStorage.setItem("material_scheme", scheme);
+    applyTheme();
+}
+
+// Function that applies current theme
+export function applyTheme() {
+    const root = document.documentElement;
+    const theme = localStorage.getItem("theme");
+    root.style.setProperty("--theme", theme);
+    switch (theme) {
+        case "midnight":
+            root.style.setProperty("--background", "#131317");
+            root.style.setProperty("--background-panel", "#1f1f23dd");
+            root.style.setProperty("--panel-border", "#2d2d32dd");
+            root.style.setProperty("--message-bg", "#1f1f23c2");
+            root.style.setProperty("--primary", "#ffffff");
+            root.style.setProperty("--secondary", "#aaaaaa");
+            break;
+        case "material":
+            let source: number;
+            try {
+                source = argbFromHex(localStorage.getItem("material_color") || "#0000ff");
+            } catch (e) {
+                source = argbFromHex("#0000ff");
+            }
+            const theme = themeFromSourceColor(source);
+            let scheme = theme.schemes.dark;
+            if (localStorage.getItem("material_scheme") === "light") {
+                scheme = theme.schemes.light;
+            }
+            root.style.setProperty("--background", hexFromArgb(scheme.shadow));
+            root.style.setProperty("--background-panel", hexFromArgb(scheme.background));
+            root.style.setProperty("--panel-border", hexFromArgb(scheme.secondaryContainer));
+            root.style.setProperty("--message-bg", hexFromArgb(scheme.surface));
+            root.style.setProperty("--primary", hexFromArgb(scheme.primary));
+            root.style.setProperty("--secondary", hexFromArgb(scheme.secondary));
+            break;
     }
 }

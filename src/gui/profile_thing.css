@@ -5,7 +5,10 @@
     align-items: center;
     height: 50px;
     width: 100%;
-    transition: background-color 0.2s ease-in-out, width 0.2s ease-in-out, translate 0.2s ease-in-out;
+    transition:
+        background-color 0.2s ease-in-out,
+        width 0.2s ease-in-out,
+        translate 0.2s ease-in-out;
     border-radius: 1svh;
     cursor: pointer;
 
@@ -13,7 +16,7 @@
         background-color: #aaaaaa66;
 
         .ProfileThingText {
-            color: #fff;
+            color: var(--primary);
         }
 
         &.anim {
@@ -30,13 +33,18 @@
 .ProfileThingText {
     text-align: left;
     margin: 0 20px 0 10px;
-    color: #aaa;
+    color: var(--secondary);
     font-weight: 500;
     transition: all 0.2s ease-in-out;
     user-select: none;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 10px;
 }
 
 .ProfileThingImage {

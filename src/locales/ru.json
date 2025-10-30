@@ -38,9 +38,22 @@
     "general": "Общие",
     "back": "Назад",
     "emojis": "Эмодзи",
+    "appearance": "Внешний вид",
     "add_emoji": "Создать эмодзи",
     "emoji_name": "Название эмодзи",
     "submit": "Сохранить",
     "upload_image_first": "Сначала загрузите изображение",
-    "language": "Язык"
+    "language": "Язык",
+    "select_theme": "Выберите тему",
+    "select_scheme": "Выберите схему",
+
+    "theme": "Тема",
+    "default_theme": "По умолчанию",
+    "midnight_theme": "Midnight",
+    "material_theme": "Material",
+    "material_scheme": "Material Схема",
+    "dark_scheme": "Темная",
+    "light_scheme": "Светлая",
+    "default_scheme": "По умолчанию",
+    "material_color": "Material Цвет"
 }

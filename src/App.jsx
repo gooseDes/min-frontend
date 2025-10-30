@@ -3,7 +3,7 @@ import Popup from "./gui/popup.jsx";
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import ProfilePopup from "./gui/profile_popup.jsx";
 import { address, getSocket } from "./wsClient.js";
-import { isElectron } from "./utils.js";
+import { applyTheme, isElectron } from "./utils.js";
 import { AnimatePresence, motion } from "framer-motion";
 import Loader from "./gui/loader/loader.js";
 
@@ -117,6 +117,22 @@ function App() {
             setImageOverlaySrc(src);
             if (src) setImageOverlayShown(true);
             else setImageOverlayShown(false);
+        };
+    }, []);
+
+    useEffect(() => {
+        applyTheme();
+
+        const handleStorageChange = (event) => {
+            if (event.key === "theme") {
+                applyTheme();
+            }
+        };
+
+        window.addEventListener("storage", handleStorageChange);
+
+        return () => {
+            window.removeEventListener("storage", handleStorageChange);
         };
     }, []);
 

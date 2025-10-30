@@ -16,7 +16,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: opacity 0.5s ease, translate 0.5s ease;
+    transition:
+        opacity 0.5s ease,
+        translate 0.5s ease;
     padding: 10px;
 
     &.show {
@@ -57,7 +59,7 @@
     background-color: #111111aa;
     backdrop-filter: blur(10px);
     border-radius: 2svh;
-    border: 2px solid #fff;
+    border: 2px solid var(--primary);
     padding: 20px;
     display: flex;
     justify-content: flex-start;
@@ -85,7 +87,7 @@
 
 .pencil {
     position: absolute;
-    color: #fff;
+    color: var(--primary);
     font-size: 48px;
     scale: 0;
 }
@@ -101,6 +103,10 @@
 
 .Thing {
     aspect-ratio: 1/2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .AdaptiveThing {
@@ -120,7 +126,7 @@
     top: 40px;
     background: transparent;
     border: none;
-    color: #fff;
+    color: var(--primary);
     font-size: 24px;
     z-index: 9999;
     transition: all 0.3s ease;
@@ -179,7 +185,7 @@
 
     &:hover {
         scale: 1.02;
-        box-shadow: 0 0 10px #fff;
+        box-shadow: 0 0 10px var(--primary);
         background-color: #11111111;
     }
 }
@@ -202,16 +208,16 @@
 .SubmitEmojiBtn {
     position: absolute;
     bottom: 30px;
-    border: #aaa solid 2px;
+    border: var(--secondary) solid 2px;
     border-radius: 2svh;
     font-size: 32px;
     padding: 12px;
     background-color: #111111aa;
-    color: #fff;
+    color: var(--primary);
     transition: all 0.3s ease;
 
     &:hover {
         scale: 1.05;
-        box-shadow: 0 0 10px #fff;
+        box-shadow: 0 0 10px var(--primary);
     }
 }

@@ -38,9 +38,22 @@
     "general": "Загальні",
     "back": "Назад",
     "emojis": "Емодзі",
+    "appearance": "Зовнішній вигляд",
     "add_emoji": "Створити емодзі",
     "emoji_name": "Ім'я емодзі",
     "submit": "Зберегти",
     "upload_image_first": "Спочатку завантажте зображення",
-    "language": "Мова"
+    "language": "Мова",
+    "select_theme": "Виберіть тему",
+    "select_scheme": "Виберіть схему",
+
+    "theme": "Тема",
+    "default_theme": "За замовчуванням",
+    "midnight_theme": "Midnight",
+    "material_theme": "Material",
+    "material_scheme": "Material Схема",
+    "dark_theme": "Темна",
+    "light_theme": "Світла",
+    "default_scheme": "За замовчуванням",
+    "material_color": "Material Колір"
 }

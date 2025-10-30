@@ -4,14 +4,15 @@ import "./SettingsPage.css";
 import ProfileThing from "../../gui/profile_thing";
 import { getSocket, address } from "@/wsClient";
 import { subscribeUser } from "../../push";
-import { faArrowLeft, faEarth, faFaceSmile, faGear, faMessage, faPencil, faPlus, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faEarth, faFaceSmile, faGear, faMessage, faPaintBrush, faPallet, faPencil, faPlus, faUser } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import { closePopup, cropCenter, loadFile, openPopup, showError, validateString } from "@/utils.ts";
 import SquareImgBtn from "../../gui/square_img_btn/square_img_btn";
 import Popup from "../../gui/popup";
-import { changeLang, goTo, toggleDropdown } from "../../utils";
+import { applyTheme, changeLang, changeScheme, changeTheme, closeDropdown, goTo, toggleDropdown } from "../../utils";
 import Dropdown from "../../gui/dropdown/dropdown";
 import Icon from "../../gui/icon";
+import { motion } from "framer-motion";
 
 function SettingsPage() {
     const [customEmojis, setCustomEmojis] = useState([]);
@@ -162,8 +163,7 @@ function SettingsPage() {
                                 goTo("/");
                             }}
                         >
-                            {" "}
-                            <Icon icon={faArrowLeft} />{" "}
+                            <Icon icon={faArrowLeft} />
                         </ProfileThing>
                         <ProfileThing
                             text={t("general")}
@@ -196,6 +196,16 @@ function SettingsPage() {
                             <Icon icon={faMessage} />{" "}
                         </ProfileThing>
                         <ProfileThing
+                            text={t("appearance")}
+                            image={false}
+                            onClick={() => {
+                                openSettingsScreen("AppearanceSettings");
+                            }}
+                        >
+                            {" "}
+                            <Icon icon={faPaintBrush} />{" "}
+                        </ProfileThing>
+                        <ProfileThing
                             text={t("emojis")}
                             image={false}
                             onClick={() => {
@@ -211,12 +221,41 @@ function SettingsPage() {
                     <div className="SettingsScreens">
                         <div className="SettingsScreen GeneralSettings hide">
                             <div className="Thing">
-                                {" "}
-                                {/*Big brain moment*/}
                                 <div className="EditDiv" onClick={(e) => toggleDropdown("lang", e.currentTarget)}>
                                     <p style={{ width: "100%", textAlign: "center", display: "flex", justifyContent: "center", alignItems: "center" }}>{`${t("language")}: ${t("current_lang")}`}</p>
                                     <Icon icon={faPencil} className="pencil" />
                                 </div>
+                            </div>
+                        </div>
+                        <div className="SettingsScreen AppearanceSettings hide">
+                            <div className="Thing">
+                                <ProfileThing
+                                    image={false}
+                                    animation={false}
+                                    text={`${t("theme")}: ${t((localStorage.getItem("theme") || "default") + "_theme")}`}
+                                    onClick={(_, e) => toggleDropdown("theme", e.target)}
+                                />
+                                {localStorage.getItem("theme") === "material" && (
+                                    <div>
+                                        <ProfileThing
+                                            image={false}
+                                            animation={false}
+                                            text={`${t("material_scheme")}: ${t((localStorage.getItem("material_scheme") || "default") + "_scheme")}`}
+                                            onClick={(_, e) => toggleDropdown("scheme", e.target)}
+                                        />
+                                        <motion.div initial={{ opacity: 0, x: 250 }} animate={{ opacity: 1, x: 0 }}>
+                                            <p style={{ color: "var(--secondary)", fontWeight: "500" }}>{t("material_color")}</p>
+                                            <input
+                                                type="color"
+                                                value={localStorage.getItem("material_color") || "#0000ff"}
+                                                onChange={(e) => {
+                                                    localStorage.setItem("material_color", e.target.value);
+                                                    applyTheme();
+                                                }}
+                                            />
+                                        </motion.div>
+                                    </div>
+                                )}
                             </div>
                         </div>
                         <div className="SettingsScreen ProfileSettings hide">
@@ -283,6 +322,50 @@ function SettingsPage() {
                 </div>
                 <div onClick={() => changeLang("uk")}>
                     <p>Українська</p>
+                </div>
+            </Dropdown>
+            <Dropdown name="theme">
+                <div className="noanim">
+                    <Icon icon={faPaintBrush} />
+                    {t("select_theme")}
+                </div>
+                <div
+                    onClick={() => {
+                        changeTheme("midnight");
+                        closeDropdown("theme");
+                    }}
+                >
+                    <p>{t("midnight_theme")}</p>
+                </div>
+                <div
+                    onClick={() => {
+                        changeTheme("material");
+                        closeDropdown("theme");
+                    }}
+                >
+                    <p>{t("material_theme")}</p>
+                </div>
+            </Dropdown>
+            <Dropdown name="scheme">
+                <div className="noanim">
+                    <Icon icon={faPaintBrush} />
+                    {t("select_scheme")}
+                </div>
+                <div
+                    onClick={() => {
+                        changeScheme("light");
+                        closeDropdown("scheme");
+                    }}
+                >
+                    <p>{t("light_scheme")}</p>
+                </div>
+                <div
+                    onClick={() => {
+                        changeScheme("dark");
+                        closeDropdown("scheme");
+                    }}
+                >
+                    <p>{t("dark_scheme")}</p>
                 </div>
             </Dropdown>
         </>
