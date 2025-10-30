@@ -191,6 +191,13 @@ function ChatPage() {
             showError(data.msg);
         });
 
+        setInterval(() => {
+            if (localStorage.getItem("justLoggedIn")) {
+                window.location.reload(true);
+                localStorage.removeItem("justLoggedIn");
+            }
+        }, 1000);
+
         return () => {
             socket.off("message");
             socket.off("history");

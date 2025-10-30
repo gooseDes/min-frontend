@@ -76,6 +76,7 @@ function SigninPage() {
                     localStorage.setItem("email", email_input.value);
                     localStorage.setItem("username", json.username);
                     localStorage.setItem("id", json.id);
+                    localStorage.setItem("justLoggedIn", true);
                     goTo("/");
                 } else {
                     showError(json.msg || "Unknown error");
