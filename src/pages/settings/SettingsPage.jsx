@@ -221,10 +221,10 @@ function SettingsPage() {
                     <div className="SettingsScreens">
                         <div className="SettingsScreen GeneralSettings hide">
                             <div className="Thing">
-                                <div className="EditDiv" onClick={(e) => toggleDropdown("lang", e.currentTarget)}>
-                                    <p style={{ width: "100%", textAlign: "center", display: "flex", justifyContent: "center", alignItems: "center" }}>{`${t("language")}: ${t("current_lang")}`}</p>
-                                    <Icon icon={faPencil} className="pencil" />
-                                </div>
+                                <p
+                                    style={{ width: "100%", textAlign: "center", display: "flex", justifyContent: "center", alignItems: "center", cursor: "pointer", fontWeight: "500" }}
+                                    onClick={(e) => toggleDropdown("lang", e.currentTarget)}
+                                >{`${t("language")}: ${t("current_lang")}`}</p>
                             </div>
                         </div>
                         <div className="SettingsScreen AppearanceSettings hide">
@@ -278,7 +278,7 @@ function SettingsPage() {
                             </div>
                         </div>
                         <div className="SettingsScreen EmptySettings show">
-                            <Icon icon={faGear} style={{ color: "#aaa", fontSize: "24vh", filter: "blur(5px)" }} />
+                            <Icon icon={faGear} style={{ color: "var(--primary)", fontSize: "24vh", filter: "blur(5px)" }} />
                         </div>
                         <div className="SettingsScreen EmojiSettings hide">
                             <div className="CurrentEmojis">
