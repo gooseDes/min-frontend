@@ -374,6 +374,7 @@ function ChatPage() {
         document.getElementById("content_panel").classList.add("shown");
         document.getElementById("input_panel").classList.add("shown");
         document.getElementById("top_panel_username").textContent = username;
+        document.getElementById("call_button").classList.add("shown");
         const socket = getSocket();
         socket.on("userInfo", (data) => {
             document.getElementById("top_panel_avatar").src = `${address}/avatars/${data.user?.id}.webp`;
@@ -549,7 +550,7 @@ function ChatPage() {
                                 <img id="top_panel_avatar" src={logo} alt="avatar" onError={(e) => (e.currentTarget.src = "./logo512.png")} />
                                 <p id="top_panel_username">username</p>
                             </div>
-                            <div className="CallButton" onClick={() => setIsInVoiceChat(true)}>
+                            <div className="CallButton" id="call_button" onClick={() => setIsInVoiceChat(true)}>
                                 <Icon icon={faPhone} />
                             </div>
                         </div>
