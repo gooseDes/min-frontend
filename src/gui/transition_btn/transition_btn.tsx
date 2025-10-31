@@ -11,18 +11,25 @@ function TransitionButtonBase({ children, onClick }: TransitionButtonProps) {
     const controls = useAnimationControls();
 
     async function handleClick() {
-        controls.start({
-            position: "fixed",
-            x: window.innerWidth / 2,
-            y: -window.innerHeight / 2,
-            backgroundColor: "#000",
-            scale: 100,
-            opacity: 0,
-            fontSize: 20,
-            color: "#aaa",
-            transition: { type: "tween", ease: "easeOut", duration: 0.5 },
+        const app = document.getElementById("root");
+        if (app) {
+            app.style.transition = "opacity 0.3s ease-out";
+            app.style.opacity = "0";
+        }
+
+        await controls.start({
+            y: -250,
+            scale: 5,
+            transition: { type: "tween", duration: 0.2, ease: "easeOut" },
         });
-        if (onClick) setTimeout(() => onClick(), 300);
+
+        if (onClick) setTimeout(() => onClick(), 200);
+
+        await controls.start({
+            y: 0,
+            scale: 1,
+            transition: { type: "spring", stiffness: 200, damping: 10, mass: 1.2 },
+        });
     }
 
     return (
