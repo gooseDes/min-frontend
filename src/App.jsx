@@ -11,7 +11,6 @@ const ChatPage = lazy(() => import("./pages/chat/ChatPage.jsx"));
 const SignupPage = lazy(() => import("./pages/signup/SignupPage.jsx"));
 const SigninPage = lazy(() => import("./pages/signin/SigninPage.jsx"));
 const SettingsPage = lazy(() => import("./pages/settings/SettingsPage.jsx"));
-const VoicePage = lazy(() => import("./pages/voice/VoicePage.jsx"));
 
 const Router = isElectron() ? HashRouter : BrowserRouter;
 
@@ -71,14 +70,6 @@ function AnimatedRoutes() {
                         element={
                             <PageWrapper>
                                 <SettingsPage />
-                            </PageWrapper>
-                        }
-                    />
-                    <Route
-                        path="/voice"
-                        element={
-                            <PageWrapper>
-                                <VoicePage />
                             </PageWrapper>
                         }
                     />

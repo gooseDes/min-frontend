@@ -1,10 +1,13 @@
+import "./VoiceThing.css";
 import { useEffect, useState } from "react";
 import { getSocket } from "../../wsClient";
 
-function VoicePage() {
+function VoiceThing({ active = false }) {
     const [inited, setInited] = useState(false);
 
     useEffect(() => {
+        if (!active) return;
+        console.log("Voice Chat Started!");
         if (inited) return;
         setInited(true);
         const ws = getSocket();
@@ -29,7 +32,7 @@ function VoicePage() {
 
                     pc.onicecandidate = (event) => {
                         if (event.candidate) {
-                            ws.emit("voiceAction", { chat: 1, action: "candidate", candidate: event.candidate });
+                            ws.emit("voiceAction", { chat: localStorage.getItem("chatId") || 1, action: "candidate", candidate: event.candidate });
                         }
                     };
 
@@ -41,7 +44,7 @@ function VoicePage() {
                             await pc.setRemoteDescription(data.offer);
                             const answer = await pc.createAnswer();
                             await pc.setLocalDescription(answer);
-                            ws.emit("voiceAction", { chat: 1, action: "answer", answer });
+                            ws.emit("voiceAction", { chat: localStorage.getItem("chatId") || 1, action: "answer", answer });
                         } else if (data.action === "answer") {
                             await pc.setRemoteDescription(data.answer);
                         } else if (data.action === "candidate") {
@@ -53,7 +56,7 @@ function VoicePage() {
                         }
                     });
 
-                    ws.emit("joinVoice", { chat: 1 });
+                    ws.emit("joinVoice", { chat: localStorage.getItem("chatId") || 1 });
 
                     ws.on("joinedVoice", (data) => {
                         console.log("joinedVoice:", data);
@@ -63,7 +66,7 @@ function VoicePage() {
                                 if (joinedData.user !== ws.id) {
                                     const offer = await pc.createOffer();
                                     await pc.setLocalDescription(offer);
-                                    ws.emit("voiceAction", { chat: 1, action: "offer", offer });
+                                    ws.emit("voiceAction", { chat: localStorage.getItem("chatId") || 1, action: "offer", offer });
                                 }
                             });
                         }
@@ -78,17 +81,15 @@ function VoicePage() {
             console.error(data);
         });
 
-        ws.emit("getTurnUrls", { chat: 1 });
-    }, []);
+        ws.emit("getTurnUrls", { chat: localStorage.getItem("chatId") || 1 });
+    }, [active]);
 
     return (
-        <div>
-            <div className="App">
-                <div style={{ color: "#fff" }}>Welcome to call beta test!</div>
-                <audio id="remoteAudio" autoPlay></audio>
-            </div>
+        <div className={`VoiceChatThing ${active ? "shown" : ""}`}>
+            <div style={{ color: "var(--secondary)" }}>Welcome to voice!</div>
+            <audio id="remoteAudio" autoPlay></audio>
         </div>
     );
 }
 
-export default VoicePage;
+export default VoiceThing;

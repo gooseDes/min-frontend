@@ -7,7 +7,7 @@ import { useState, useEffect, useRef } from "react";
 import { closePopup, isUserLogined, loadFile, openPopup, showError, validateString, verifyToken } from "@/utils";
 import { address, getSocket } from "@/wsClient.js";
 import ProfilePopup from "../../gui/profile_popup";
-import { faArrowRight, faArrowRightFromBracket, faBars, faGear, faMessage, faPaperclip, faPaperPlane, faPlus, faReply, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight, faArrowRightFromBracket, faBars, faGear, faMessage, faPaperclip, faPaperPlane, faPhone, faPlus, faReply, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import Popup from "../../gui/popup";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { Trans } from "react-i18next";
@@ -17,6 +17,7 @@ import { goTo, isElectron, openDropdown } from "../../utils";
 import { motion } from "framer-motion";
 import TransitionButton from "../../gui/transition_btn/transition_btn";
 import Icon from "../../gui/icon";
+import VoiceThing from "../../gui/voice_thing/VoiceThing";
 
 function ChatPage() {
     const [messages, setMessages] = useState([]);
@@ -25,6 +26,7 @@ function ChatPage() {
     const [chats, setChats] = useState([]);
     const [lines, setLines] = useState(1);
     const [customEmojis, setCustomEmojis] = useState([]);
+    const [isInVoiceChat, setIsInVoiceChat] = useState(false);
 
     var inited = useRef(false);
     var lastSended = useRef("");
@@ -537,6 +539,7 @@ function ChatPage() {
                 </div>
                 <div className="RightPanel" id="right_panel">
                     <Icon icon={faMessage} className="MessageWhenEmpty" />
+                    <VoiceThing active={isInVoiceChat} />
                     <div className="TopPanel" id="top_panel">
                         <div className="TopPanelContent" id="top_panel_content">
                             <button className="MenuButton" onClick={openMenu}>
@@ -545,6 +548,9 @@ function ChatPage() {
                             <div className="TopPanelThing">
                                 <img id="top_panel_avatar" src={logo} alt="avatar" onError={(e) => (e.currentTarget.src = "./logo512.png")} />
                                 <p id="top_panel_username">username</p>
+                            </div>
+                            <div className="CallButton" onClick={() => setIsInVoiceChat(true)}>
+                                <Icon icon={faPhone} />
                             </div>
                         </div>
                     </div>

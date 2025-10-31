@@ -1,0 +1,25 @@
+.VoiceChatThing {
+    width: calc(100% + 20px);
+    height: 0px;
+    background-color: var(--background-panel);
+    border: 2px solid var(--panel-border);
+    border-radius: 2svh;
+    overflow: hidden;
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+    &.shown {
+        display: flex;
+        animation: voice-thing-anim 0.3s ease-in-out forwards;
+    }
+}
+
+@keyframes voice-thing-anim {
+    from {
+        height: 0px;
+    }
+    to {
+        height: 500px;
+    }
+}

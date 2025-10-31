@@ -117,3 +117,17 @@
         text-decoration: underline;
     }
 }
+
+.CallButton {
+    font-size: 32px;
+    color: var(--primary);
+    transition: rotate 0s linear;
+    position: absolute;
+    right: 30px;
+    transform: scaleX(-1);
+
+    &:hover {
+        transition: rotate 0.5s ease-in-out;
+        rotate: 360deg;
+    }
+}
