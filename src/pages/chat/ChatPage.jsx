@@ -150,7 +150,6 @@ function ChatPage() {
         socket.on("createChatResult", (data) => {
             if (data.success) {
                 closePopup("create-chat");
-                console.log("gettings chats");
                 socket.emit("getChats", {});
             } else {
                 const createError = document.getElementById("create_chat_error");
@@ -279,7 +278,6 @@ function ChatPage() {
 
     useEffect(() => {
         const socket = getSocket();
-        console.log("getting chats");
         socket.emit("getChats", {});
     }, []);
 
@@ -477,7 +475,6 @@ function ChatPage() {
     useEffect(() => {
         setTimeout(() => {
             const socket = getSocket();
-            console.log("getting chats");
             socket.emit("getChats", {});
             socket.emit("getCustomEmojis", {});
         }, 10000);
