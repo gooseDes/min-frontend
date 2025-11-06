@@ -474,12 +474,14 @@ function ChatPage() {
         }
     };
 
-    setTimeout(() => {
-        const socket = getSocket();
-        console.log("getting chats");
-        socket.emit("getChats", {});
-        socket.emit("getCustomEmojis", {});
-    }, 10000);
+    useEffect(() => {
+        setTimeout(() => {
+            const socket = getSocket();
+            console.log("getting chats");
+            socket.emit("getChats", {});
+            socket.emit("getCustomEmojis", {});
+        }, 10000);
+    });
 
     return (
         <div>
