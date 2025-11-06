@@ -481,7 +481,7 @@ function ChatPage() {
             socket.emit("getChats", {});
             socket.emit("getCustomEmojis", {});
         }, 10000);
-    });
+    }, []);
 
     return (
         <div>
