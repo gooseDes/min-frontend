@@ -1,0 +1,1 @@
+import{R as s,j as p}from"./index-Me4eKa4c.js";function d({children:o,direction:r="up",name:n="dropdown"}){return p.jsx("div",{className:`DropDownDiv ${r}`,id:`${n}-dropdown`,children:o})}const a=s.memo(d);export{a as D};
