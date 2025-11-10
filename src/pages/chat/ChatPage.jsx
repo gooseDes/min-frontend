@@ -17,7 +17,7 @@ import { goTo, isElectron, openDropdown } from "../../utils";
 import { motion } from "framer-motion";
 import TransitionButton from "../../gui/transition_btn/transition_btn";
 import Icon from "../../gui/icon";
-import VoiceThing from "../../gui/voice_thing/VoiceThing";
+import VoiceThing from "../../gui/voice_thing/voice_thing";
 
 function ChatPage() {
     const [messages, setMessages] = useState([]);

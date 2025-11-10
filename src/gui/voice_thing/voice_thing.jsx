@@ -1,9 +1,11 @@
-import "./VoiceThing.css";
+import "./voice_thing.css";
 import { useEffect, useState } from "react";
 import { getSocket } from "../../wsClient";
+import VoiceProfile from "../voice_user/voice_profile";
 
 function VoiceThing({ active = false }) {
     const [inited, setInited] = useState(false);
+    const [participants, setParticipants] = useState([]);
 
     useEffect(() => {
         if (!active) return;
@@ -59,7 +61,7 @@ function VoiceThing({ active = false }) {
                     ws.emit("joinVoice", { chat: localStorage.getItem("chatId") || 1 });
 
                     ws.on("joinedVoice", (data) => {
-                        console.log("joinedVoice:", data);
+                        setParticipants(data.participants);
                         if (data.role === "offer") {
                             ws.on("userJoined", async (joinedData) => {
                                 console.log("userJoined:", joinedData);
@@ -86,7 +88,11 @@ function VoiceThing({ active = false }) {
 
     return (
         <div className={`VoiceChatThing ${active ? "shown" : ""}`}>
-            <div style={{ color: "var(--secondary)" }}>Welcome to voice!</div>
+            <div>
+                {participants.map((participant) => {
+                    return <VoiceProfile id={participant.id} name={participant.name} key={participant.id} />;
+                })}
+            </div>
             <audio id="remoteAudio" autoPlay></audio>
         </div>
     );
