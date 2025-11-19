@@ -620,6 +620,7 @@ function ChatPage() {
                     </div>
                 </div>
             </div>
+            <div id="overlay" />
             <Popup title={t("account")} name="account" disableCloseButton={true}>
                 <div className="scrollable-y">
                     <p style={{ fontSize: "3svh" }}>

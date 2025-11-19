@@ -7,7 +7,7 @@
     position: fixed;
     left: -100px;
     bottom: 100px;
-    z-index: 999999;
+    z-index: 99999999999999999999;
     backdrop-filter: blur(5px);
     color: var(--primary);
     border-radius: 2svh;

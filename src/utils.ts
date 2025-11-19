@@ -20,8 +20,7 @@ export function isUserLogined() {
 }
 
 export function openPopup(popupName: string) {
-    const app = document.getElementById("app");
-    if (app) app.style.filter = "blur(2px)";
+    applyEffect("blur");
     const popup = document.getElementById(`${popupName}-popup`);
     if (popup) {
         popup.classList.remove("PopupHide");
@@ -33,8 +32,7 @@ export function openPopup(popupName: string) {
 export function closePopup(popupName: string) {
     const popup = document.getElementById(`${popupName}-popup`);
     if (popup) {
-        const app = document.getElementById("app");
-        if (app) app.style.filter = "blur(0)";
+        removeEffect("blur");
         popup.classList.remove("PopupShow");
         popup.classList.add("PopupHide");
         setTimeout(() => {
@@ -44,8 +42,6 @@ export function closePopup(popupName: string) {
 }
 
 export function openDropdown(name: string, caller: HTMLElement) {
-    const app = document.getElementById("app");
-    if (app) app.style.filter = "blur(5px)";
     const dropdown = document.getElementById(`${name}-dropdown`);
     if (!dropdown) return;
     const rect = caller.getBoundingClientRect();
@@ -57,6 +53,7 @@ export function openDropdown(name: string, caller: HTMLElement) {
         document.removeEventListener("click", close);
     }
     document.addEventListener("click", close);
+    applyEffect("blur");
 }
 
 export function toggleDropdown(name: string, caller: HTMLElement) {
@@ -72,8 +69,7 @@ export function closeDropdown(name: string) {
     const dropdown = document.getElementById(`${name}-dropdown`);
     if (!dropdown) return;
     dropdown.classList.remove("open");
-    const app = document.getElementById("app");
-    if (app) app.style.filter = "";
+    removeEffect("blur");
 }
 
 export function showError(text: string) {
@@ -272,4 +268,15 @@ export function applyTheme() {
             root.style.setProperty("--secondary", hexFromArgb(scheme.secondary));
             break;
     }
+}
+
+// Functions that apply effects to screen
+export function applyEffect(effect_name: string = "") {
+    const overlay = document.getElementById("overlay");
+    overlay?.classList.add("effect-" + effect_name);
+}
+
+export function removeEffect(effect_name: string = "") {
+    const overlay = document.getElementById("overlay");
+    overlay?.classList.remove("effect-" + effect_name);
 }
