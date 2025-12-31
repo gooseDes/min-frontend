@@ -1,5 +1,7 @@
 # MIN
 
+**THIS REPO WILL BE REWERITTEN!**
+
 Absolutely free and open-source messenger, you can host yourself.  
 (or just use it here: https://msg-min.xyz)
 
