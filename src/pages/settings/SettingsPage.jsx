@@ -42,8 +42,9 @@ function SettingsPage() {
                         setTimeout(() => {
                             avatar_settings.src = "";
                             setTimeout(() => {
-                                avatar_settings.src = `${address}/avatars/${localStorage.getItem("id")}.webp?t=${Date.now()}`;
+                                avatar_settings.src = `${address}${data.url}`;
                                 avatar_settings.style.scale = "1";
+                                localStorage.setItem("avatar", data.avatar);
                             }, 10);
                         }, 500);
                     }, 100);
@@ -262,7 +263,7 @@ function SettingsPage() {
                             <div className="Profile">
                                 <div className="EditDiv" onClick={uploadAvatar}>
                                     <img
-                                        src={`${address}/avatars/${localStorage.getItem("id")}.webp`}
+                                        src={`${address}/avatars/${localStorage.getItem("avatar") || localStorage.getItem("id")}.webp`}
                                         onError={(e) => (e.currentTarget.src = "./logo512.png")}
                                         className="AvatarSettings"
                                         id="avatar_settings"

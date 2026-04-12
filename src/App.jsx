@@ -97,7 +97,7 @@ function App() {
             profilePopupRef.current.show();
             const socket = getSocket();
             socket.on("userInfo", (data) => {
-                setProfilePopupContent({ username: data.user.name, id: data.user.id });
+                setProfilePopupContent({ username: data.user.name, id: data.user.id, avatar: data.user.avatar });
                 socket.off("userInfo");
             });
             socket.emit("getUserInfo", { name: username });
@@ -152,7 +152,7 @@ function App() {
                 <Popup title="Error" name="error">
                     {errorPopupContent}
                 </Popup>
-                <ProfilePopup ref={profilePopupRef} username={profilePopupContent.username} src={`${address}/avatars/${profilePopupContent.id}.webp`} />
+                <ProfilePopup ref={profilePopupRef} username={profilePopupContent.username} src={`${address}/avatars/${profilePopupContent.avatar}.webp`} />
                 <div className={`ImageOverlay ${imageOverlayShown ? "show" : "hide"}`} onClick={() => setImageOverlayShown(false)} onWheel={handleOverlayWheel}>
                     <div className={`ImageOverlayContent ${imageOverlayShown ? "show" : "hide"}`}>
                         <img

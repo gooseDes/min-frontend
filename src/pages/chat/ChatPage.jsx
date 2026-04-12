@@ -72,6 +72,7 @@ function ChatPage() {
                         type: data.author == "You" ? "right" : "left",
                         author: data.author,
                         author_id: data.author_id,
+                        author_avatar: data.author_avatar,
                         sent_at: data.sent_at,
                         seen: data.seen,
                         shown: true,
@@ -96,6 +97,7 @@ function ChatPage() {
                             type: msg.author === localStorage.getItem("username") ? "right" : "left",
                             author: msg.author === localStorage.getItem("username") ? "You" : msg.author,
                             author_id: msg.author_id,
+                            author_avatar: msg.author_avatar,
                             sent_at: msg.sent_at,
                             seen: msg.seen,
                             shown: false,
@@ -131,6 +133,7 @@ function ChatPage() {
                         type: msg.author === localStorage.getItem("username") ? "right" : "left",
                         author: msg.author === localStorage.getItem("username") ? "You" : msg.author,
                         author_id: msg.author_id,
+                        author_avatar: msg.author_avatar,
                         sent_at: msg.sent_at,
                         seen: msg.seen,
                         shown: true,
@@ -279,6 +282,14 @@ function ChatPage() {
     useEffect(() => {
         const socket = getSocket();
         socket.emit("getChats", {});
+        socket.on("userInfo", (data) => {
+            data = data.user;
+            if (data.id === parseInt(localStorage.getItem("id"), 10)) {
+                localStorage.setItem("avatar", data.avatar);
+            }
+            socket.off("userInfo");
+        });
+        socket.emit("getUserInfo", { id: localStorage.getItem("id") });
     }, []);
 
     useEffect(() => {
@@ -377,7 +388,7 @@ function ChatPage() {
         document.getElementById("call_button").classList.add("shown");
         const socket = getSocket();
         socket.on("userInfo", (data) => {
-            document.getElementById("top_panel_avatar").src = `${address}/avatars/${data.user?.id}.webp`;
+            document.getElementById("top_panel_avatar").src = `${address}/avatars/${data.user?.avatar}.webp`;
             socket.off("userInfo");
         });
         socket.emit("getUserInfo", { name: username });
@@ -507,7 +518,7 @@ function ChatPage() {
                                         localStorage.setItem("chatId", chat.id);
                                         openChat(chat.name);
                                     }}
-                                    src={`${address}/avatars/${other?.id}.webp`}
+                                    src={`${address}/avatars/${other?.avatar}.webp`}
                                     key={chat.id}
                                 />
                             );
@@ -519,7 +530,7 @@ function ChatPage() {
                                 text={localStorage.getItem("username") || t("guest")}
                                 onClick={openUserProfile}
                                 animation={false}
-                                src={`${address}/avatars/${localStorage.getItem("id")}.webp`}
+                                src={`${address}/avatars/${localStorage.getItem("avatar") || localStorage.getItem("id")}.webp`}
                             />
                             <TransitionButton
                                 onClick={() => {
@@ -590,7 +601,7 @@ function ChatPage() {
                                     seen={msg.seen}
                                     shown={msg.shown}
                                     anim_delay={msg.anim_delay}
-                                    src={`${address}/avatars/${msg.author_id}.webp`}
+                                    src={`${address}/avatars/${msg.author_avatar}.webp`}
                                     connected={!isLast}
                                     onContextMenu={(e) => {
                                         e.preventDefault();
@@ -651,7 +662,11 @@ function ChatPage() {
                     <Icon icon={faArrowRight} onClick={createChat} />
                 </button>
             </Popup>
-            <ProfilePopup ref={ProfilePopupRef} src={`${address}/avatars/${localStorage.getItem("id")}.webp`} username={localStorage.getItem("username") || t("guest")} />
+            <ProfilePopup
+                ref={ProfilePopupRef}
+                src={`${address}/avatars/${localStorage.getItem("avatar") || localStorage.getItem("id")}.webp`}
+                username={localStorage.getItem("username") || t("guest")}
+            />
             <Dropdown name="msg">
                 <div className="noanim">{t("message_actions")}</div>
                 <div
