@@ -13,8 +13,8 @@ self.addEventListener("push", (event) => {
     event.waitUntil(
         self.registration.showNotification(data.chat, {
             body: data.message,
-            icon: `${address}/avatars/${data.author}.webp`,
-            badge: `${address}/avatars/${data.author}.webp`,
+            icon: `${address}/avatars/${data.authorAvatar}.webp`,
+            badge: `${address}/avatars/${data.authorAvatar}.webp`,
             tag: "message",
             vibration: [200, 100, 200, 100, 400],
         }),

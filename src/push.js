@@ -17,7 +17,7 @@ export async function subscribeUser() {
 
             console.log("Got subscription:", subscription);
 
-            await fetch(`${address}/subscribe`, {
+            const response = await fetch(`${address}/subscribe`, {
                 method: "POST",
                 body: JSON.stringify({
                     subscription: subscription,
@@ -25,6 +25,8 @@ export async function subscribeUser() {
                 }),
                 headers: { "Content-Type": "application/json" },
             });
+
+            console.log("Response:", response);
 
             console.log("Subscription sent to server ✅");
         } catch (err) {
