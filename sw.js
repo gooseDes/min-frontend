@@ -1,4 +1,4 @@
-import { address } from "../src/wsClient.js";
+const address = "https://serv.msg-min.xyz";
 
 self.addEventListener("push", (event) => {
     console.log("Push received:", event);
