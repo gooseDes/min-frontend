@@ -31,7 +31,7 @@ export async function subscribeUser() {
             console.error("Push subscription error:", err);
         }
     } else {
-        console.warn("Push messaging is not supported in this browser :(");
+        console.warn("Push notifications are not supported in this browser :(");
     }
 }
 

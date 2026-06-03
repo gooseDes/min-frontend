@@ -1,4 +1,4 @@
-import { address } from "./wsClient.js";
+import { address } from "../src/wsClient.js";
 
 self.addEventListener("push", (event) => {
     console.log("Push received:", event);
@@ -17,7 +17,7 @@ self.addEventListener("push", (event) => {
             badge: `${address}/avatars/${data.author}.webp`,
             tag: "message",
             vibration: [200, 100, 200, 100, 400],
-        })
+        }),
     );
 });
 
