@@ -25,7 +25,7 @@ function ChatPage() {
     const [lastMessages, setLastMessages] = useState([]);
     const [chats, setChats] = useState([]);
     const [lines, setLines] = useState(1);
-    const [customEmojis, setCustomEmojis] = useState([]);
+    const customEmojis = useRef([]);
     const [isInVoiceChat, setIsInVoiceChat] = useState(false);
 
     var inited = useRef(false);
@@ -165,7 +165,7 @@ function ChatPage() {
         });
 
         socket.on("customEmojis", (data) => {
-            setCustomEmojis(data.emojis);
+            customEmojis.current = data.emojis;
         });
 
         socket.on("seenAll", (data) => {
@@ -282,6 +282,8 @@ function ChatPage() {
     useEffect(() => {
         const socket = getSocket();
         socket.emit("getChats", {});
+        socket.emit("getCustomEmojis", {});
+
         socket.on("userInfo", (data) => {
             data = data.user;
             if (data.id === parseInt(localStorage.getItem("id"), 10)) {
@@ -349,12 +351,11 @@ function ChatPage() {
         if (value.trim() === "") return;
         const splitted = value.split(":");
         for (let i = 0; i < splitted.length - 1; i++) {
-            if (validateString(splitted[i], "username", 1, 64) && customEmojis.find((emoji) => emoji.name === splitted[i])) {
-                splitted[i] = `![${splitted[i]}](${address}/emojis/${customEmojis.find((emoji) => emoji.name === splitted[i]).id}.webp)`;
+            if (validateString(splitted[i], "username", 1, 64) && customEmojis.current.find((emoji) => emoji.name === splitted[i])) {
+                splitted[i] = `![${splitted[i]}](${address}/emojis/${customEmojis.current.find((emoji) => emoji.name === splitted[i]).id}.webp)`;
             }
         }
-        console.log(splitted);
-        value = splitted.join(":");
+        value = splitted.join(" ");
         input.value = "";
         setLines(1);
         const socket = getSocket();
