@@ -355,7 +355,7 @@ function ChatPage() {
                 splitted[i] = `![${splitted[i]}](${address}/emojis/${customEmojis.current.find((emoji) => emoji.name === splitted[i]).id}.webp)`;
             }
         }
-        value = splitted.join(" ");
+        value = splitted.join(":");
         input.value = "";
         setLines(1);
         const socket = getSocket();
