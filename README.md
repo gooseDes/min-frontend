@@ -1,6 +1,7 @@
 # MIN
 
-**THIS REPO WILL BE REWRITTEN!**
+**THIS REPO IS DEPRECATED!**  
+New WIP web version is available here: https://github.com/gooseDes/min-web
 
 Absolutely free and open-source messenger, you can host yourself.  
 (or just use it here: https://msg-min.xyz)
